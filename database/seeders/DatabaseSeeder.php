@@ -11,19 +11,31 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::factory(10)->create();
+        $this->call(LaratrustSeeder::class);
 
-        User::insert([
-            [
-                'name' => 'admin',
-                'email' => 'admin@mail.com',
-                'password' => bcrypt('123'),
-            ],
-            [
-                'name' => 'user',
-                'email' => 'user@mail.com',
-                'password' => bcrypt('123'),
-            ],
+        $sadmin =  User::create([
+            'name' => 'sadmin',
+            'email' => 'sadmin@mail.com',
+            'password' => bcrypt('123'),
         ]);
+        $sadmin->addRole('sadmin');
+
+        $admin =  User::create([
+            'name' => 'admin',
+            'email' => 'admin@mail.com',
+            'password' => bcrypt('123'),
+        ]);
+        $admin->addRole('admin');
+        $admin->givePermission('statistical-approve');
+
+        $user = User::create([
+            'name' => 'user',
+            'email' => 'user@mail.com',
+            'password' => bcrypt('123'),
+        ]);
+        $user->addRole('user');
+        $user->givePermission('printer-approve');
+
+        User::factory(10)->create();
     }
 }
