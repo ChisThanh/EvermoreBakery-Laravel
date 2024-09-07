@@ -11,7 +11,10 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(LaratrustSeeder::class);
+        $this->call([
+            LaratrustSeeder::class,
+            ProductSeeder::class,
+        ]);
 
         $sadmin =  User::create([
             'name' => 'sadmin',

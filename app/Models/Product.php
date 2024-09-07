@@ -21,7 +21,6 @@ class Product extends Model implements TranslatableContract
     protected $fillable = [
         'name',
         'category_id',
-        'brand_id',
         'price',
         'price_sale',
         'image',
@@ -31,10 +30,5 @@ class Product extends Model implements TranslatableContract
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
-    }
-
-    public function brand()
-    {
-        return $this->hasOne(Brand::class, 'id', 'brand_id');
     }
 }

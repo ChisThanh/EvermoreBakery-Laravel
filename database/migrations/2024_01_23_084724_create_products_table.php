@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('category_id')->constrained();
-            $table->foreignId('brand_id')->constrained();
             $table->bigInteger('price')->default(0);
             $table->bigInteger('price_sale')->default(0);
             $table->string('image');
