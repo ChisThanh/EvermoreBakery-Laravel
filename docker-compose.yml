@@ -1,15 +1,56 @@
 services:
-    nginx:
-        image: nginx:latest
-        ports:
-            - "9090:80"
-        volumes:
-            - ./:/var/www/html
-            - ./docker/nginx:/etc/nginx/conf.d
+  nginx:
+    image: nginx:latest
+    ports:
+      - "9090:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - custom_network
 
-    php:
-        build:
-            context: .
-        volumes:
-            - ./:/var/www/html
+  php:
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - custom_network
 
+  redis:
+    container_name: redis
+    image: 'redis:alpine'
+    command: redis-server --requirepass someredispassword
+    networks:
+      - custom_network
+
+  queue-redis:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - custom_network
+    command: php artisan queue:work
+    depends_on:
+      - redis
+
+  meilisearch:
+    image: 'getmeili/meilisearch:latest'
+    ports:
+      - '7700:7700'
+    environment:
+      MEILI_MASTER_KEY: masterKey
+    volumes:
+      - sail-meilisearch:/meili_data
+    networks:
+      - custom_network
+
+volumes:
+  sail-meilisearch:
+
+
+networks:
+  custom_network:
+    external: true

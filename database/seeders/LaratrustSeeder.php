@@ -16,7 +16,7 @@ class LaratrustSeeder extends Seeder
      */
     public function run()
     {
-        $this->truncateLaratrustTables();
+        $this->deleteLaratrustTables();
 
         $config = Config::get('laratrust_seeder.roles_structure');
 
@@ -95,6 +95,28 @@ class LaratrustSeeder extends Seeder
             if (Config::get('laratrust_seeder.create_users')) {
                 $usersTable = (new \App\Models\User)->getTable();
                 DB::table($usersTable)->truncate();
+            }
+        }
+
+        Schema::enableForeignKeyConstraints();
+    }
+
+    public function deleteLaratrustTables()
+    {
+        $this->command->info('Truncating User, Role and Permission tables');
+        Schema::disableForeignKeyConstraints();
+
+        DB::table('permission_role')->delete();
+        DB::table('permission_user')->delete();
+        DB::table('role_user')->delete();
+
+        if (Config::get('laratrust_seeder.truncate_tables')) {
+            DB::table('roles')->delete();
+            DB::table('permissions')->delete();
+
+            if (Config::get('laratrust_seeder.create_users')) {
+                $usersTable = (new \App\Models\User)->getTable();
+                DB::table($usersTable)->delete();
             }
         }
 

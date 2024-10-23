@@ -35,6 +35,15 @@ RUN pecl install sqlsrv pdo_sqlsrv && \
 # Cài đặt các extension PHP cần thiết cho MySQL, GD, và gettext
 RUN docker-php-ext-install gettext intl pdo_mysql gd
 
+# Cài đặt Xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+# Tạo file cấu hình Xdebug
+RUN echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+    echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini
+    
 # Cài đặt Composer từ image composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -42,5 +51,4 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ./ /var/www/html
 
 # Gán quyền cho thư mục storage và bootstrap
-RUN chmod 777 -R /var/www/html/storage
-RUN chmod 777 -R /var/www/html/bootstrap
+RUN chown -R 777 /var/www/html/storage /var/www/html/bootstrap/cache

@@ -11,7 +11,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <script src="{{ asset("js/tailwindcss.js") }}"></script>
+    @stack('css')
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
@@ -27,5 +28,6 @@
         </div>
     </div>
 </body>
+@stack('scripts')
 
 </html>
