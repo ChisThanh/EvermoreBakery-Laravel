@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Client\KeywordController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,20 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::resource('users', UserController::class);
+Route::prefix('kw')->group(function () {
+    Route::get('/search', [KeywordController::class, 'search'])->name('kw.search');
+    Route::get('/generate', [KeywordController::class, 'generate'])->name('kw.generate');
+});
 
-// Route::resources([
-//     'photos' => PhotoController::class,
-//     'posts' => PostController::class,
-// ]);
-// Chỉ định các route cụ thể:
-// Route::resource('users', UserController::class)->only([
-//     'index', 'show', 'store'
-// ]);
-
-// Loại bỏ các route cụ thể:
-// Route::resource('users', UserController::class)->except([
-//     'create', 'edit'
-// ]);
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
