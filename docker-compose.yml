@@ -5,7 +5,7 @@ services:
       - "9090:80"
     volumes:
       - ./:/var/www/html
-      - ./docker/nginx:/etc/nginx/conf.d
+      - ./.docker/nginx:/etc/nginx/conf.d
     networks:
       - custom_network
 
@@ -14,6 +14,8 @@ services:
       context: .
     volumes:
       - ./:/var/www/html
+      - ./.docker/php/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./.docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
     networks:
       - custom_network
 

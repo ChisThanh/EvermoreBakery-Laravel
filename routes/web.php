@@ -27,7 +27,7 @@ Route::prefix('kw')->group(function () {
 });
 
 Route::get('/test', function (Request $request) {
-    $result = Product::search($request->q)->options([
+    $result = Product::search($request->q ?? '')->options([
         'query_by' => 'name,description',
     ])->get();
     return response()->json($result);
