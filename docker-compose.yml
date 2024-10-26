@@ -1,34 +1,57 @@
 services:
-    nginx:
-        image: nginx:latest
-        ports:
-            - "9090:80"
-        volumes:
-            - ./:/var/www/html
-            - ./docker/nginx:/etc/nginx/conf.d
+  nginx:
+    image: nginx:latest
+    ports:
+      - "9090:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - custom_network
 
-    mysql:
-        image: mysql
-        ports:
-            - "3307:3306"
-        # volumes:
-        #     - ./Docker/mysql:/var/lib/mysql
-        environment:
-            MYSQL_DATABASE: EvermoreBakery
-            MYSQL_ROOT_PASSWORD: root1
+  php:
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - custom_network
 
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin:latest
-        environment:
-            PMA_HOST: mysql
-            PMA_PORT: 3306
-            UPLOAD_LIMIT: 200M
-        ports:
-            - "9099:80"
+  redis:
+    container_name: redis
+    image: 'redis:alpine'
+    command: redis-server --requirepass someredispassword
+    networks:
+      - custom_network
 
-    php:
-        build:
-            context: .
-        volumes:
-            - ./:/var/www/html
+  queue-redis:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - custom_network
+    command: php artisan queue:work
+    depends_on:
+      - redis
 
+  typesense:
+    image: typesense/typesense:27.1
+    restart: on-failure
+    ports:
+      - "8108:8108"
+    volumes:
+      - typesense-data:/data
+    # command: '--data-dir /data --api-key=masterKey --enable-cors'
+    command: '--data-dir /data --api-key=masterKey'
+    networks:
+      - custom_network
+
+volumes:
+  typesense-data:
+
+
+networks:
+  custom_network:
+    external: true
