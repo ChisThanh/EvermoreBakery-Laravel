@@ -3,11 +3,8 @@
 namespace App\Jobs;
 
 use App\Service\GeminiService;
-use App\Service\MeilisearchService;
+use App\Service\TypesenseService;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Queue\Queueable;
 
 
@@ -23,8 +20,8 @@ class SyncKeywords implements ShouldQueue
     public function handle(): void
     {
         $geminiService = app(GeminiService::class);
-        $meilisearchService = app(MeilisearchService::class);
+        $typesenseService = app(TypesenseService::class);
         $result = $geminiService->generateKeywords($this->text);
-        $meilisearchService->syncIndexKeywords($result);
+        $typesenseService->syncIndexKeywords($result);
     }
 }

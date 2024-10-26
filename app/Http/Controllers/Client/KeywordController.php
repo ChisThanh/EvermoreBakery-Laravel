@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SyncKeywords;
-use App\Service\GeminiService;
-use App\Service\MeilisearchService;
+use App\Service\TypesenseService;
 use Illuminate\Http\Request;
 
 class KeywordController extends Controller
 {
+    protected $typesenseService;
+
     public function __construct(
-        private MeilisearchService $meilisearchService
+        TypesenseService $typesenseService
     ) {
+        $this->typesenseService = $typesenseService;
     }
 
     public function search(Request $request)
@@ -20,7 +22,7 @@ class KeywordController extends Controller
         if (empty($request->q)) {
             return response()->json(['message' => 'Query is required.'], 400);
         }
-        $result = $this->meilisearchService->searchKeywords($request->q);
+        $result = $this->typesenseService->searchKeywords($request->q);
         return response()->json($result);
     }
 
@@ -33,6 +35,4 @@ class KeywordController extends Controller
         SyncKeywords::dispatch($request->text);
         return response()->json(['message' => 'Keywords are being generated.']);
     }
-
-
 }

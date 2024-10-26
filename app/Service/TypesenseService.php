@@ -2,23 +2,19 @@
 
 
 namespace App\Service;
-use MeiliSearch\Client as MeiliSearch;
-
-class MeilisearchService
+use Typesense\Client as Typesense;
+class TypesenseService
 {
     public mixed $client;
+
     public function __construct()
     {
-        $config = config('scout.meilisearch');
-        // $this->client = new MeiliSearch(
-        //     $config['host'],
-        //     $config['key'],
-        // );
+        $config = config('scout.typesense');
+        $this->client = new Typesense($config['client-settings']);
     }
 
     public function syncIndexKeywords(array $keywords)
     {
-        $index = $this->client->index('keywords_index');
         $data = [];
         foreach ($keywords as $keyword) {
             $id = $this->removeVietnameseChars($keyword);
@@ -26,20 +22,43 @@ class MeilisearchService
 
             $data[] = [
                 'id' => $id,
-                'keyword' => $keyword,
+                'keyword' => $keyword
             ];
         }
-        $index->addDocuments($data);
+        $this->client->collections['keywords']
+            ->documents
+            ->import($data, ['action' => 'upsert']);
     }
 
     public function searchKeywords($keyword)
     {
-        $index = $this->client->index('keywords_index');
-        $search = $index->search($keyword, [
-            'limit' => 10,
-        ])->getHits();
+        $searchParameters = [
+            'q' => $keyword,
+            'query_by' => 'keyword'
+        ];
+
+        $search = $this->client
+            ->collections['keywords']
+            ->documents
+            ->search($searchParameters);
+
         return $search;
     }
+
+    public function createCollection()
+    {
+        $schema = [
+            "name" => "keywords",
+            "fields" => [
+                ["name" => "keyword", "type" => "string"]
+            ],
+            "query_by" => "keyword"
+        ];
+
+        $this->client->collections->create($schema);
+    }
+
+
 
     function removeVietnameseChars($str)
     {

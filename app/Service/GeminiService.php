@@ -14,6 +14,13 @@ class GeminiService
         return $result->text();
     }
 
+    public function generateEmbedding($text)
+    {
+        // length 768
+        $result = Gemini::embeddingModel()->embedContent($text);
+        return $result->embedding->values;
+    }
+
     public function generateKeywords($text, $model = ModelType::GEMINI_FLASH): array
     {
         $prompt = "Vui lòng tạo ra 5 từ khóa cho nội dung sản phẩm sau: {$text}. " .
@@ -21,7 +28,6 @@ class GeminiService
             "từ_khóa1##từ_khóa2##từ_khóa3##từ_khóa4##từ_khóa5. " .
             "Xin hãy đảm bảo rằng tất cả các từ khóa đều viết thường. " .
             "Vui lòng trả lời bằng tiếng Việt.";
-
 
         $result = Gemini::generativeModel($model)->generateContent($prompt);
         $result = $result->text();

@@ -4,19 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Product extends Model implements TranslatableContract
+class Product extends Model
 {
-    use Translatable;
     use HasFactory;
     use SoftDeletes;
-
-    public $translatedAttributes = [
-        'description'
-    ];
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -24,11 +19,20 @@ class Product extends Model implements TranslatableContract
         'price',
         'price_sale',
         'image',
-        'stock_quantity'
+        'stock_quantity',
+        'description'
     ];
 
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    public function toSearchableArray()
+    {
+        return array_merge($this->toArray(), [
+            'id' => (string) $this->id,
+            'created_at' => $this->created_at->timestamp,
+        ]);
     }
 }

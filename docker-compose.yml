@@ -36,19 +36,20 @@ services:
     depends_on:
       - redis
 
-  meilisearch:
-    image: 'getmeili/meilisearch:latest'
+  typesense:
+    image: typesense/typesense:27.1
+    restart: on-failure
     ports:
-      - '7700:7700'
-    environment:
-      MEILI_MASTER_KEY: masterKey
+      - "8108:8108"
     volumes:
-      - sail-meilisearch:/meili_data
+      - typesense-data:/data
+    # command: '--data-dir /data --api-key=masterKey --enable-cors'
+    command: '--data-dir /data --api-key=masterKey'
     networks:
       - custom_network
 
 volumes:
-  sail-meilisearch:
+  typesense-data:
 
 
 networks:

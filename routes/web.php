@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Client\KeywordController;
 use App\Http\Controllers\ProfileController;
+use App\Service\GeminiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,13 @@ Route::middleware('auth')->group(function () {
 Route::prefix('kw')->group(function () {
     Route::get('/search', [KeywordController::class, 'search'])->name('kw.search');
     Route::get('/generate', [KeywordController::class, 'generate'])->name('kw.generate');
+});
+
+Route::get('/test', function (Request $request) {
+    $text = $request->input('text');
+    $service = app(GeminiService::class);
+    $result = $service->generateEmbedding($text);
+    return response()->json($result);
 });
 
 require __DIR__ . '/auth.php';
