@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bill extends Model
+class Cart extends Model
 {
     use HasFactory;
     protected $fillable = [
         'user_id',
-        'delivery_date',
         'total',
-        'payment_status',
-        'payment_method',
-        'status',
     ];
 
     public function getUserNameAttribute()
@@ -29,6 +25,6 @@ class Bill extends Model
 
     public function details()
     {
-        return $this->hasMany(BillDetail::class, 'bill_id');
+        return $this->hasMany(CartDetail::class, 'bill_id');
     }
 }
