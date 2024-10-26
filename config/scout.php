@@ -191,14 +191,14 @@ return [
                             'type' => 'string',
                         ],
                         [
-                            'name' => 'created_at',
-                            'type' => 'int32',
+                            'name' => 'updated_at',
+                            'type' => 'int64',
                         ]
                     ],
-                    'default_sorting_field' => 'created_at',
+                    'default_sorting_field' => 'updated_at',
                 ],
                 'search-parameters' => [
-                    'query_by' => 'name'
+                    'query_by' => 'name,description',
                 ],
             ],
         ],

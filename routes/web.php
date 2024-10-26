@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Client\KeywordController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Product;
 use App\Service\GeminiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +27,9 @@ Route::prefix('kw')->group(function () {
 });
 
 Route::get('/test', function (Request $request) {
-    $text = $request->input('text');
-    $service = app(GeminiService::class);
-    $result = $service->generateEmbedding($text);
+    $result = Product::search($request->q)->options([
+        'query_by' => 'name,description',
+    ])->get();
     return response()->json($result);
 });
 

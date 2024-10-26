@@ -28,11 +28,21 @@ class Product extends Model
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
 
+    public function searchableAs(): string
+    {
+        return 'product_collections';
+    }
+
     public function toSearchableArray()
     {
-        return array_merge($this->toArray(), [
+        return [
             'id' => (string) $this->id,
-            'created_at' => $this->created_at->timestamp,
-        ]);
+            'name' => (string) $this->name,
+            'description' => (string) $this->description,
+            'updated_at' => $this->updated_at->timestamp ?? 0,
+        ];
     }
+
 }
+
+// php artisan scout:import "App\Models\Product"
