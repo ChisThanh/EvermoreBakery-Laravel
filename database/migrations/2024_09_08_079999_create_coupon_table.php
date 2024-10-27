@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('code')->unique();
             $table->float('discount_amount')->nullable();
             $table->float('discount_percentage')->nullable();
+            $table->integer('quantity')->default(1);
             $table->date('expires_at')->nullable();
             $table->timestamps();
         });

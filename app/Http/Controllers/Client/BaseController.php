@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-abstract class BaseController
+abstract class BaseController extends Controller
 {
     protected $model;
     protected $view;
@@ -57,7 +58,7 @@ abstract class BaseController
     {
         $data = $this->model->find($id);
         if (!$data) {
-            return redirect()->back()->with('error',  __('Data not found'));
+            return redirect()->back()->with('error', __('Data not found'));
         }
         return view($this->view . '.show', compact('data'));
     }

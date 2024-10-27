@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Client\KeywordController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Client\ProfileController;
 use App\Models\Product;
 use App\Service\GeminiService;
 use Illuminate\Http\Request;

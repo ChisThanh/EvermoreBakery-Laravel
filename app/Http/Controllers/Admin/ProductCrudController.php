@@ -6,6 +6,7 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Str;
 
 /**
  * Class ProductCrudController
@@ -46,7 +47,17 @@ class ProductCrudController extends CrudController
             'label' => 'Image',
             'width' => '50px',
             'height' => '50px',
-            'prefix' => 'storage/',
+            'value' => function ($entry) {
+                if (
+                    Str::startsWith(
+                        $entry->image,
+                        ['http', 'https']
+                    )
+                ) {
+                    return "http://localhost:9090/storage/images/products/gJeGtNP1pJhkYC6JV1M3ycB6W5mf26GEzLAkEzFA.jpg";
+                }
+                return asset('storage/' . $entry->image);
+            }
         ]);
     }
 
