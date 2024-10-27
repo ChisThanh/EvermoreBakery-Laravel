@@ -28,7 +28,7 @@ class ProductCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Product::class);
+        CRUD::setModel(Product::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/product');
         CRUD::setEntityNameStrings('product', 'products');
 
@@ -38,7 +38,7 @@ class ProductCrudController extends CrudController
             'label' => 'Category name',
             'entity' => 'category',
             'attribute' => 'name',
-            'model' => "App\Models\Category"
+            'model' => "App\Models\Category",
         ]);
 
         $this->crud->addColumn([
@@ -65,8 +65,9 @@ class ProductCrudController extends CrudController
     {
         $image = "";
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/products', 'public'); // Lưu hình ảnh vào thư mục storage/app/public/images/products
-            $image = $imagePath; // Cập nhật đường dẫn hình ảnh vào dữ liệu
+            $imagePath = $request->file('image')
+            ->store('images/products', 'public'); 
+            $image = $imagePath; 
         }
         $product = $this->crud->model->create([
             'name' => $request->input('name'),
@@ -89,12 +90,14 @@ class ProductCrudController extends CrudController
         $request = $this->crud->validateRequest();
         $array = $request->all();
 
-        $image = "";
+        $item = $this->crud->model->findOrFail($request->id);
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images/products', 'public'); // Lưu hình ảnh vào thư mục storage/app/public/images/products
+                \Storage::disk('public')->delete($item->image);
+
+            $imagePath = $request->file('image')
+                ->store('images/products', 'public');
             $array['image'] = $imagePath;
         }
-        $item = $this->crud->model->findOrFail($request->id);
 
         $item->update($array);
 
@@ -152,7 +155,7 @@ class ProductCrudController extends CrudController
             'type' => 'number',
             'label' => 'Price sale',
             'prefix' => '$',
-            'attributes' => ["step" => "2"]
+            'attributes' => ["step" => "1"]
         ]);
 
         CRUD::addField([
@@ -160,6 +163,7 @@ class ProductCrudController extends CrudController
             'type' => 'upload',
             'label' => 'Image',
             'upload' => true,
+            'prefix' => 'storage/'
         ]);
     }
 
