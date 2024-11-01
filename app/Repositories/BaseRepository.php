@@ -5,6 +5,7 @@ namespace App\Repositories;
 abstract class BaseRepository
 {
     protected $model;
+    private static $instance = null;
 
     public function __construct()
     {
@@ -15,7 +16,10 @@ abstract class BaseRepository
 
     public static function getInstance(): static
     {
-        return new static(); 
+        if (self::$instance === null) {
+            self::$instance = new static();
+        }
+        return self::$instance;
     }
 
     public function all(): mixed
@@ -55,7 +59,7 @@ abstract class BaseRepository
     public function update($id, array $data): mixed
     {
         $record = $this->model->find($id);
-        if (!$record) 
+        if (!$record)
             return false;
         $record->update($data);
         return $record;
@@ -64,14 +68,14 @@ abstract class BaseRepository
     public function delete($id): mixed
     {
         $record = $this->model->find($id);
-        if (!$record) 
+        if (!$record)
             return false;
         return $record->delete();
     }
 
     public function deleteIds(array $ids, $field = 'id'): mixed
     {
-        if (empty($ids)) 
+        if (empty($ids))
             return false;
         return $this->model->whereIn($field, $ids)->delete();
     }
