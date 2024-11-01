@@ -10,14 +10,14 @@ return new class extends Migration {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->bigInteger('total')->default(0);
+            $table->float('total')->default(0);
             $table->timestamps();
         });
 
         Schema::create('cart_details', function (Blueprint $table) {
             $table->foreignId('cart_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->integer('quantity')->default(1);
+            $table->tinyInteger('quantity')->default(1);
             $table->float('price')->default(0);
             $table->primary(['cart_id', 'product_id']);
         });

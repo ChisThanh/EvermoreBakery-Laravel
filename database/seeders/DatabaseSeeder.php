@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
         ]);
 
+        User::factory(2)->create();
+
         $sadmin = User::create([
             'name' => 'sadmin',
             'email' => 'sadmin@mail.com',
@@ -29,16 +31,11 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
         $admin->addRole('admin');
-        $admin->givePermission('statistical-approve');
 
         $user = User::create([
             'name' => 'user',
             'email' => 'user@mail.com',
             'password' => bcrypt('123'),
         ]);
-        $user->addRole('user');
-        $user->givePermission('printer-approve');
-
-        User::factory(2)->create();
     }
 }

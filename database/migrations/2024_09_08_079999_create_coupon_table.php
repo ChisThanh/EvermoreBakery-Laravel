@@ -9,17 +9,21 @@ return new class extends Migration {
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
+            $table->string('code', 20)->unique();
             $table->float('discount_amount')->nullable();
             $table->float('discount_percentage')->nullable();
-            $table->integer('quantity')->default(1);
+            $table->tinyInteger('quantity')->default(1);
             $table->date('expires_at')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('coupon_user', function (Blueprint $table) {
+        Schema::create('event', function (Blueprint $table) {
             $table->foreignId('coupon_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->string('name');
+            $table->date('used_at')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->primary(['coupon_id', 'user_id']);
         });
     }
 
