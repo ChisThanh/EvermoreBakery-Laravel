@@ -11,6 +11,7 @@
         "google-gemini-php/laravel": "^1.0",
         "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^11.9",
+        "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.11",
         "laravel/tinker": "^2.9",
         "predis/predis": "^2.2",
