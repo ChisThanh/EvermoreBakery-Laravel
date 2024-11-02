@@ -32,6 +32,9 @@ return [
             'product-interaction' => 'c,r,u',
             'statistical' => 'a'
         ],
+        'user' => [
+            "product" => "r",
+        ],
     ],
 
     'permissions_map' => [
