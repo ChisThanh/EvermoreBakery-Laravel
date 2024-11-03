@@ -25,6 +25,8 @@ class AuthApiController extends BaseApiController
 
             $user = auth()->user();
             $tokenResult = $user->createToken('authToken')->plainTextToken;
+            // Thiết Lập Quyền Hạn Cho Token
+            // $token = $user->createToken('Admin Token', ['create', 'view', 'delete'])->plainTextToken;
 
             return $this->makeResponse(fields: ['access_token' => $tokenResult]);
         } catch (ValidationException $error) {
