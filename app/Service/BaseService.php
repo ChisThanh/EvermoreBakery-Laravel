@@ -6,6 +6,29 @@ class BaseService
 {
     protected $repository;
 
+    // public function index(Request $request)
+    // {
+    //     $query = $this->model->query();
+    //     if ($request->has('q')) {
+    //         $query->where('name', 'like', '%' . $request->q . '%');
+    //     }
+
+    //     if ($request->has('sort')) {
+    //         $query->orderBy($request->sort, $request->order ?? 'asc');
+    //     }
+
+    //     // ví dụ filter[id]=1&filter[name]=sadmin
+    //     if ($request->has('filter')) {
+    //         foreach ($request->filter as $key => $value) {
+    //             if (!empty($value)) {
+    //                 $query->where($key, 'like', '%' . $value . '%');
+    //             }
+    //         }
+    //     }
+    //     $data = $query->paginate($request->limit ?? 10);
+    //     return view($this->view . '.index', compact('data'));
+    // }
+
     public function all(): mixed
     {
         return $this->repository->all();

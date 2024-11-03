@@ -22,7 +22,7 @@
 ``` 7. exit
 
 
-``` tất cả các lần sau ``` docker docker compose up -d
+``` Tất cả các lần sau ``` docker docker compose up -d
 
 
-``` kiểm tra docker  --> docker ps
+``` Kiểm tra docker  --> docker ps
