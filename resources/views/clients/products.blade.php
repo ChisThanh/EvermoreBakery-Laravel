@@ -75,7 +75,7 @@
                                     </path>
                                 </svg><input
                                     class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-full text-sm font-normal h-12 px-0 py-3 border-transparent bg-transparent placeholder:text-neutral-500 focus:border-transparent"
-                                    placeholder="Search..." type="password">
+                                    placeholder="Search..." type="text">
                             </div>
                             <div class="grid grid-cols-2 gap-4"><button type="button"
                                     class="rounded-lg py-4 bg-primary text-white">New York</button><button type="button"
@@ -100,7 +100,7 @@
                             </path>
                         </svg><input
                             class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-full text-sm font-normal h-12 px-0 py-3 border-transparent bg-transparent placeholder:text-neutral-500 focus:border-transparent"
-                            placeholder="Search..." type="password"></div>
+                            placeholder="Search..." type="text"></div>
                     <div class="flex items-center gap-5"><button
                             class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  flex items-center gap-1 bg-gray"><svg
                                 stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
@@ -116,330 +116,44 @@
                             </svg></button></div>
                 </div>
                 <div class="grid flex-1 gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3 ">
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/airForce1"><img
-                                    alt="Air Force 1 cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FairForce1.490466ef.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2FairForce1.490466ef.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FairForce1.490466ef.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Air Force 1</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
+                    @foreach ($data as $each)
+                        <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
+                            <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
+                                <button type="button"
+                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2">
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                                        @if ($each['liked'])
+                                            <path
+                                                d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
+                                                stroke="currentColor" fill="#e94e07" stroke-width="0"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                        @else
+                                            <path
+                                                d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
+                                                stroke="currentColor" fill="none" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round"></path>
+                                        @endif
+                                    </svg>
+                                </button>
+                                <a class="h-[250px] w-full lg:h-[220px]" href="/products/{{ $each['slug'] }}">
+                                    <img alt="Air Force 1 cover photo" loading="lazy" width="592" height="592"
+                                        decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
+                                        {{-- src="{{ asset('storage/' . $each['images'][0]['url']) }}" --}} src="{{ asset('images/new_balance3.webp') }}"
+                                        style="color: transparent;">
+                                </a>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                            <div
-                                class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
-                                Just In!</div><button type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/blackLebron"><img
-                                    alt="Lebron Black cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FblackLebron.5e8db3ca.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2FblackLebron.5e8db3ca.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FblackLebron.5e8db3ca.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a>
-                        </div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Lebron Black</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
+                            <div class="mt-3">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="font-semibold">{{ $each['name'] }}</h3>
+                                    <p class="text-neutral-500 block text-sm line-through">{{ $each['price_sale'] }}</p>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <p class="text-sm text-neutral-500">{{ $each['category_name'] }}</p>
+                                    <p class="text-lg font-medium text-primary">{{ $each['price'] }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/brownsb"><img
-                                    alt="SB Low Brown cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbrownsb.2a8c3289.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbrownsb.2a8c3289.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbrownsb.2a8c3289.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">SB Low Brown</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/brsb"><img
-                                    alt="BRSB cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbrsb.fabc76b3.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbrsb.fabc76b3.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbrsb.fabc76b3.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">BRSB</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="#e94e07" fill="#e94e07" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/dunklow"><img
-                                    alt="Dunk Low cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdunklow.18061fa7.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdunklow.18061fa7.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdunklow.18061fa7.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Dunk Low</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="#e94e07" fill="#e94e07" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/lebronxx"><img
-                                    alt="Lebron XXL cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flebronxx.f8f8ed59.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flebronxx.f8f8ed59.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flebronxx.f8f8ed59.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Lebron XXL</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                            <div
-                                class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
-                                Just In!</div><button type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/metcon5"><img
-                                    alt="Metcon 5 cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmetcon5.104ecaa9.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmetcon5.104ecaa9.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmetcon5.104ecaa9.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a>
-                        </div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Metcon 5</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="#e94e07" fill="#e94e07" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/metcon9"><img
-                                    alt="Metcon 9 cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmetcon9.954f2f42.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmetcon9.954f2f42.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmetcon9.954f2f42.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Metcon 9</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                            <div
-                                class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
-                                Just In!</div><button type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="#e94e07" fill="#e94e07" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/nike_blazer"><img
-                                    alt="Nike Blazer cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnike_blazer.1e1b15e6.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnike_blazer.1e1b15e6.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnike_blazer.1e1b15e6.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a>
-                        </div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Nike Blazer</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/redlow"><img
-                                    alt="Dunk Low Red cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fredlow.d8dfddcd.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fredlow.d8dfddcd.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fredlow.d8dfddcd.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Dunk Low Red</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]"><button
-                                type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="#e94e07" fill="#e94e07" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/slides"><img
-                                    alt="Slides cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fslides.413749d0.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fslides.413749d0.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fslides.413749d0.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a></div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Slides</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
-                        <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                            <div
-                                class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
-                                Just In!</div><button type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button><a class="h-[250px] w-full lg:h-[220px]" href="/products/yellowLow"><img
-                                    alt="Dunk Low Yellow cover photo" loading="lazy" width="592" height="592"
-                                    decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FyellowLow.cc64548d.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2FyellowLow.cc64548d.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FyellowLow.cc64548d.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></a>
-                        </div>
-                        <div class="mt-3">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-semibold">Dunk Low Yellow</h3>
-                                <p class="text-neutral-500 block text-sm line-through">$250</p>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <p class="text-sm text-neutral-500">Men's shoes</p>
-                                <p class="text-lg font-medium text-primary">$199</p>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

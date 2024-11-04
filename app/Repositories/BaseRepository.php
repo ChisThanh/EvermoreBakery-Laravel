@@ -14,7 +14,7 @@ abstract class BaseRepository
 
     abstract public function getModel();
 
-    public static function getInstance(): static
+    public static function getInstance(): mixed
     {
         if (self::$instance === null) {
             self::$instance = new static();

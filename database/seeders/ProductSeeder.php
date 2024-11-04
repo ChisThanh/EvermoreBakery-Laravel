@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Ingredient;
 use App\Models\Nutrition;
 use App\Models\Product;
@@ -19,16 +20,16 @@ class ProductSeeder extends Seeder
             'description' => $fake->text
         ]);
 
-        for ($i = 0; $i < 10; $i++) {
-            Product::create([
+        for ($i = 0; $i < 5; $i++) {
+            $product = Product::create([
                 'category_id' => $category->id,
-                'name' => $fake->words(10, true),
+                'name' => $fake->words(3, true),
                 'price' => $fake->randomNumber(5),
                 'price_sale' => $fake->randomNumber(5),
-                'image' => $fake->imageUrl(),
                 'stock_quantity' => $fake->randomNumber(2),
                 'description' => $fake->text,
             ]);
+            $product->images()->create(['url' => 'images/products/0D4mqkyOHOrjbGwCGfSPc2HSX6rijbtdJMtLzS6m.jpg']);
         }
     }
 }

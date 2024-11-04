@@ -9,23 +9,16 @@ return new class extends Migration {
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->string('cookie_id')->nullable();
             $table->float('total')->default(0);
+            $table->json('cart_details')->nullable();
             $table->timestamps();
-        });
-
-        Schema::create('cart_details', function (Blueprint $table) {
-            $table->foreignId('cart_id')->constrained();
-            $table->foreignId('product_id')->constrained();
-            $table->tinyInteger('quantity')->default(1);
-            $table->float('price')->default(0);
-            $table->primary(['cart_id', 'product_id']);
         });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('carts');
-        Schema::dropIfExists('cart_details');
     }
 };

@@ -12,12 +12,14 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="{{ asset('js/tailwindcss.js') }}"></script>
     <script src="{{ asset('js/tailwind.config.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/@uplab/rc-slider@9.3.6/assets/index.min.css" rel="stylesheet">
+    
     @stack('css')
 </head>
+
 
 <body>
     @include('layouts.header')
@@ -25,9 +27,12 @@
     @include('layouts.footer')
 </body>
 
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script src="{{ asset('js/main.js') }}"></script>
 @stack('scripts')
-<script src="https://cdn.jsdelivr.net/npm/@uplab/rc-slider@9.3.6/lib/index.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.11/dist/framer-motion.min.js"></script>
+
 </html>
 
 

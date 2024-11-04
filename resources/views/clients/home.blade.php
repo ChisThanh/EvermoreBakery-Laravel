@@ -45,15 +45,16 @@
                             <div class="mb-5 items-center justify-between space-y-5 md:flex md:space-y-0">
                                 <h3 class="text-3xl font-medium">Top Best Deals!</h3>
                                 <div class="inline-flex rounded-full bg-primary px-3 py-2 font-medium text-white">
-                                    Ends in:2:28:17</div>
+                                    Ends in &nbsp;<span id="countdown" data-second="99999"></span></div>
                             </div>
                             <div class="pb-2">
                                 <div class="">
                                     <div class="nc-Slider ">
                                         <div class="relative flow-root">
-                                            <div class="flow-root rounded-xl">
-                                                <ul class="relative -mx-2 flex whitespace-nowrap xl:-mx-4 ">
-                                                    <li class="relative inline-block shrink-0 whitespace-normal px-2"
+                                            <div class="swiper-home flow-root rounded-xl">
+                                                <div class="swiper-button-prev p-5"></div>
+                                                <ul class="swiper-wrapper relative -mx-2 flex whitespace-nowrap xl:-mx-4 ">
+                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
                                                         style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
                                                         <div
                                                             class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
@@ -90,7 +91,7 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                                    <li class="relative inline-block shrink-0 whitespace-normal px-2"
+                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
                                                         style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
                                                         <div
                                                             class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
@@ -128,7 +129,7 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                                    <li class="relative inline-block shrink-0 whitespace-normal px-2"
+                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
                                                         style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
                                                         <div
                                                             class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
@@ -167,7 +168,7 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                                    <li class="relative inline-block shrink-0 whitespace-normal px-2"
+                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
                                                         style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
                                                         <div
                                                             class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
@@ -208,7 +209,7 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                                    <li class="relative inline-block shrink-0 whitespace-normal px-2"
+                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
                                                         style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
                                                         <div
                                                             class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
@@ -247,7 +248,7 @@
                                                             </div>
                                                         </div>
                                                     </li>
-                                                    <li class="relative inline-block shrink-0 whitespace-normal px-2"
+                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
                                                         style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
                                                         <div
                                                             class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
@@ -289,15 +290,8 @@
                                                         </div>
                                                     </li>
                                                 </ul>
-                                            </div><button type="button"
-                                                class="NextBtn absolute -right-3 z-[1] h-9 w-9 bg-white text-lg xl:-right-6 xl:h-12 xl:w-12 top-1/2 -translate-y-1/2 inline-flex items-center justify-center rounded-full border border-neutral-200 bg-white hover:border-neutral-300"><svg
-                                                    stroke="currentColor" fill="currentColor" stroke-width="0"
-                                                    viewBox="0 0 24 24" class="text-2xl" height="1em" width="1em"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill="none" d="M0 0h24v24H0V0z"></path>
-                                                    <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z">
-                                                    </path>
-                                                </svg></button>
+                                                <div class="swiper-button-next p-5"></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -690,9 +684,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-14 flex items-center justify-center"><button
-                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">View
-                                More</button></div>
+                        <div class="mt-14 flex items-center justify-center">
+                            <a href="/products">
+                                <button
+                                    class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">
+                                    View More
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-32">
@@ -904,160 +903,8 @@
             </div>
         </div>
     </div>
-    <div class="fixed inset-0 z-50 overflow-y-auto hidden">
-        <div class="z-max fixed inset-y-0 right-0 w-full max-w-md outline-none focus:outline-none md:max-w-md">
-            <div class="relative z-20 opacity-100 translate-x-0">
-                <div class="overflow-hidden shadow-lg ring-1 ring-black/5">
-                    <div class="relative h-screen bg-white">
-                        <div class="hiddenScrollbar h-screen overflow-y-auto p-5 d-none">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-xl font-semibold">Shopping cart</h3><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70    "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                                        class="text-2xl" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path
-                                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
-                                        </path>
-                                    </svg></button>
-                            </div>
-                            <div class="divide-y divide-neutral-300">
-                                <div class="flex py-5 last:pb-0">
-                                    <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl"><img
-                                            alt="Air Force 1" loading="lazy" decoding="async" data-nimg="fill"
-                                            class="h-full w-full object-contain object-center" sizes="100vw"
-                                            style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><a
-                                            class="absolute inset-0" href="/products/airForce1"></a></div>
-                                    <div class="ml-4 flex flex-1 flex-col justify-between">
-                                        <div>
-                                            <div class="flex justify-between ">
-                                                <div>
-                                                    <h3 class="font-medium "><a href="/products/airForce1">Air Force
-                                                            1</a></h3><span class="my-1 text-sm text-neutral-500">Men's
-                                                        shoes</span>
-                                                    <div class="flex items-center gap-1"><svg stroke="currentColor"
-                                                            fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                                                            class="text-yellow-400" height="1em" width="1em"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                                            <path
-                                                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                                            </path>
-                                                        </svg><span class="text-sm">4.8</span></div>
-                                                </div><span class=" font-medium">$199</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex w-full items-end justify-between text-sm">
-                                            <div class="flex items-center gap-3"><button type="button"
-                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white "><svg
-                                                        class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                                        <path
-                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                            stroke="currentColor" fill="none" stroke-width="1.5"
-                                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                                    </svg></button><svg stroke="currentColor" fill="currentColor"
-                                                    stroke-width="0" viewBox="0 0 1024 1024" class="text-2xl"
-                                                    height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z">
-                                                    </path>
-                                                </svg></div>
-                                            <div>
-                                                <div
-                                                    class="nc-InputNumber flex items-center justify-between space-x-5 w-full">
-                                                    <div
-                                                        class="nc-NcInputNumber__content flex w-[104px] items-center justify-between sm:w-28">
-                                                        <button
-                                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
-                                                            type="button" disabled="">-</button><span
-                                                            class="block flex-1 select-none text-center leading-none">1</span><button
-                                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
-                                                            type="button">+</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex py-5 last:pb-0">
-                                    <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl"><img
-                                            alt="Lebron Black" loading="lazy" decoding="async" data-nimg="fill"
-                                            class="h-full w-full object-contain object-center" sizes="100vw"
-                                            src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FblackLebron.5e8db3ca.webp&amp;w=3840&amp;q=75"
-                                            style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"><a
-                                            class="absolute inset-0" href="/products/blackLebron"></a></div>
-                                    <div class="ml-4 flex flex-1 flex-col justify-between">
-                                        <div>
-                                            <div class="flex justify-between ">
-                                                <div>
-                                                    <h3 class="font-medium "><a href="/products/blackLebron">Lebron
-                                                            Black</a></h3><span
-                                                        class="my-1 text-sm text-neutral-500">Men's
-                                                        shoes</span>
-                                                    <div class="flex items-center gap-1"><svg stroke="currentColor"
-                                                            fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                                                            class="text-yellow-400" height="1em" width="1em"
-                                                            xmlns="http://www.w3.org/2000/svg">
-                                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                                            <path
-                                                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                                            </path>
-                                                        </svg><span class="text-sm">4.8</span></div>
-                                                </div><span class=" font-medium">$199</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex w-full items-end justify-between text-sm">
-                                            <div class="flex items-center gap-3"><button type="button"
-                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white "><svg
-                                                        class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                                        <path
-                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                            stroke="currentColor" fill="none" stroke-width="1.5"
-                                                            stroke-linecap="round" stroke-linejoin="round"></path>
-                                                    </svg></button><svg stroke="currentColor" fill="currentColor"
-                                                    stroke-width="0" viewBox="0 0 1024 1024" class="text-2xl"
-                                                    height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z">
-                                                    </path>
-                                                </svg></div>
-                                            <div>
-                                                <div
-                                                    class="nc-InputNumber flex items-center justify-between space-x-5 w-full">
-                                                    <div
-                                                        class="nc-NcInputNumber__content flex w-[104px] items-center justify-between sm:w-28">
-                                                        <button
-                                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
-                                                            type="button" disabled="">-</button><span
-                                                            class="block flex-1 select-none text-center leading-none">1</span><button
-                                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
-                                                            type="button">+</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 w-full bg-neutral-50 p-5">
-                            <p class="flex justify-between"><span><span class="font-medium">Subtotal</span><span
-                                        class="block text-sm text-neutral-500">Shipping and taxes calculated at
-                                        checkout.</span></span><span class="text-xl font-medium">$597</span></p>
-                            <div class="mt-5 flex items-center gap-5"><a
-                                    class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 w-full flex-1"
-                                    href="/checkout">Checkout</a><a
-                                    class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  w-full flex-1 border-2 border-primary text-primary"
-                                    href="/cart">View cart</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="fixed inset-0 bg-neutral-900/60 opacity-100" id="headlessui-dialog-overlay-:r7:"
-                aria-hidden="true" data-headlessui-state="open"></div>
-        </div>
-    </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/home.js') }}"></script>
+@endpush

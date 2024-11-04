@@ -17,4 +17,9 @@ class Category extends Model
         'name',
         "description"
     ];
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

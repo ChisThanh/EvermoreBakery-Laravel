@@ -21,7 +21,8 @@ Route::group([
 
     Route::prefix('products')->group(function () {
         Route::get('/', 'ProductController@index')->name('products');
-        Route::get('/{id}', 'ProductController@show')->name('product.show');
+        Route::get('/{slug}', 'ProductController@show')->name('product.show');
+        Route::get('/add-to-cart/{slug}', 'ProductController@addToCart')->name('product.add-to-cart');
     });
 });
 
