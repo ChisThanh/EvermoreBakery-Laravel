@@ -11,9 +11,11 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
     <script src="{{ asset('js/tailwindcss.js') }}"></script>
     <script src="{{ asset('js/tailwind.config.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/@uplab/rc-slider@9.3.6/assets/index.min.css" rel="stylesheet">
     @stack('css')
 </head>
 
@@ -22,8 +24,10 @@
     @yield('content')
     @include('layouts.footer')
 </body>
-@stack('scripts')
 
+@stack('scripts')
+<script src="https://cdn.jsdelivr.net/npm/@uplab/rc-slider@9.3.6/lib/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/framer-motion@11.11.11/dist/framer-motion.min.js"></script>
 </html>
 
 
