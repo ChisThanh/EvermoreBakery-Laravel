@@ -15,18 +15,18 @@ class DiscountsTableSeeder extends Seeder
         \DB::table('coupons')->insert([
             [
                 'code' => 'DISCOUNT10',
-                'discount_amount' => 10,
+                'discount_amount' => 1000,
                 'discount_percentage' => 10,
-                'quantity' => 100,
+                'quantity' => 10,
                 'expires_at' => Carbon::now()->addDays(30),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
                 'code' => 'DISCOUNT20',
-                'discount_amount' => 20,
+                'discount_amount' => 20000,
                 'discount_percentage' => 20,
-                'quantity' => 50,
+                'quantity' => 9,
                 'expires_at' => Carbon::now()->addDays(30),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

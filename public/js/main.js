@@ -70,16 +70,21 @@ function extractNumbers(str) {
 
 function applyCoupon(element) {
     const input = element.previousElementSibling;
+    const dataClickBtn = element.getAttribute('data-click');
     const code = input.value.trim();
     const { token, options } = optionAPI();
 
-    if (token && code) {
+    if (token && code && dataClickBtn === 'true') {
         const jsTotal = document.querySelector('.js-total');
         let totalNumber = extractNumbers(jsTotal.textContent);
         fetch(`/api/v1/coupons/${code}`, options)
             .then(response => response.json())
             .then(data => {
-                if (data.status_code === 200 && data.data.quantity > 0) {
+                if(data.status_code === 200 && data.data.quantity <= 0){
+                    alert('Coupon has been used up!');
+                    return;
+                }
+                if (data.status_code === 200 ) {
                     const { discount_amount, discount_percentage } = data.data;
                     const discountAmount = parseInt(discount_amount);
                     const discountPercentage = parseInt(discount_percentage);
@@ -90,6 +95,7 @@ function applyCoupon(element) {
 
                     jsTotal.textContent = `${totalNumber} Đ`;
                     alert('Coupon applied successfully!');
+                    element.setAttribute('data-click', 'false');
                 }
             })
             .catch(error => console.log('Error applying coupon:', error));

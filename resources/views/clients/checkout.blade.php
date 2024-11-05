@@ -293,8 +293,9 @@
                                 <div class="mt-1.5 flex">
                                     <input
                                         class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 flex-1 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
-                                        type="text">
+                                        type="text" name="coupon_code">
                                     <button type="button"
+                                        data-click="true"
                                         onclick="applyCoupon(this)"
                                         class="ml-3 flex w-24 items-center justify-center rounded-2xl border border-neutral-300 bg-gray px-4 text-sm font-medium transition-colors hover:bg-neutral-100">
                                         Apply

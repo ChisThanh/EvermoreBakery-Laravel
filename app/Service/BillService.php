@@ -60,7 +60,7 @@ class BillService extends BaseService
                     'quantity' => $quantity,
                     'price' => $product->price,
                 ];
-                $total += (int)$product->price *  (int)$quantity;
+                $total += (int) $product->price * (int) $quantity;
             }
             $bill->total = $total;
             $bill->details()->createMany($billDetail);
@@ -85,11 +85,22 @@ class BillService extends BaseService
                 $address['payment'] = json_encode($payment);
             }
 
+            if (isset($data['coupon_code'])) {
+                $coupon = $this->getCoupons($data['coupon_code']);
+                if ($coupon && $coupon->quantity > 0) {
+                    $bill->coupon_id = $coupon->id;
+                    $discountByAmount = $bill->total - $coupon->discount_amount;
+                    $discountByPercentage = $bill->total * (1 - $coupon->discount_percentage / 100);
+                    $bill->total = min([$discountByAmount, $discountByPercentage]);
+                    $coupon->quantity -= 1;
+                    $coupon->save();
+                }
+            }
+
             $bill->address()->create($address);
             $bill->save();
 
             cookie()->forget('cart_id');
-
             $this->cartRepository->getModel()->where('user_id', $user->id)->delete();
 
             \DB::commit();
@@ -111,7 +122,7 @@ class BillService extends BaseService
     public function getCoupons($code): mixed
     {
         $coupons = $this->couponRepository->getModel()->where('code', $code)->first();
-        if(!$coupons){
+        if (!$coupons) {
             return false;
         }
         return $coupons;
