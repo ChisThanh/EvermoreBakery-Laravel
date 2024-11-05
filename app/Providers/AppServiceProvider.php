@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Service\GeminiService;
-use App\Service\MeilisearchService;
 use App\Service\TypesenseService;
 use Illuminate\Support\ServiceProvider;
 

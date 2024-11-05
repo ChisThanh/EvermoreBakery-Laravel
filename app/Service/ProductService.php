@@ -3,8 +3,7 @@
 
 namespace App\Service;
 
-use App\Models\Cart;
-use App\Models\Product;
+use App\Repositories\BillRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\ProductRepository;
 
@@ -12,12 +11,16 @@ class ProductService extends BaseService
 {
     protected $repository;
     protected $cartRepository;
+    protected $billRepository;
+
     public function __construct(
         ProductRepository $repository,
-        CartRepository $cartRepository
+        CartRepository $cartRepository,
+        BillRepository $billRepository
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
+        $this->billRepository = $billRepository;
     }
 
 
@@ -64,6 +67,8 @@ class ProductService extends BaseService
                 return $product;
             });
         }
+
+        $this->getCart(request()->cookie('cart_id'));
         // dd(\DB::getQueryLog());
         return $data;
 
@@ -83,11 +88,47 @@ class ProductService extends BaseService
         if (!$product)
             $product = $model->first();
 
+        $product->liked = false;
+        if (auth()->check()) {
+            $userId = auth()->id();
+            $product->liked = $product->likes->contains('id', $userId);
+        }
+
         return $product;
     }
 
-    public function addToCart($slug, $cookie_id = null)
+    public function showCart()
     {
+        $model = $this->cartRepository->getModel();
+        if (auth()->check() && empty(request()->cookie('cart_id'))) {
+            $userId = auth()->id();
+            $carts = $model->where('user_id', $userId)->first();
+            $cookie_id = \Str::random(32);
+            \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
+            if ($carts) {
+                $carts->cookie_id = $cookie_id;
+                $carts->save();
+            }
+        } else {
+            $cookie = request()->cookie('cart_id');
+            $carts = $model->where('cookie_id', $cookie)->first();
+        }
+        $cartDetails = [];
+        if ($carts) {
+            $cartDetails = json_decode($carts->cart_details, true) ?? [];
+        }
+        return ["cartDetails" => $cartDetails, "total" => $carts->total ?? 0];
+    }
+
+    public function addToCart($slug)
+    {
+        $cookie_id = request()->cookie('cart_id');
+
+        if (!auth()->check() && !request()->cookie('cart_id')) {
+            $cookie_id = \Str::random(32);
+            \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
+        }
+
         $product = $this->repository->getModel()->where('slug', $slug)->first();
         if (!$product) {
             return false;
@@ -117,49 +158,75 @@ class ProductService extends BaseService
         $cartDetails[$productId]['total'] = $cartDetails[$productId]['quantity'] * $product->price;
         $cart->cart_details = json_encode($cartDetails);
         $cart->total += array_sum(array_column($cartDetails, 'total'));
+        if (auth()->check())
+            $cart->user_id = auth()->id();
+
         $cart->save();
 
         return true;
     }
 
-    private function getCart($cookie_id = null)
+    private function getCart($cookie_id)
     {
         $cartModel = $this->cartRepository->getModel();
+        if (auth()->check()) {
+            $userId = auth()->id();
+            $cartUser = $cartModel->firstWhere('user_id', $userId);
+            if (isset($cartUser) && $cartUser->cookie_id != $cookie_id) {
+                $cartCookie = $cartModel->firstWhere('cookie_id', $cookie_id);
 
-        if ($cookie_id && !auth()->check()) {
-            return $cartModel->firstOrCreate(['cookie_id' => $cookie_id]);
+                $jsonCartUser = json_decode($cartUser->cart_details, true) ?? [];
+                $jsonCartCookie = json_decode($cartCookie->cart_details, true) ?? [];
+                $mergedArray = array_merge_recursive($jsonCartUser, $jsonCartCookie);
+                $cartUser->cart_details = json_encode($mergedArray);
+                $cartUser->total += $cartCookie->total;
+                $cartUser->cookie_id = $cookie_id;
+                $cartUser->save();
+                $cartCookie->delete();
+            }
+            if ($cartUser) {
+                $cartUser->cookie_id = $cookie_id;
+                $cartUser->save();
+                return $cartUser;
+            }
         }
 
-        $user = auth()->user();
-        if (!$user) {
-            return null;
-        }
-
-        $cart = $cartModel->firstOrCreate(['user_id' => $user->id]);
-
-        return $cart;
+        return $cartModel->firstOrCreate(['cookie_id' => $cookie_id]);
     }
 
+    public function updateFromCart($slug, $quantity)
+    {
+        $cookie_id = request()->cookie('cart_id');
+        $cart = $this->getCart($cookie_id);
+        $cartDetails = json_decode($cart->cart_details, true) ?? [];
+        foreach ($cartDetails as $index => $cartDetail) {
+            if ($cartDetail['slug'] == $slug && $quantity <= 99) {
+                $cartDetail['quantity'] += (int) $quantity;
+                $cartDetail['total'] = $cartDetail['quantity'] * $cartDetail['price'];
+                if ($cartDetail['quantity'] <= 0) {
+                    unset($cartDetails[$index]);
+                } else {
+                    $cartDetails[$index] = $cartDetail;
+                }
+                break;
+            }
+        }
+        $cart->cart_details = json_encode($cartDetails);
+        $cart->total = array_sum(array_column($cartDetails, 'total'));
+        $cart->save();
+        return true;
+    }
 
-    // public function showCart()
-    // {
-    //     $user = auth()->user();
-    //     $cartModel = $this->cartRepository->getModel();
-    //     $cart = $cartModel->where('user_id', $user->id)->first();
-    //     $cartDetails = json_decode($cart->cart_details, true) ?? [];
-
-    //     $productIds = array_keys($cartDetails);
-    //     $productModel = $this->repository->getModel();
-    //     $products = $productModel->whereIn('id', $productIds)->get();
-
-    //     $products->transform(function ($product) use ($cartDetails) {
-    //         $product->quantity = $cartDetails[$product->id]['quantity'];
-    //         $product->total = $cartDetails[$product->id]['total'];
-    //         return $product;
-    //     });
-
-    //     return $products;
-    // }
+    public function likeProduct($slug)
+    {
+        $product = $this->repository->getModel()->where('slug', $slug)->first();
+        if (!$product)
+            return false;
+        $userId = auth()->id();
+        $hasLiked = $product->likes()->where('user_id', $userId)->exists();
+        $product->likes()->toggle($userId);
+        return ['liked' => !$hasLiked];
+    }
 
 }
 // SELECT 

@@ -38,7 +38,7 @@ class BaseApiController extends Controller
     public function makeResponse($message = 'Successfully', $status = 200, $data = [], $fields = []): JsonResponse
     {
         $res = [];
-        if (!empty($data) || sizeof($data) !== 0)
+        if ($data !== null && $data !== '' && !(is_array($data) && empty($data))) 
             $res['data'] = $data;
 
         if (!empty($message))

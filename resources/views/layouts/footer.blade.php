@@ -64,19 +64,7 @@
     </div>
 </div>
 
-@php
-    if (auth()->check()) {
-        $userId = auth()->id();
-        $carts = App\Models\Cart::where('user_id', $userId)->first();
-    } else {
-        $cookie = request()->cookie('cart_id');
-        $carts = App\Models\Cart::where('cookie_id', $cookie)->first();
-    }
-    $cartDetails = [];
-    if ($carts) {
-        $cartDetails = json_decode($carts->cart_details, true) ?? [];
-    }
-@endphp
+
 {{-- cart right --}}
 <div class="fixed inset-0 z-50 overflow-y-auto hidden" id="main-cart">
     <div class="z-max fixed inset-y-0 right-0 w-full max-w-md outline-none focus:outline-none md:max-w-md">
@@ -98,7 +86,7 @@
                             </button>
                         </div>
                         <div class="divide-y divide-neutral-300">
-                            @foreach ($cartDetails as $item)
+                            @foreach ($cartDetails as  $item)
                                 <div class="flex py-5 last:pb-0">
                                     <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl">
                                         <img alt="" loading="lazy" decoding="async" data-nimg="fill"
@@ -123,6 +111,7 @@
                                             </div>
                                         </div>
                                         <div class="flex w-full items-end justify-between text-sm">
+                                            <a href="/products/update-from-cart/{{ $item['slug'] }}/-999">
                                             <div class="flex items-center gap-3 cursor-pointer">
                                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0"
                                                     viewBox="0 0 1024 1024" class="text-2xl" height="1em"
@@ -132,23 +121,24 @@
                                                     </path>
                                                 </svg>
                                             </div>
+                                        </a>
                                             <div>
                                                 <div class=" flex items-center justify-between space-x-5 w-full">
                                                     <div class=" flex w-[104px] items-center justify-between sm:w-28">
-                                                        <button
+                                                        <a href="/products/update-from-cart/{{ $item['slug'] }}/-1"
                                                             class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                             type="button">
                                                             -
-                                                        </button>
+                                                        </a>
                                                         <span
                                                             class="block flex-1 select-none text-center leading-none">
                                                             {{ $item['quantity'] }}
                                                         </span>
-                                                        <button
+                                                        <a href="/products/update-from-cart/{{ $item['slug'] }}/1"
                                                             class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                             type="button">
                                                             +
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Service\BillService;
 use App\Service\ProductService;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     protected $productService;
+    protected $billService;
     public function __construct(
-        ProductService $productService
+        ProductService $productService,
+        BillService $billService
     ) {
         $this->productService = $productService;
+        $this->billService = $billService;
     }
 
     public function index()
@@ -29,19 +33,45 @@ class ProductController extends Controller
 
     public function addToCart($slug)
     {
-        $cookie_id = null;
+        $check = $this->productService->addToCart($slug);
 
-        if (!auth()->check()) {
-            $cookie_id = request()->cookie('cart_id') ?? \Str::random(32);
-            \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
-        }
-
-        $check = $this->productService->addToCart($slug, $cookie_id);
-
-        if (!$check) {
+        if (!$check)
             return abort(404);
-        }
 
         return redirect()->back()->with('success', 'Add to cart successfully');
+    }
+
+    public function updateFromCart($slug, $quantity)
+    {
+        $check = $this->productService->updateFromCart($slug, $quantity);
+
+        if (!$check)
+            return abort(404);
+
+        return redirect()->back()->with('success', 'Update from cart successfully');
+    }
+
+    public function cart()
+    {
+        $data = $this->productService->showCart();
+        return view('clients.cart', compact('data'));
+    }
+
+    public function checkout()
+    {
+        $data = $this->productService->showCart();
+        $address = $this->billService->getAddressUser();
+        $user = auth()->user();
+        return view('clients.checkout', compact('data', 'address', 'user'));
+    }
+
+    public function HandleCheckout(Request $request)
+    {
+        $check = $this->billService->create($request->all());
+
+        if (!$check)
+            return abort(404);
+
+        return redirect()->route('products')->with('success', 'Checkout successfully');
     }
 }

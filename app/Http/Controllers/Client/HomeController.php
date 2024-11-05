@@ -27,13 +27,7 @@ class HomeController extends Controller
         return view('clients.contact');
     }
 
-    public function checkout()
-    {
-        return view('clients.checkout');
-    }
+    
 
-    public function cart()
-    {
-        return view('clients.cart');
-    }
+    
 }

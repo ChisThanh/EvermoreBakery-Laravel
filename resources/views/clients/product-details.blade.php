@@ -1,10 +1,5 @@
 @extends('layouts.main')
 @section('content')
-    {{-- @if (session('success'))
-        <div style="color: red">
-            {{ session('success') }}
-        </div>
-    @endif --}}
     <div class="container">
         <div class="my-10 flex items-center justify-between">
             <a href="/">
@@ -27,14 +22,24 @@
             <div class="items-stretch justify-between space-y-10 lg:flex lg:space-y-0">
                 <div class="basis-[50%]">
                     <div class="space-y-3 rounded-2xl border border-neutral-300 p-2">
-                        <div class="relative overflow-hidden rounded-2xl md:h-[520px]"><button type="button"
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-5 top-5"><svg
-                                    class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                        stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg></button>
+                        <div class="relative overflow-hidden rounded-2xl md:h-[520px]">
+                            <button type="button" onclick="likeProduct('{{ $data->slug }}', this)" 
+                                data-liked="{{ $data->liked }}"
+                                class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-5 top-5">
+                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
+                                    @if ($data->liked)
+                                        <path
+                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
+                                            stroke="currentColor" fill="#e94e07" stroke-width="0" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    @else
+                                        <path
+                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
+                                            stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    @endif
+                                </svg>
+                            </button>
                             <img alt="shoe image" loading="lazy" width="592" height="592" decoding="async"
                                 data-nimg="1" class="h-full w-full object-cover object-center"
                                 src="{{ asset('images/new_balance3.webp') }}" style="color: transparent;">

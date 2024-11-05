@@ -13,7 +13,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->date('delivery_date')->default(today());
             $table->float('total')->default(0);
-            $table->foreignId('delivery_id')->constrained();
             $table->tinyInteger('payment_status')->default(0);
             $table->tinyInteger('payment_method')->default(0);
             $table->tinyInteger('status')->default(0);

@@ -119,7 +119,8 @@
                     @foreach ($data as $each)
                         <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
                             <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                                <button type="button"
+                                <button type="button" onclick="likeProduct('{{ $each['slug'] }}', this)"
+                                    data-liked="{{ $each['liked'] }}"
                                     class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2">
                                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
                                         @if ($each['liked'])
@@ -145,221 +146,15 @@
                             <div class="mt-3">
                                 <div class="flex items-center justify-between">
                                     <h3 class="font-semibold">{{ $each['name'] }}</h3>
-                                    <p class="text-neutral-500 block text-sm line-through">{{ $each['price_sale'] }}</p>
+                                    <p class="text-neutral-500 block text-sm line-through">{{ $each['price_sale'] }} Đ</p>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <p class="text-sm text-neutral-500">{{ $each['category_name'] }}</p>
-                                    <p class="text-lg font-medium text-primary">{{ $each['price'] }}</p>
+                                    <p class="text-lg font-medium text-primary">{{ $each['price'] }} Đ</p>
                                 </div>
                             </div>
                         </div>
                     @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="my-24">
-            <div class="container">
-                <div class="nc-Section-Heading relative flex flex-col justify-between sm:flex-row sm:items-end mb-10">
-                    <div class="mx-auto mb-2 w-full max-w-3xl text-center">
-                        <h2 class="lineHeight text-3xl lg:text-[55px] mb-5 font-medium" style="line-height: 1.2em;">The
-                            Official Store of The Amazing Brand</h2>
-                        <p class="mt-5 text-neutral-500">We work together with high quality and famous brands around the
-                            world</p>
-                    </div>
-                </div>
-                <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                    <div class="rounded-2xl border border-neutral-300 p-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <div class="h-20 w-20 overflow-hidden rounded-lg"><img alt="logo" loading="lazy"
-                                        width="225" height="225" decoding="async" data-nimg="1"
-                                        class="h-full w-full object-cover object-center"
-                                        srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance.5c7d0ea5.png&amp;w=256&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance.5c7d0ea5.png&amp;w=640&amp;q=75 2x"
-                                        src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance.5c7d0ea5.png&amp;w=640&amp;q=75"
-                                        style="color: transparent;"></div>
-                                <div>
-                                    <h3 class="flex items-center gap-1 text-lg font-medium">New Balance <svg
-                                            stroke="currentColor" fill="currentColor" stroke-width="0"
-                                            viewBox="0 0 256 256" class="text-blue-600" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z">
-                                            </path>
-                                        </svg></h3>
-                                    <div class="flex items-center gap-1"><svg stroke="currentColor" fill="currentColor"
-                                            stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400" height="1em"
-                                            width="1em" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                            <path
-                                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                            </path>
-                                        </svg>
-                                        <p class="text-sm">4.9 <span class="text-neutral-500">(10334 Reviews)</span></p>
-                                    </div>
-                                    <p class="text-sm text-neutral-500">7.2M Followers</p>
-                                </div>
-                            </div><a
-                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  border-2 border-primary text-primary"
-                                href="https://www.newbalance.com">Visit</a>
-                        </div>
-                        <div class="mt-3 grid grid-cols-2 gap-3">
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="440" height="440" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance1.2fe3752d.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance1.2fe3752d.webp&amp;w=1080&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance1.2fe3752d.webp&amp;w=1080&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="440" height="440" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance2.c21ff37e.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance2.c21ff37e.webp&amp;w=1080&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance2.c21ff37e.webp&amp;w=1080&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="440" height="440" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance3.3d2b18a7.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance3.3d2b18a7.webp&amp;w=1080&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance3.3d2b18a7.webp&amp;w=1080&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="440" height="440" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance4.5d035acc.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance4.5d035acc.webp&amp;w=1080&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnew_balance4.5d035acc.webp&amp;w=1080&amp;q=75"
-                                    style="color: transparent;"></div>
-                        </div>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-300 p-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <div class="h-20 w-20 overflow-hidden rounded-lg"><img alt="logo" loading="lazy"
-                                        width="130" height="130" decoding="async" data-nimg="1"
-                                        class="h-full w-full object-cover object-center"
-                                        srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass_profile.712e49d8.jpeg&amp;w=256&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass_profile.712e49d8.jpeg&amp;w=384&amp;q=75 2x"
-                                        src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass_profile.712e49d8.jpeg&amp;w=384&amp;q=75"
-                                        style="color: transparent;"></div>
-                                <div>
-                                    <h3 class="flex items-center gap-1 text-lg font-medium">Compass <svg
-                                            stroke="currentColor" fill="currentColor" stroke-width="0"
-                                            viewBox="0 0 256 256" class="text-blue-600" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z">
-                                            </path>
-                                        </svg></h3>
-                                    <div class="flex items-center gap-1"><svg stroke="currentColor" fill="currentColor"
-                                            stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400" height="1em"
-                                            width="1em" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                            <path
-                                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                            </path>
-                                        </svg>
-                                        <p class="text-sm">4.9 <span class="text-neutral-500">(10334 Reviews)</span></p>
-                                    </div>
-                                    <p class="text-sm text-neutral-500">8.5M Followers</p>
-                                </div>
-                            </div><a
-                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  border-2 border-primary text-primary"
-                                href="https://www.sepatucompass.com/">Visit</a>
-                        </div>
-                        <div class="mt-3 grid grid-cols-2 gap-3">
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="1299" height="1299" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass1.0c3d7a92.jpg&amp;w=1920&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass1.0c3d7a92.jpg&amp;w=3840&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass1.0c3d7a92.jpg&amp;w=3840&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="738" height="738" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass2.2022727b.jpg&amp;w=750&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass2.2022727b.jpg&amp;w=1920&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass2.2022727b.jpg&amp;w=1920&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="1477" height="1477" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass3.a5a66112.png&amp;w=1920&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass3.a5a66112.png&amp;w=3840&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass3.a5a66112.png&amp;w=3840&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="4480" height="4480" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass4.b0ed7c1c.jpg&amp;w=3840&amp;q=75 1x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcompass4.b0ed7c1c.jpg&amp;w=3840&amp;q=75"
-                                    style="color: transparent;"></div>
-                        </div>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-300 p-3">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-2">
-                                <div class="h-20 w-20 overflow-hidden rounded-lg"><img alt="logo" loading="lazy"
-                                        width="200" height="200" decoding="async" data-nimg="1"
-                                        class="h-full w-full object-cover object-center"
-                                        srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnike_profile.34f18203.jpg&amp;w=256&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnike_profile.34f18203.jpg&amp;w=640&amp;q=75 2x"
-                                        src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fnike_profile.34f18203.jpg&amp;w=640&amp;q=75"
-                                        style="color: transparent;"></div>
-                                <div>
-                                    <h3 class="flex items-center gap-1 text-lg font-medium">Nike <svg
-                                            stroke="currentColor" fill="currentColor" stroke-width="0"
-                                            viewBox="0 0 256 256" class="text-blue-600" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z">
-                                            </path>
-                                        </svg></h3>
-                                    <div class="flex items-center gap-1"><svg stroke="currentColor" fill="currentColor"
-                                            stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400" height="1em"
-                                            width="1em" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                            <path fill="none" d="M0 0h24v24H0z"></path>
-                                            <path
-                                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                            </path>
-                                        </svg>
-                                        <p class="text-sm">4.9 <span class="text-neutral-500">(10334 Reviews)</span></p>
-                                    </div>
-                                    <p class="text-sm text-neutral-500">11.2M Followers</p>
-                                </div>
-                            </div><a
-                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  border-2 border-primary text-primary"
-                                href="https://nike.com">Visit</a>
-                        </div>
-                        <div class="mt-3 grid grid-cols-2 gap-3">
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="592" height="592" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FyellowLow.cc64548d.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2FyellowLow.cc64548d.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FyellowLow.cc64548d.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="592" height="592" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fredlow.d8dfddcd.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fredlow.d8dfddcd.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fredlow.d8dfddcd.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="592" height="592" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdunklow.18061fa7.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdunklow.18061fa7.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdunklow.18061fa7.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></div>
-                            <div class="h-[150px] overflow-hidden rounded-lg bg-gray"><img alt="shoe" loading="lazy"
-                                    width="592" height="592" decoding="async" data-nimg="1"
-                                    class="h-full w-full object-cover object-bottom"
-                                    srcset="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flebronxx.f8f8ed59.webp&amp;w=640&amp;q=75 1x, /_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flebronxx.f8f8ed59.webp&amp;w=1200&amp;q=75 2x"
-                                    src="/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flebronxx.f8f8ed59.webp&amp;w=1200&amp;q=75"
-                                    style="color: transparent;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-14 flex items-center justify-center"><button
-                        class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">
-                        View
-                        More
-                    </button>
                 </div>
             </div>
         </div>

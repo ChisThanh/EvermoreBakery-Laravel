@@ -21,4 +21,9 @@ Route::group([
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('/products', 'ProductApiController');
     });
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/products/{slug}/like', 'ProductApiController@likeProduct');
+        Route::post('/coupons/{code}', 'ProductApiController@getCoupons');
+    });
 });

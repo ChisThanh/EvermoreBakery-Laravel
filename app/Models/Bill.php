@@ -8,6 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Bill extends Model
 {
     use HasFactory;
+
+    public const STATUS_PENDING = 1;
+    public const STATUS_PROCESSING = 2;
+    public const STATUS_DELIVERED = 3;
+    public const STATUS_CANCEL = 4;
+
+    public const PAYMENT_METHOD_CASH = 1;
+    public const PAYMENT_METHOD_CARD = 2;
+
+    public const PAYMENT_PAID = 1;
+    public const PAYMENT_UNPAID = 2;
+
     protected $fillable = [
         'user_id',
         'delivery_date',
@@ -15,6 +27,8 @@ class Bill extends Model
         'payment_status',
         'payment_method',
         'status',
+        'note',
+        'coupon_id',
     ];
 
     public function getUserNameAttribute()
@@ -30,5 +44,10 @@ class Bill extends Model
     public function details()
     {
         return $this->hasMany(BillDetail::class, 'bill_id');
+    }
+
+    public function address()
+    {
+        return $this->hasOne(BillAddress::class, 'bill_id');
     }
 }

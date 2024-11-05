@@ -20,16 +20,21 @@
                 </li>
                 <li class="menu-item shrink-0 list-none">
                     <div class="mx-3 flex shrink-0 items-center font-medium hover:text-primary"><a class="list-none"
-                            href="/checkout">Checkout</a></div>
-                </li>
-                <li class="menu-item shrink-0 list-none">
-                    <div class="mx-3 flex shrink-0 items-center font-medium hover:text-primary"><a class="list-none"
                             href="/cart">Cart</a></div>
                 </li>
                 @if (auth()->check())
                     <li class="menu-item shrink-0 list-none">
                         <div class="mx-3 flex shrink-0 items-center font-medium hover:text-primary"><a class="list-none"
                                 href="/logout">Logout</a></div>
+                    </li>
+                @else
+                    <li class="menu-item shrink-0 list-none">
+                        <div class="mx-3 flex shrink-0 items-center font-medium hover:text-primary"><a class="list-none"
+                                href="/login">Login</a></div>
+                    </li>
+                    <li class="menu-item shrink-0 list-none">
+                        <div class="mx-3 flex shrink-0 items-center font-medium hover:text-primary"><a class="list-none"
+                                href="/register">Register</a></div>
                     </li>
                 @endif
             </div>
@@ -87,7 +92,7 @@
                             d="M160 112c0-35.3 28.7-64 64-64s64 28.7 64 64v48H160V112zm-48 48H48c-26.5 0-48 21.5-48 48V416c0 53 43 96 96 96H352c53 0 96-43 96-96V208c0-26.5-21.5-48-48-48H336V112C336 50.1 285.9 0 224 0S112 50.1 112 112v48zm24 48a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm152 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z">
                         </path>
                     </svg>
-                    <span class="hidden text-sm lg:block">3 items</span>
+                    <span class="hidden text-sm lg:block">{{ sizeof($cartDetails) }} items</span>
                 </button>
                 <div class="flex items-center gap-2 pl-5">
                     <button type="button"
