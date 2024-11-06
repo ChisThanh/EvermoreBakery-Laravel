@@ -86,7 +86,7 @@
                             </button>
                         </div>
                         <div class="divide-y divide-neutral-300">
-                            @foreach ($cartDetails as  $item)
+                            @foreach ($cartDetails as $item)
                                 <div class="flex py-5 last:pb-0">
                                     <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl">
                                         <img alt="" loading="lazy" decoding="async" data-nimg="fill"
@@ -112,16 +112,16 @@
                                         </div>
                                         <div class="flex w-full items-end justify-between text-sm">
                                             <a href="/products/update-from-cart/{{ $item['slug'] }}/-999">
-                                            <div class="flex items-center gap-3 cursor-pointer">
-                                                <svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                                                    viewBox="0 0 1024 1024" class="text-2xl" height="1em"
-                                                    width="1em" xmlns="http://www.w3.org/2000/svg">
-                                                    <path
-                                                        d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z">
-                                                    </path>
-                                                </svg>
-                                            </div>
-                                        </a>
+                                                <div class="flex items-center gap-3 cursor-pointer">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                                        viewBox="0 0 1024 1024" class="text-2xl" height="1em"
+                                                        width="1em" xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                            </a>
                                             <div>
                                                 <div class=" flex items-center justify-between space-x-5 w-full">
                                                     <div class=" flex w-[104px] items-center justify-between sm:w-28">
@@ -155,7 +155,7 @@
                                     class="block text-sm text-neutral-500">Shipping and taxes calculated at
                                     checkout.</span></span>
                             <span class="text-xl font-medium">
-                                {{ $carts['total'] ?? 0 }} Đ
+                                {{ isset($carts['total']) ? (int) $carts['total'] : 0 }} Đ
                             </span>
                         </p>
                         <div class="mt-5 flex items-center gap-5"><a
@@ -207,5 +207,17 @@
         </div>
         <div class="fixed inset-0 bg-neutral-900/60 opacity-100" id="headlessui-dialog-overlay-:r1:"
             aria-hidden="true" data-headlessui-state="open"></div>
+    </div>
+</div>
+
+
+<div id="confirmationModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+        <h2 class="text-lg font-bold mb-4">Confirm Action</h2>
+        <p class="text-gray-700 mb-6">Are you sure you want to proceed with this action?</p>
+        <div class="flex justify-end">
+            <button onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
+            <button onclick="confirmAction()" class="bg-red-500 text-white px-4 py-2 rounded">Confirm</button>
+        </div>
     </div>
 </div>

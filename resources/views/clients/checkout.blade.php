@@ -23,9 +23,11 @@
                                             </svg>
                                         </span>
                                         <div class="flex w-full items-center justify-between">
-                                            <div class="sm:ml-8"><span class="uppercase">Thông tin nhận hàng</span>
-                                                <div class="mt-1 text-sm font-semibold"><span
-                                                        class="">{{ $user->name }}</span></div>
+                                            <div class="sm:ml-8">
+                                                <span class="uppercase">Thông tin nhận hàng</span>
+                                                <div class="mt-1 text-sm font-semibold">
+                                                    <span class="">{{ $user->name }}</span>
+                                                </div>
                                             </div><button
                                                 class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-2 px-4  border-2 border-primary text-primary">Edit</button>
                                         </div>
@@ -33,63 +35,86 @@
                                     <div class="space-y-4 border-t border-neutral-300 px-6 py-7 sm:space-y-6 block">
                                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-3">
                                             <div>
-                                                <div class="font-medium">Tên người nhận</div>
+                                                <div class="font-medium">Tên người nhận <span class="text-red-600">*</span>
+                                                </div>
                                                 <div class="mt-1.5">
                                                     <input
                                                         class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
                                                         type="text" value="{{ $user->name }}" name="name">
+                                                    @error('name')
+                                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
+
                                             </div>
                                             <div>
-                                                <div class="font-medium">Số điện thoại</div>
+                                                <div class="font-medium">Số điện thoại <span class="text-red-600">*</span>
+                                                </div>
                                                 <div class="mt-1.5">
                                                     <input
                                                         class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
                                                         type="text" value="" name="phone">
+                                                    @error('phone')
+                                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="space-y-4 sm:flex sm:space-x-3 sm:space-y-0">
+                                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-3">
                                             <div class="flex-1">
                                                 <div class="">
-                                                    <div class="font-medium">Địa chỉ / Đường</div>
+                                                    <div class="font-medium">Địa chỉ / Đường <span
+                                                            class="text-red-600">*</span></div>
                                                     <div class="mt-1.5">
                                                         <input
                                                             class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
                                                             placeholder="" type="text" value="" name="street">
+                                                        @error('street')
+                                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="sm:w-1/3">
-                                                <div class="">
-                                                    <div class="font-medium">Thành phố</div>
-                                                    <div class="mt-1.5">
-                                                        <input
-                                                            class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
-                                                            type="text" name="city" value="">
-                                                    </div>
+                                            <div>
+                                                <div class="font-medium">Thành phố <span class="text-red-600">*</span>
+                                                </div>
+                                                <div class="mt-1.5">
+                                                    <input
+                                                        class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
+                                                        type="text" name="city" value="">
+                                                    @error('city')
+                                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-3">
                                             <div>
                                                 <div class="">
-                                                    <div class="font-medium">Quận / Huyện</div>
+                                                    <div class="font-medium">Quận / Huyện <span
+                                                            class="text-red-600">*</span></div>
                                                     <div class="mt-1.5">
                                                         <input
                                                             class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
                                                             type="text" value="" name="district">
+                                                        @error('district')
+                                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
                                             <div>
                                                 <div class="">
-                                                    <div class="font-medium">Phường / Xã</div>
+                                                    <div class="font-medium">Phường / Xã <span class="text-red-600">*</span>
+                                                    </div>
                                                     <div class="mt-1.5">
                                                         <input
                                                             class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
                                                             type="text" name="ward">
+                                                        @error('ward')
+                                                            <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -99,14 +124,13 @@
                                             <div class="mt-1.5">
                                                 <textarea
                                                     class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary min-h-[150px]"
-                                                    name="note">
-                                                </textarea>
+                                                    name="note"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="px-6">
                                         <div class="">
-                                            <div class="font-medium">Thanh toán</div>
+                                            <div class="font-medium">Thanh toán <span class="text-red-600">*</span></div>
                                             <div class="mt-1.5">
                                                 <div class="mt-1.5 grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
                                                     <div class="flex items-center text-sm sm:text-base ">
@@ -122,6 +146,9 @@
                                                         <div class="block select-none pl-2.5 sm:pl-3">Chuyển khoàn</div>
                                                     </div>
                                                 </div>
+                                                @error('payment')
+                                                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -294,9 +321,7 @@
                                     <input
                                         class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 flex-1 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
                                         type="text" name="coupon_code">
-                                    <button type="button"
-                                        data-click="true"
-                                        onclick="applyCoupon(this)"
+                                    <button type="button" data-click="true" onclick="applyCoupon(this)"
                                         class="ml-3 flex w-24 items-center justify-center rounded-2xl border border-neutral-300 bg-gray px-4 text-sm font-medium transition-colors hover:bg-neutral-100">
                                         Apply
                                     </button>
@@ -304,7 +329,7 @@
                             </div>
                             <div class="mt-4 flex justify-between pb-4">
                                 <span>Subtotal</span>
-                                <span class="font-semibold js-subtotal" >{{ $item['total'] ?? 0 }} Đ</span>
+                                <span class="font-semibold js-subtotal">{{ $item['total'] ?? 0 }} Đ</span>
                             </div>
                             <div class="flex justify-between py-4">
                                 <span>Phí vận chuyển</span>
@@ -312,7 +337,7 @@
                             </div>
                             <div class="flex justify-between pt-4 text-base font-semibold">
                                 <span>Total</span>
-                                <span class="js-total">{{ $item['total'] ?? 0 + 50000 }} Đ</span>
+                                <span class="js-total">{{ $item['total'] + 50000 ?? 0 + 50000 }} Đ</span>
                             </div>
                         </div><button
                             class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 mt-8 w-full">

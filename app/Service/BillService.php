@@ -58,11 +58,11 @@ class BillService extends BaseService
                     'bill_id' => $bill->id,
                     'product_id' => $product->id,
                     'quantity' => $quantity,
-                    'price' => $product->price,
+                    'price' => $product->price_sale,
                 ];
-                $total += (int) $product->price * (int) $quantity;
+                $total += (int) $product->price_sale * (int) $quantity;
             }
-            $bill->total = $total;
+            $bill->total = $total + 50000;
             $bill->details()->createMany($billDetail);
 
             $address = [
@@ -87,7 +87,7 @@ class BillService extends BaseService
 
             if (isset($data['coupon_code'])) {
                 $coupon = $this->getCoupons($data['coupon_code']);
-                if ($coupon && $coupon->quantity > 0) {
+                if (isset($coupon) && $coupon->quantity > 0) {
                     $bill->coupon_id = $coupon->id;
                     $discountByAmount = $bill->total - $coupon->discount_amount;
                     $discountByPercentage = $bill->total * (1 - $coupon->discount_percentage / 100);

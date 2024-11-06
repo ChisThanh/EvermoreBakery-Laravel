@@ -40,6 +40,10 @@
         } else {
             $cookie = request()->cookie('cart_id');
             $carts = App\Models\Cart::where('cookie_id', $cookie)->first();
+            if(auth()->check() && $carts){
+                $carts->user_id = auth()->id();
+                $carts->save();
+            }
         }
         $cartDetails = [];
         if ($carts) {

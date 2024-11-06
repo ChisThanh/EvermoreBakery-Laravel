@@ -147,7 +147,7 @@ class ProductService extends BaseService
         } else {
             $cartDetails[$productId] = [
                 'quantity' => 1,
-                'price' => $product->price,
+                'price' => $product->price_sale,
                 'product_name' => substr($product->name, 0, 20) . '...',
                 'slug' => $product->slug,
                 'category_name' => $product->category->name,
@@ -155,7 +155,7 @@ class ProductService extends BaseService
             ];
         }
 
-        $cartDetails[$productId]['total'] = $cartDetails[$productId]['quantity'] * $product->price;
+        $cartDetails[$productId]['total'] = $cartDetails[$productId]['quantity'] * $product->price_sale;
         $cart->cart_details = json_encode($cartDetails);
         $cart->total += array_sum(array_column($cartDetails, 'total'));
         if (auth()->check())

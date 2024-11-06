@@ -80,24 +80,85 @@ function applyCoupon(element) {
         fetch(`/api/v1/coupons/${code}`, options)
             .then(response => response.json())
             .then(data => {
-                if(data.status_code === 200 && data.data.quantity <= 0){
-                    alert('Coupon has been used up!');
+                if (data.status_code === 200 && data.data.quantity <= 0) {
+                    input.value = '';
+                    openModal("Mã giảm giá đã hết", "Vui lòng thử lại sau", 3000);
                     return;
                 }
-                if (data.status_code === 200 ) {
+                if (data.status_code === 200) {
                     const { discount_amount, discount_percentage } = data.data;
                     const discountAmount = parseInt(discount_amount);
                     const discountPercentage = parseInt(discount_percentage);
 
                     const discountByAmount = totalNumber - discountAmount;
                     const discountByPercentage = totalNumber * (1 - discountPercentage / 100);
-                    totalNumber = Math.min(discountByAmount, discountByPercentage);
+                    totalNumber = Math.floor(Math.min(discountByAmount, discountByPercentage));
+                    totalNumber = parseInt(totalNumber);
 
                     jsTotal.textContent = `${totalNumber} Đ`;
-                    alert('Coupon applied successfully!');
+                    openModal("Áp dụng mã giảm giá thành công", "Bạn đã áp dụng mã giảm giá thành công", 3000);
                     element.setAttribute('data-click', 'false');
+                } else {
+                    input.value = '';
+                    openModal("Mã giảm giá không hợp lệ", "Vui lòng thử lại sau", 3000);
                 }
             })
-            .catch(error => console.log('Error applying coupon:', error));
+            .catch(error => {
+                input.value = '';
+                openModal("Có lỗi xảy ra", "Vui lòng thư lại sau", 3000);
+            });
+    }
+}
+
+
+
+function openModal(
+    title = "Confirm Action",
+    content = "Are you sure",
+    timeout = 0,
+) {
+    const existingModal = document.getElementById('confirmationModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    const modal = document.createElement('div');
+    modal.id = 'confirmationModal';
+    modal.className = 'fixed inset-0 bg-opacity-50 flex items-center justify-center bg-neutral-900/60 opacity-100 z-[99999] ';
+
+    modal.innerHTML = `
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full modal-overlay">
+            <h2 class="text-lg font-bold mb-4">${title}</h2>
+            <p class="text-gray-700 mb-6">${content}</p>
+            <div class="flex justify-end">
+                <button id="cancelButton" class="bg-gray-500 px-4 py-2 rounded mr-2">Cancel</button>
+                <button id="confirmButton" class="bg-red-500 text-white px-4 py-2 rounded">Confirm</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    let interval;
+
+    function closeModal() {
+        clearInterval(interval);
+        modal.remove();
+    }
+
+    document.getElementById('cancelButton').addEventListener('click', closeModal);
+    document.getElementById('confirmButton').addEventListener('click', closeModal);
+
+    if (timeout > 0) {
+        const cancelButton = document.getElementById('cancelButton');
+        let remainingTime = timeout / 1000;
+
+        interval = setInterval(() => {
+            remainingTime -= 1;
+            cancelButton.textContent = `Cancel (${remainingTime})`;
+            if (remainingTime <= 0) {
+                closeModal();
+            }
+        }, 1000);
     }
 }
