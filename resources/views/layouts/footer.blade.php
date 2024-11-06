@@ -87,7 +87,7 @@
                         </div>
                         <div class="divide-y divide-neutral-300">
                             @foreach ($cartDetails as $item)
-                                <div class="flex py-5 last:pb-0">
+                                <div class="flex py-5 last:pb-0 js-cart-item">
                                     <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl">
                                         <img alt="" loading="lazy" decoding="async" data-nimg="fill"
                                             class="h-full w-full object-contain object-center" sizes="100vw"
@@ -107,11 +107,12 @@
                                                     <span class="my-1 text-sm text-neutral-500">
                                                         {{ $item['category_name'] }}
                                                     </span>
-                                                </div><span class=" font-medium">{{ $item['price'] }} Đ</span>
+                                                </div>
+                                                <span class=" font-medium js-item-price">{{ $item['price'] }} Đ</span>
                                             </div>
                                         </div>
                                         <div class="flex w-full items-end justify-between text-sm">
-                                            <a href="/products/update-from-cart/{{ $item['slug'] }}/-999">
+                                            <button onclick="removeItemCart(this,'{{ $item['slug'] }}')">
                                                 <div class="flex items-center gap-3 cursor-pointer">
                                                     <svg stroke="currentColor" fill="currentColor" stroke-width="0"
                                                         viewBox="0 0 1024 1024" class="text-2xl" height="1em"
@@ -121,24 +122,27 @@
                                                         </path>
                                                     </svg>
                                                 </div>
-                                            </a>
+                                            </button>
                                             <div>
                                                 <div class=" flex items-center justify-between space-x-5 w-full">
-                                                    <div class=" flex w-[104px] items-center justify-between sm:w-28">
-                                                        <a href="/products/update-from-cart/{{ $item['slug'] }}/-1"
+                                                    <div
+                                                        class=" flex w-[104px] items-center justify-between sm:w-28 js-item-quantity-container">
+                                                        <button
+                                                            onclick="updateQuantity(this, '{{ $item['slug'] }}', -1)"
                                                             class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                             type="button">
                                                             -
-                                                        </a>
+                                                        </button>
                                                         <span
-                                                            class="block flex-1 select-none text-center leading-none">
+                                                            class="block flex-1 select-none text-center leading-none js-item-quantity">
                                                             {{ $item['quantity'] }}
                                                         </span>
-                                                        <a href="/products/update-from-cart/{{ $item['slug'] }}/1"
+                                                        <button
+                                                            onclick="updateQuantity(this, '{{ $item['slug'] }}', 1)"
                                                             class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                             type="button">
                                                             +
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,10 +155,14 @@
                         </div>
                     </div>
                     <div class="absolute bottom-0 left-0 w-full bg-neutral-50 p-5">
-                        <p class="flex justify-between"><span><span class="font-medium">Subtotal</span><span
-                                    class="block text-sm text-neutral-500">Shipping and taxes calculated at
-                                    checkout.</span></span>
-                            <span class="text-xl font-medium">
+                        <p class="flex justify-between">
+                            <span>
+                                <span class="font-medium">Subtotal</span>
+                                <span class="block text-sm text-neutral-500">
+                                    Shipping and taxes calculated at checkout.
+                                </span>
+                            </span>
+                            <span class="text-xl font-medium js-cart-total">
                                 {{ isset($carts['total']) ? (int) $carts['total'] : 0 }} Đ
                             </span>
                         </p>
@@ -211,13 +219,5 @@
 </div>
 
 
-<div id="confirmationModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-        <h2 class="text-lg font-bold mb-4">Confirm Action</h2>
-        <p class="text-gray-700 mb-6">Are you sure you want to proceed with this action?</p>
-        <div class="flex justify-end">
-            <button onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded mr-2">Cancel</button>
-            <button onclick="confirmAction()" class="bg-red-500 text-white px-4 py-2 rounded">Confirm</button>
-        </div>
-    </div>
-</div>
+
+

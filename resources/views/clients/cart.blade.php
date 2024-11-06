@@ -9,7 +9,7 @@
             <div class="flex flex-col lg:flex-row">
                 <div class="w-full divide-y divide-neutral-300 lg:w-[60%] xl:w-[55%]">
                     @foreach ($data['cartDetails'] as $item)
-                        <div class="flex py-5 last:pb-0">
+                        <div class="flex py-5 last:pb-0 js-cart-item">
                             <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl md:h-40 md:w-40"><img
                                     alt="Air Force 1" loading="lazy" decoding="async" data-nimg="fill"
                                     class="h-full w-full object-contain object-center" sizes="100vw"
@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="flex w-full items-end justify-between text-sm">
                                     <div class="flex items-center gap-3">
-                                        <a href="/products/update-from-cart/{{ $item['slug'] }}/-999">
+                                        <button onclick="removeItemCart(this,'{{ $item['slug'] }}')">
                                             <svg stroke="currentColor" fill="currentColor" stroke-width="0"
                                                 viewBox="0 0 1024 1024" class="text-2xl" height="1em" width="1em"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -38,24 +38,25 @@
                                                     d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z">
                                                 </path>
                                             </svg>
-                                        </a>
+                                        </button>
                                     </div>
                                     <div>
                                         <div class="nc-InputNumber flex items-center justify-between space-x-5 w-full">
                                             <div
-                                                class="nc-NcInputNumber__content flex w-[104px] items-center justify-between sm:w-28">
-                                                <a href="/products/update-from-cart/{{ $item['slug'] }}/-1"
+                                                class="js-item-quantity-container flex w-[104px] items-center justify-between sm:w-28">
+                                                <button onclick="updateQuantity(this, '{{ $item['slug'] }}', -1)"
                                                     class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                     type="button">
                                                     -
-                                                </a>
-                                                <span
-                                                    class="block flex-1 select-none text-center leading-none">{{ $item['quantity'] }}</span>
-                                                <a href="/products/update-from-cart/{{ $item['slug'] }}/1"
+                                                </button>
+                                                <span class="js-item-quantity block flex-1 select-none text-center leading-none">
+                                                    {{ $item['quantity'] }}
+                                                </span>
+                                                <button onclick="updateQuantity(this, '{{ $item['slug'] }}', 1)"
                                                     class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                     type="button">
                                                     +
-                                                </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

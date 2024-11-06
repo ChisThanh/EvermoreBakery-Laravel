@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-function optionAPI() {
+function optionAPI(method = 'POST', body = {}) {
     const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const token = document.querySelector('meta[name="api-token"]').getAttribute('content');
     const options = {
-        method: 'POST',
+        method: method,
         credentials: 'include',
         headers: {
             'Accept': 'application/json',
@@ -37,6 +37,7 @@ function optionAPI() {
             'X-Requested-With': 'XMLHttpRequest',
             'Authorization': `Bearer ${token}`,
         },
+        body: JSON.stringify(body),
     };
     return { token, options };
 }
@@ -60,12 +61,6 @@ function likeProduct(slug, element) {
     if (token !== '') {
         fetch(`/api/v1/products/${slug}/like`, options);
     }
-}
-
-function extractNumbers(str) {
-    const numbers = str.match(/\d+/g);
-    const joinedNumbers = numbers ? numbers.join('') : '';
-    return parseInt(joinedNumbers);
 }
 
 function applyCoupon(element) {
@@ -110,55 +105,55 @@ function applyCoupon(element) {
     }
 }
 
-
-
-function openModal(
-    title = "Confirm Action",
-    content = "Are you sure",
-    timeout = 0,
-) {
-    const existingModal = document.getElementById('confirmationModal');
-    if (existingModal) {
-        existingModal.remove();
-    }
-
-    const modal = document.createElement('div');
-    modal.id = 'confirmationModal';
-    modal.className = 'fixed inset-0 bg-opacity-50 flex items-center justify-center bg-neutral-900/60 opacity-100 z-[99999] ';
-
-    modal.innerHTML = `
-        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full modal-overlay">
-            <h2 class="text-lg font-bold mb-4">${title}</h2>
-            <p class="text-gray-700 mb-6">${content}</p>
-            <div class="flex justify-end">
-                <button id="cancelButton" class="bg-gray-500 px-4 py-2 rounded mr-2">Cancel</button>
-                <button id="confirmButton" class="bg-red-500 text-white px-4 py-2 rounded">Confirm</button>
-            </div>
-        </div>
-    `;
-
-    document.body.appendChild(modal);
-
-    let interval;
-
-    function closeModal() {
-        clearInterval(interval);
-        modal.remove();
-    }
-
-    document.getElementById('cancelButton').addEventListener('click', closeModal);
-    document.getElementById('confirmButton').addEventListener('click', closeModal);
-
-    if (timeout > 0) {
-        const cancelButton = document.getElementById('cancelButton');
-        let remainingTime = timeout / 1000;
-
-        interval = setInterval(() => {
-            remainingTime -= 1;
-            cancelButton.textContent = `Cancel (${remainingTime})`;
-            if (remainingTime <= 0) {
-                closeModal();
+function addToCart(slug) {
+    const cartId = document.querySelector('meta[name="cart-id"]').getAttribute('content');
+    const { token, options } = optionAPI('POST', { cartId });
+    return fetch(`/api/v1/add-to-cart/${slug}`, options)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status_code === 200) {
+                openModal("Thêm vào giỏ hàng thành công", "Sản phẩm đã được thêm vào giỏ hàng", 3000);
+            } else {
+                openModal("Có lỗi xảy ra", "Vui lòng thử lại sau", 3000);
             }
-        }, 1000);
+        }).catch(() => {
+            openModal("Có lỗi xảy ra", "Vui lòng thử lại sau", 3000);
+        });
+}
+
+function updateCart(slug, quantity) {
+    const cartId = document.querySelector('meta[name="cart-id"]').getAttribute('content');
+    const { token, options } = optionAPI('POST', { cartId });
+    return fetch(`/api/v1/update-from-cart/${slug}/${quantity}`, options)
+        .then(response => response.json())
+        .then(data => data.status_code === 200)
+        .catch(() => false);
+}
+
+function removeItemCart(element, slug) {
+    const cartItem = element.closest('.js-cart-item');
+    const check = updateCart(slug, -999);
+    if (check) {
+        cartItem.remove();
+    }
+}
+
+function updateQuantity(element, slug, quantity) {
+    const quantityElement = element.closest('.js-item-quantity-container').querySelector('.js-item-quantity');
+    var _quantity = parseInt(quantityElement.textContent);
+    const check = updateCart(slug, quantity);
+    if (check) {
+        if (_quantity + quantity <= 0) {
+            element.closest('.js-cart-item').remove();
+            return;
+        }
+        var newQuantity = _quantity + quantity;
+        quantityElement.textContent = newQuantity;
+        // const priceElement = element.closest('.js-cart-item').querySelector('.js-item-price');
+        // const price = extractNumbers(priceElement.textContent);
+        // const totalElement = element.closest('.js-cart-item').querySelector('.js-cart-total');
+        // var oldTotal = extractNumbers(totalElement.textContent);
+        // const total = (oldTotal - (price * _quantity)) + (price * newQuantity);
+        // totalElement.textContent = `${total} Đ`;
     }
 }

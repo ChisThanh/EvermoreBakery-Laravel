@@ -15,21 +15,24 @@ class BillService extends BaseService
     protected $productRepository;
     protected $cartRepository;
     protected $couponRepository;
+    protected $vnPayService;
 
 
     public function __construct(
         BillRepository $repository,
         ProductRepository $productRepository,
         CartRepository $cartRepository,
-        CouponsRepository $couponRepository
+        CouponsRepository $couponRepository,
+        VnPayService $vnPayService
     ) {
         $this->repository = $repository;
         $this->productRepository = $productRepository;
         $this->cartRepository = $cartRepository;
         $this->couponRepository = $couponRepository;
+        $this->vnPayService = $vnPayService;
     }
 
-    public function create(array $data): mixed
+    public function store(array $data): mixed
     {
         try {
             \DB::beginTransaction();
@@ -100,9 +103,16 @@ class BillService extends BaseService
             $bill->address()->create($address);
             $bill->save();
 
+            if ($data['payment'] == 'card') {
+                $url = $this->vnPayService->vnpay([
+                    'bill_id' => "HD_" . $bill->id,
+                    'amount' => $bill->total,
+                ]);
+                \DB::commit();
+                return ['url' => $url];
+            }
             cookie()->forget('cart_id');
             $this->cartRepository->getModel()->where('user_id', $user->id)->delete();
-
             \DB::commit();
         } catch (\Exception $th) {
             \DB::rollBack();
@@ -126,5 +136,20 @@ class BillService extends BaseService
             return false;
         }
         return $coupons;
+    }
+
+    public function updateStatus($inputs): mixed
+    {
+        // 00 là mã trạng thái giao dịch thành công
+        if(isset($inputs['vnp_ResponseCode ']) && $inputs['vnp_ResponseCode '] == '00') {
+            $userId = auth()->id();
+            cookie()->forget('cart_id');
+            $this->cartRepository->getModel()->where('user_id', $userId)->delete();
+            $bill = $this->repository->getModel()->where('id', $inputs['bill_id'])->first();
+            $bill->payment_status = Bill::PAYMENT_PAID;
+            $bill->save();
+            return true;
+        }
+        return false;
     }
 }

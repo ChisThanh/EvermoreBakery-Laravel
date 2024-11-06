@@ -38,7 +38,7 @@ class ProductController extends Controller
         if (!$check)
             return abort(404);
 
-        return redirect()->back()->with('success', 'Add to cart successfully');
+        return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công');
     }
 
     public function updateFromCart($slug, $quantity)
@@ -70,14 +70,13 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required',
             'phone' => 'required',
-            'address' => 'required',
             'street' => 'required',
             'city' => 'required',
             'district' => 'required',
             'ward' => 'required',
             'note' => 'string|nullable',
             'payment' => 'required',
-        ],[
+        ], [
             'name.required' => 'Tên không được để trống',
             'phone.required' => 'Số điện thoại không được để trống',
             'address.required' => 'Địa chỉ không được để trống',
@@ -88,11 +87,13 @@ class ProductController extends Controller
             'payment.required' => 'Phương thức thanh toán không được để trống',
         ]);
 
-        $check = $this->billService->create($request->all());
+        $res = $this->billService->store($request->all());
+        if (isset($res['url']))
+            return redirect($res['url']);
 
-        if (!$check)
+        if (!$res)
             return abort(404);
 
-        return redirect()->route('products')->with('success', 'Checkout successfully');
+        return redirect()->route('products')->with('success', 'Đặt hàng thành công');
     }
 }

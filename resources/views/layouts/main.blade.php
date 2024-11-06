@@ -11,6 +11,10 @@
         <meta name="api-token" content="">
     @endif
 
+    @if ($cartId = request()->cookie('cart_id'))
+        <meta name="cart-id" content="{{ $cartId }}">
+    @endif
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
@@ -40,7 +44,7 @@
         } else {
             $cookie = request()->cookie('cart_id');
             $carts = App\Models\Cart::where('cookie_id', $cookie)->first();
-            if(auth()->check() && $carts){
+            if (auth()->check() && $carts) {
                 $carts->user_id = auth()->id();
                 $carts->save();
             }
@@ -59,6 +63,7 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/helper.js') }}"></script>
 @stack('scripts')
 
 </html>

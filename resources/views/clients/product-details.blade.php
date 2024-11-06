@@ -23,7 +23,7 @@
                 <div class="basis-[50%]">
                     <div class="space-y-3 rounded-2xl border border-neutral-300 p-2">
                         <div class="relative overflow-hidden rounded-2xl md:h-[520px]">
-                            <button type="button" onclick="likeProduct('{{ $data->slug }}', this)" 
+                            <button type="button" onclick="likeProduct('{{ $data->slug }}', this)"
                                 data-liked="{{ $data->liked }}"
                                 class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-5 top-5">
                                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
@@ -694,3 +694,10 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        @if (session('success'))
+            openToast('success', '{{ session('success') }}', 5000);
+        @endif
+    </script>
+@endpush

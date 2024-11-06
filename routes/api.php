@@ -26,4 +26,6 @@ Route::group([
         Route::post('/products/{slug}/like', 'ProductApiController@likeProduct');
         Route::post('/coupons/{code}', 'ProductApiController@getCoupons');
     });
+    
+    Route::post('/update-from-cart/{slug}/{quantity}', 'ProductApiController@updateFromCart');
 });

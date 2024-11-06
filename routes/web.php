@@ -1,5 +1,6 @@
 <?php
 
+use App\Service\VnPayService;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -20,10 +21,21 @@ Route::group([
         Route::get('/{slug}', 'ProductController@show')->name('product.show');
         Route::get('/add-to-cart/{slug}', 'ProductController@addToCart');
         Route::get('/update-from-cart/{slug}/{quantity}', 'ProductController@updateFromCart');
-
     });
 });
 
+Route::get('/vnpay', function () {
+    return view("clients.test");
+});
+Route::post('/vnpay', function () {
+    $inputs = request()->validate([
+        'amount' => 'required|numeric',
+        'bill_id' => 'required',
+    ]);
+    $vnpService = new VnPayService();
+    $url = $vnpService->vnpay($inputs);
+    return redirect()->to($url);
+});
 
 
 // https://hotkicks.themealchemy.com/home/

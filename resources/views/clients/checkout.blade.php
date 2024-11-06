@@ -271,10 +271,10 @@
                                         <div>
                                             <div class="flex justify-between ">
                                                 <div>
-                                                    <h3 class="font-medium md:text-2xl ">
+                                                    <h4 class="font-medium md:text-xl ">
                                                         <a
                                                             href="/products/{{ $item['slug'] }}">{{ $item['product_name'] }}</a>
-                                                    </h3>
+                                                    </h4>
                                                     <span class="my-1 text-sm text-neutral-500">
                                                         {{ $item['category_name'] }}
                                                     </span>
@@ -302,7 +302,7 @@
                                                         <button
                                                             class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                             type="button">-</button><span
-                                                            class="block flex-1 select-none text-center leading-none">1</span><button
+                                                            class="block flex-1 select-none text-center leading-none">{{ $item['quantity'] }}</span><button
                                                             class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                             type="button">+</button>
                                                     </div>

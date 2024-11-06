@@ -16,7 +16,8 @@ class ProductService extends BaseService
     public function __construct(
         ProductRepository $repository,
         CartRepository $cartRepository,
-        BillRepository $billRepository
+        BillRepository $billRepository,
+
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
@@ -163,10 +164,10 @@ class ProductService extends BaseService
 
         $cart->save();
 
-        return true;
+        return $product;
     }
 
-    private function getCart($cookie_id)
+    public function getCart($cookie_id)
     {
         $cartModel = $this->cartRepository->getModel();
         if (auth()->check()) {
@@ -196,7 +197,12 @@ class ProductService extends BaseService
 
     public function updateFromCart($slug, $quantity)
     {
-        $cookie_id = request()->cookie('cart_id');
+        if (request()->has('cartId')) {
+            $cookie_id = request()->get('cartId');
+        } else {
+            $cookie_id = request()->cookie('cart_id');
+        }
+
         $cart = $this->getCart($cookie_id);
         $cartDetails = json_decode($cart->cart_details, true) ?? [];
         foreach ($cartDetails as $index => $cartDetail) {
@@ -222,9 +228,14 @@ class ProductService extends BaseService
         $product = $this->repository->getModel()->where('slug', $slug)->first();
         if (!$product)
             return false;
+
         $userId = auth()->id();
         $hasLiked = $product->likes()->where('user_id', $userId)->exists();
         $product->likes()->toggle($userId);
+
+        $product->like_count = $hasLiked ? max(0, $product->like_count - 1) : $product->like_count + 1;
+        $product->save();
+
         return ['liked' => !$hasLiked];
     }
 
