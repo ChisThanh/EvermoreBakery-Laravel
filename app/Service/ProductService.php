@@ -28,31 +28,29 @@ class ProductService extends BaseService
     public function index(array $inputs): mixed
     {
         // \DB::enableQueryLog();
+        // dd(\DB::getQueryLog());
         $model = $this->repository->getModel();
 
-        $query = $model->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug')
+        $query = $model
+            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug')
             ->with([
                 'category:id,name',
                 'images:id,imageable_id,url',
                 'likes:id',
             ]);
 
-        if (isset($inputs['q'])) {
+        if (isset($inputs['q']))
             $query->where('name', 'like', '%' . $inputs['q'] . '%');
-        }
 
-        if (isset($inputs['sort'])) {
+        if (isset($inputs['sort']))
             $query->orderBy($inputs['sort'], $inputs['order'] ?? 'asc');
-        }
 
-        // ví dụ filter[id]=1&filter[name]=sadmin
-        if (isset($inputs['filter'])) {
-            foreach ($inputs['filter'] as $key => $value) {
-                if (!empty($value)) {
+
+        if (isset($inputs['filter']))
+            foreach ($inputs['filter'] as $key => $value)
+                if (!empty($value))
                     $query->where($key, 'like', '%' . $value . '%');
-                }
-            }
-        }
+
         $data = $query->paginate($inputs['limit'] ?? 10);
         $data->getCollection()->transform(function ($product) {
             $product->category_name = $product->category->name;
@@ -70,9 +68,7 @@ class ProductService extends BaseService
         }
 
         $this->getCart(request()->cookie('cart_id'));
-        // dd(\DB::getQueryLog());
         return $data;
-
     }
 
     public function show($slug)
@@ -95,7 +91,10 @@ class ProductService extends BaseService
             $product->liked = $product->likes->contains('id', $userId);
         }
 
-        return $product;
+        return [
+            'success' => true,
+            'data' => $product,
+        ];
     }
 
     public function showCart()
@@ -118,7 +117,11 @@ class ProductService extends BaseService
         if ($carts) {
             $cartDetails = json_decode($carts->cart_details, true) ?? [];
         }
-        return ["cartDetails" => $cartDetails, "total" => $carts->total ?? 0];
+        return [
+            "success" => true,
+            "cartDetails" => $cartDetails,
+            "total" => $carts->total ?? 0
+        ];
     }
 
     public function addToCart($slug)
@@ -132,12 +135,18 @@ class ProductService extends BaseService
 
         $product = $this->repository->getModel()->where('slug', $slug)->first();
         if (!$product) {
-            return false;
+            return [
+                'success' => false,
+                'message' => 'Product not found'
+            ];
         }
 
-        $cart = $this->getCart($cookie_id);
+        $cart = $this->getCart($cookie_id)['data'];
         if (!$cart) {
-            return false;
+            return [
+                'success' => false,
+                'message' => 'Cart not found'
+            ];
         }
 
         $cartDetails = json_decode($cart->cart_details, true) ?? [];
@@ -164,7 +173,10 @@ class ProductService extends BaseService
 
         $cart->save();
 
-        return $product;
+        return [
+            'success' => true,
+            'data' => $product,
+        ];
     }
 
     public function getCart($cookie_id)
@@ -188,22 +200,30 @@ class ProductService extends BaseService
             if ($cartUser) {
                 $cartUser->cookie_id = $cookie_id;
                 $cartUser->save();
-                return $cartUser;
+                return [
+                    'success' => true,
+                    'data' => $cartUser,
+                ];
             }
         }
 
-        return $cartModel->firstOrCreate(['cookie_id' => $cookie_id]);
+        $cart = $cartModel->firstOrCreate(['cookie_id' => $cookie_id]);
+
+        return [
+            'success' => true,
+            'data' => $cart,
+        ];
     }
 
     public function updateFromCart($slug, $quantity)
     {
-        if (request()->has('cartId')) {
+        if (request()->has('cartId'))
             $cookie_id = request()->get('cartId');
-        } else {
+        else
             $cookie_id = request()->cookie('cart_id');
-        }
 
-        $cart = $this->getCart($cookie_id);
+
+        $cart = $this->getCart($cookie_id)['data'];
         $cartDetails = json_decode($cart->cart_details, true) ?? [];
         foreach ($cartDetails as $index => $cartDetail) {
             if ($cartDetail['slug'] == $slug && $quantity <= 99) {
@@ -220,14 +240,18 @@ class ProductService extends BaseService
         $cart->cart_details = json_encode($cartDetails);
         $cart->total = array_sum(array_column($cartDetails, 'total'));
         $cart->save();
-        return true;
+
+        return ['success' => true];
     }
 
     public function likeProduct($slug)
     {
         $product = $this->repository->getModel()->where('slug', $slug)->first();
         if (!$product)
-            return false;
+            return [
+                'success' => false,
+                'message' => 'Product not found'
+            ];
 
         $userId = auth()->id();
         $hasLiked = $product->likes()->where('user_id', $userId)->exists();
@@ -236,7 +260,10 @@ class ProductService extends BaseService
         $product->like_count = $hasLiked ? max(0, $product->like_count - 1) : $product->like_count + 1;
         $product->save();
 
-        return ['liked' => !$hasLiked];
+        return [
+            'success' => true,
+            'liked' => !$hasLiked
+        ];
     }
 
 }

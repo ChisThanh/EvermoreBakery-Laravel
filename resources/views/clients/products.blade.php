@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-    <div class="">
+    <div class="mb-5">
         <div class="container relative flex flex-col lg:flex-row" id="body">
             <div class="pr-4 pt-10 lg:basis-1/3 xl:basis-1/4">
                 <div class="top-28 lg:sticky">
@@ -160,3 +160,14 @@
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        @if (session('success'))
+            openToast('success', '{{ session('success') }}', 5000);
+        @endif
+
+        @if (session('error'))
+            openToast('error', '{{ session('error') }}', 5000);
+        @endif
+    </script>
+@endpush

@@ -12,25 +12,37 @@ class DiscountsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        \DB::table('coupons')->insert([
+        $now = Carbon::now();
+        $coupons = [
             [
-                'code' => 'DISCOUNT10',
+                'code' => '10',
                 'discount_amount' => 1000,
                 'discount_percentage' => 10,
                 'quantity' => 10,
-                'expires_at' => Carbon::now()->addDays(30),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'expires_at' => $now->copy()->addDays(30),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'code' => 'DISCOUNT20',
+                'code' => '20',
                 'discount_amount' => 20000,
                 'discount_percentage' => 20,
                 'quantity' => 9,
-                'expires_at' => Carbon::now()->addDays(30),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'expires_at' => $now->copy()->addDays(30),
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
-        ]);
+            [
+                'code' => '50',
+                'discount_amount' => 50000,
+                'discount_percentage' => 40,
+                'quantity' => 9,
+                'expires_at' => $now->copy()->addDays(30),
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+        ];
+
+        \DB::table('coupons')->insert($coupons);
     }
 }

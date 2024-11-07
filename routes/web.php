@@ -12,9 +12,14 @@ Route::group([
     Route::get('/about', 'HomeController@about')->name('about');
     Route::get('/blog', 'HomeController@blog')->name('blog');
     Route::get('/contact', 'HomeController@contact')->name('contact');
-    Route::get('/checkout', 'ProductController@checkout')->middleware('auth');
-    Route::post('/checkout', 'ProductController@HandleCheckout')->middleware('auth');
     Route::get('/cart', 'ProductController@cart')->name('cart');
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/checkout', 'ProductController@checkout');
+        Route::post('/checkout', 'ProductController@HandleCheckout');
+        Route::get('/checkout/vnpay/callback', 'ProductController@CheckoutCallback')
+            ->name('checkout.callback');
+    });
 
     Route::prefix('products')->group(function () {
         Route::get('/', 'ProductController@index')->name('products');
@@ -24,18 +29,18 @@ Route::group([
     });
 });
 
-Route::get('/vnpay', function () {
-    return view("clients.test");
-});
-Route::post('/vnpay', function () {
-    $inputs = request()->validate([
-        'amount' => 'required|numeric',
-        'bill_id' => 'required',
-    ]);
-    $vnpService = new VnPayService();
-    $url = $vnpService->vnpay($inputs);
-    return redirect()->to($url);
-});
+// Route::get('/vnpay', function () {
+//     return view("clients.test");
+// });
+// Route::post('/vnpay', function () {
+//     $inputs = request()->validate([
+//         'amount' => 'required|numeric',
+//         'bill_id' => 'required',
+//     ]);
+//     $vnpService = new VnPayService();
+//     $url = $vnpService->vnpay($inputs);
+//     return redirect()->to($url);
+// });
 
 
 // https://hotkicks.themealchemy.com/home/

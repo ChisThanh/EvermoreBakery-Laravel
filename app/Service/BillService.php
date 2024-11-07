@@ -17,7 +17,6 @@ class BillService extends BaseService
     protected $couponRepository;
     protected $vnPayService;
 
-
     public function __construct(
         BillRepository $repository,
         ProductRepository $productRepository,
@@ -78,18 +77,18 @@ class BillService extends BaseService
                 'payment' => '',
             ];
 
-            if ($data['payment'] == 'card') {
-                $payment = [
-                    "card_number" => $data['card-number'],
-                    "holder_name" => $data['holder-name'],
-                    "expiration_date" => $data['expiration-date'],
-                    "cvc" => $data['cvc'],
-                ];
-                $address['payment'] = json_encode($payment);
-            }
+            // if ($data['payment'] == 'card') {
+            //     $payment = [
+            //         "card_number" => $data['card-number'],
+            //         "holder_name" => $data['holder-name'],
+            //         "expiration_date" => $data['expiration-date'],
+            //         "cvc" => $data['cvc'],
+            //     ];
+            //     $address['payment'] = json_encode($payment);
+            // }
 
             if (isset($data['coupon_code'])) {
-                $coupon = $this->getCoupons($data['coupon_code']);
+                $coupon = $this->getCoupons($data['coupon_code'])['data'];
                 if (isset($coupon) && $coupon->quantity > 0) {
                     $bill->coupon_id = $coupon->id;
                     $discountByAmount = $bill->total - $coupon->discount_amount;
@@ -105,51 +104,98 @@ class BillService extends BaseService
 
             if ($data['payment'] == 'card') {
                 $url = $this->vnPayService->vnpay([
-                    'bill_id' => "HD_" . $bill->id,
+                    'bill_id' => "HD_" . $bill->id . "_" . time(),
                     'amount' => $bill->total,
                 ]);
                 \DB::commit();
-                return ['url' => $url];
+                return [
+                    'success' => true,
+                    'url' => $url,
+                ];
             }
             cookie()->forget('cart_id');
             $this->cartRepository->getModel()->where('user_id', $user->id)->delete();
             \DB::commit();
         } catch (\Exception $th) {
             \DB::rollBack();
-            return false;
+            return [
+                'success' => false,
+                'message' => $th->getMessage(),
+            ];
         }
-        return true;
+        return ['success' => true];
     }
 
     public function getAddressUser(): mixed
     {
         $user = auth()->user();
         $model = $this->repository->getModel();
-        $data = $model->where('user_id', $user->id)->latest()->first();
-        return $data;
+        $data = $model->where('user_id', $user->id)
+            ->latest()
+            ->first();
+        if (!$data) {
+            return [
+                'success' => false,
+                'message' => 'Chưa có hóa đơn nào',
+                'data' => null,
+            ];
+        }
+        $data = $data->address;
+        return [
+            'success' => true,
+            'data' => $data,
+        ];
     }
 
     public function getCoupons($code): mixed
     {
         $coupons = $this->couponRepository->getModel()->where('code', $code)->first();
         if (!$coupons) {
-            return false;
+            return [
+                'success' => false,
+                'message' => 'Coupon not found',
+            ];
         }
-        return $coupons;
+        return [
+            'success' => true,
+            'data' => $coupons,
+        ];
     }
 
-    public function updateStatus($inputs): mixed
+    public function updateBillStatusPayment($inputs): mixed
     {
-        // 00 là mã trạng thái giao dịch thành công
-        if(isset($inputs['vnp_ResponseCode ']) && $inputs['vnp_ResponseCode '] == '00') {
-            $userId = auth()->id();
-            cookie()->forget('cart_id');
-            $this->cartRepository->getModel()->where('user_id', $userId)->delete();
-            $bill = $this->repository->getModel()->where('id', $inputs['bill_id'])->first();
-            $bill->payment_status = Bill::PAYMENT_PAID;
-            $bill->save();
-            return true;
+        $responseCode = $inputs['vnp_ResponseCode'] ?? null;
+        $transactionStatus = $inputs['vnp_TransactionStatus'] ?? null;
+
+        if ($responseCode === '00' || $transactionStatus === '00') {
+            $billId = explode('_', $inputs['vnp_TxnRef'])[1];
+            $bill = $this->repository->getModel()->find($billId);
+
+            if ($bill) {
+                $bill->payment_status = Bill::PAYMENT_PAID;
+                $bill->id_payment = $inputs['vnp_TxnRef'];
+                $bill->save();
+
+                $this->clearUserCart();
+                return [
+                    'success' => true,
+                    'message' => 'Thanh toán hóa đơn thành công',
+                ];
+            }
         }
-        return false;
+
+        $this->clearUserCart();
+        return [
+            'success' => false,
+            'message' => 'Thanh toán hóa đơn thất bại',
+        ];
     }
+
+    private function clearUserCart(): void
+    {
+        $userId = auth()->id();
+        cookie()->forget('cart_id');
+        $this->cartRepository->getModel()->where('user_id', $userId)->delete();
+    }
+
 }

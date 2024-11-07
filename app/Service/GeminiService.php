@@ -23,7 +23,7 @@ class GeminiService
 
     public function generateKeywords($text, $model = ModelType::GEMINI_FLASH): array
     {
-        $prompt = "Vui lòng tạo ra 5 từ khóa cho nội dung sản phẩm sau: {$text}. " .
+        $prompt = "Vui lòng tạo ra 5 từ khóa cho người dùng tìm kiếm cho nội dung sản phẩm sau: {$text}. " .
             "Các từ khóa nên được phân cách bởi ký tự '##' và định dạng như sau: " .
             "từ_khóa1##từ_khóa2##từ_khóa3##từ_khóa4##từ_khóa5. " .
             "Xin hãy đảm bảo rằng tất cả các từ khóa đều viết thường. " .
@@ -33,6 +33,6 @@ class GeminiService
         $result = $result->text();
         $result = str_replace("\n", "", $result);
         $array = explode('##', $result);
-        return $array;
+        return ['success' => true, 'data' => $array];
     }
 }

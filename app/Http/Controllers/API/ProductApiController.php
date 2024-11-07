@@ -25,9 +25,9 @@ class ProductApiController extends BaseApiController
     public function getCoupons($code)
     {
         $res = $this->billService->getCoupons($code);
-        if (isset($res) && $res === false)
+        if ($res['success'] === false)
             return $this->makeResponse("Có lỗi xãy ra", 400);
-        return $this->makeResponse("Get coupons successfully", 200, $res);
+        return $this->makeResponse("Get coupons successfully", 200, $res['data']);
     }
 
     public function addToCart($slug)

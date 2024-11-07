@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('ward')->nullable();
             $table->string('street')->nullable();
             $table->primary('bill_id');
-            $table->json('payment')->nullable();
         });
     }
 

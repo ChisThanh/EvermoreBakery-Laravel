@@ -1,4 +1,4 @@
-<?php   
+<?php
 
 namespace App\Service;
 
@@ -26,46 +26,87 @@ class BaseService
             }
         }
         $data = $query->paginate($inputs['limit'] ?? 10);
-        return $data;
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function all(): mixed
     {
-        return $this->repository->all();
+        $data = $this->repository->all();
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function paginate($perPage = 10): mixed
     {
-        return $this->repository->paginate($perPage);
+        $data = $this->repository->paginate($perPage);
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function search(array $columns, mixed $value): mixed
     {
-        return $this->repository->search($columns, $value);
+        $data = $this->repository->search($columns, $value);
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function where($column, $value): mixed
     {
-        return $this->repository->where($column, $value);
+        $data = $this->repository->where($column, $value);
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function find($id): mixed
     {
-        return $this->repository->find($id);
+        $data = $this->repository->find($id);
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function create(array $data): mixed
     {
-        return $this->repository->create($data);
+        $data = $this->repository->create($data);
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function update($id, array $data): mixed
     {
-        return $this->repository->update($id, $data);
+        $data = $this->repository->update($id, $data);
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 
     public function delete($id): mixed
     {
-        return $this->repository->destroy($id);
+        $check = $this->repository->destroy($id);
+        if (!$check) {
+            return [
+                'success' => false,
+                'message' => 'Delete error'
+            ];
+        }
+        return [
+            'success' => true,
+            'message' => 'Delete success'
+        ];
     }
 }

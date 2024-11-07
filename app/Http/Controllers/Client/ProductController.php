@@ -22,38 +22,41 @@ class ProductController extends Controller
     public function index()
     {
         $data = $this->productService->index(request()->all());
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
         return view('clients.products', compact('data'));
     }
 
     public function show($slug)
     {
         $data = $this->productService->show($slug);
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
+        $data = $data['data'];
         return view('clients.product-details', compact('data'));
     }
 
     public function addToCart($slug)
     {
-        $check = $this->productService->addToCart($slug);
-
-        if (!$check)
-            return abort(404);
-
+        $data = $this->productService->addToCart($slug);
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
         return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công');
     }
 
     public function updateFromCart($slug, $quantity)
     {
-        $check = $this->productService->updateFromCart($slug, $quantity);
-
-        if (!$check)
-            return abort(404);
-
+        $data = $this->productService->updateFromCart($slug, $quantity);
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
         return redirect()->back()->with('success', 'Update from cart successfully');
     }
 
     public function cart()
     {
         $data = $this->productService->showCart();
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
         return view('clients.cart', compact('data'));
     }
 
@@ -62,7 +65,17 @@ class ProductController extends Controller
         $data = $this->productService->showCart();
         $address = $this->billService->getAddressUser();
         $user = auth()->user();
-        return view('clients.checkout', compact('data', 'address', 'user'));
+
+        if (sizeof($data['cartDetails']) <= 0)
+            return redirect()
+                ->route('products')
+                ->with('error', "Chưa có sản phẩm trong giỏ hàng");
+
+        $address = $address['data'];
+        return view(
+            'clients.checkout',
+            compact('data', 'address', 'user')
+        );
     }
 
     public function HandleCheckout(Request $request)
@@ -87,13 +100,33 @@ class ProductController extends Controller
             'payment.required' => 'Phương thức thanh toán không được để trống',
         ]);
 
-        $res = $this->billService->store($request->all());
-        if (isset($res['url']))
-            return redirect($res['url']);
+        $data = $this->billService->store($request->all());
 
-        if (!$res)
-            return abort(404);
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
 
-        return redirect()->route('products')->with('success', 'Đặt hàng thành công');
+        if (isset($data['url']))
+            return redirect($data['url']);
+
+        return redirect()
+            ->route('products')
+            ->with('success', 'Đặt hàng thành công');
+    }
+
+    public function CheckoutCallback(Request $request)
+    {
+        $inputs = $request->validate([
+            "vnp_TransactionStatus" => "required",
+            "vnp_ResponseCode" => "required",
+            "vnp_TxnRef" => "required",
+        ]);
+        $data = $this->billService->updateBillStatusPayment($inputs);
+        if ($data['success'] === false)
+            return redirect()->route('products')
+                ->with('error', $data['message']);
+
+        return redirect()
+            ->route('products')
+            ->with('success', 'Đặt hàng thành công');
     }
 }
