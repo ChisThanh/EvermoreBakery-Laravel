@@ -121,7 +121,7 @@
                             <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
                                 <button type="button" onclick="likeProduct('{{ $each['slug'] }}', this)"
                                     data-liked="{{ $each['liked'] }}"
-                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2">
+                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2 border-0">
                                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
                                         @if ($each['liked'])
                                             <path
@@ -155,6 +155,11 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
+                <div class="mt-4 text-gray-700">
+                    <div class="mt-4">
+                        {{ $data->links() }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -43,6 +43,8 @@ class Product extends Model
             'id' => (string) $this->id,
             'name' => (string) $this->name,
             'description' => (string) $this->description,
+            'category' => (string) $this->category->name,
+            'price' => (float) $this->price_sale,
             'updated_at' => $this->updated_at->timestamp ?? 0,
         ];
     }

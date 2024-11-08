@@ -17,10 +17,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="{{ asset('js/tailwindcss.js') }}"></script>
@@ -61,14 +57,8 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/helper.js') }}"></script>
 @stack('scripts')
-
-</html>
-
-
-
 
 </html>

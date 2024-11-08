@@ -15,12 +15,16 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $fake = \Faker\Factory::create();
-        $category = Category::create([
-            'name' => 'Category ' . now()->timestamp,
-            'description' => $fake->text
-        ]);
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 20; $i++) {
+            if ($i < 5) {
+                $category = Category::create([
+                    'name' => 'Category ' . now()->timestamp,
+                    'description' => $fake->text
+                ]);
+                $category->images()
+                    ->create(['url' => 'images/categories/0D4mqkyOHOrjbGwCGfSPc2HSX6rijbtdJMtLzS6m.jpg']);
+            }
             $product = Product::create([
                 'category_id' => $category->id,
                 'name' => $fake->words(3, true),
@@ -29,7 +33,8 @@ class ProductSeeder extends Seeder
                 'stock_quantity' => $fake->randomNumber(2),
                 'description' => $fake->text,
             ]);
-            $product->images()->create(['url' => 'images/products/0D4mqkyOHOrjbGwCGfSPc2HSX6rijbtdJMtLzS6m.jpg']);
+            $product->images()
+                ->create(['url' => 'images/products/0D4mqkyOHOrjbGwCGfSPc2HSX6rijbtdJMtLzS6m.jpg']);
         }
     }
 }

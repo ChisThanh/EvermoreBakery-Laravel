@@ -24,35 +24,20 @@ class ProductService extends BaseService
         $this->billRepository = $billRepository;
     }
 
-
-    public function index(array $inputs): mixed
+    public function getProductHome()
     {
-        // \DB::enableQueryLog();
-        // dd(\DB::getQueryLog());
         $model = $this->repository->getModel();
-
-        $query = $model
-            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug')
+        $products = $model
+            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug', 'created_at')
             ->with([
                 'category:id,name',
                 'images:id,imageable_id,url',
                 'likes:id',
-            ]);
-
-        if (isset($inputs['q']))
-            $query->where('name', 'like', '%' . $inputs['q'] . '%');
-
-        if (isset($inputs['sort']))
-            $query->orderBy($inputs['sort'], $inputs['order'] ?? 'asc');
-
-
-        if (isset($inputs['filter']))
-            foreach ($inputs['filter'] as $key => $value)
-                if (!empty($value))
-                    $query->where($key, 'like', '%' . $value . '%');
-
-        $data = $query->paginate($inputs['limit'] ?? 10);
-        $data->getCollection()->transform(function ($product) {
+            ])
+            ->orderBy('created_at', 'desc')
+            ->limit(8)
+            ->get();
+        $products->transform(function ($product) {
             $product->category_name = $product->category->name;
             $product->image = $product->images->first()->url ?? null;
             $product->liked = false;
@@ -61,7 +46,43 @@ class ProductService extends BaseService
 
         if (auth()->check()) {
             $userId = auth()->id();
-            $data->getCollection()->transform(function ($product) use ($userId) {
+            $products->transform(function ($product) use ($userId) {
+                $product->liked = $product->likes->contains('id', $userId);
+                return $product;
+            });
+        }
+
+        return $products;
+    }
+
+    public function index(array $inputs): mixed
+    {
+        // \DB::enableQueryLog();
+        // dd(\DB::getQueryLog());
+        $model = $this->repository->getModel();
+
+        // dd($model->search($inputs['q'] ?? '')->raw());
+        $query = $model->search($inputs['q'] ?? '')
+            ->query(function ($query) use ($inputs) {
+                $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug')
+                    ->with([
+                        'category:id,name',
+                        'images:id,imageable_id,url',
+                        'likes:id',
+                    ]);
+            });
+
+        $data = $query->paginate($inputs['limit'] ?? 9);
+        $data->transform(function ($product) {
+            $product->category_name = $product->category->name;
+            $product->image = $product->images->first()->url ?? null;
+            $product->liked = false;
+            return $product;
+        });
+
+        if (auth()->check()) {
+            $userId = auth()->id();
+            $data->transform(function ($product) use ($userId) {
                 $product->liked = $product->likes->contains('id', $userId);
                 return $product;
             });
