@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
-            $table->float('rating')->default(0);
-            $table->string('comment')->default('');
-            $table->integer('quantity_limit')->default(0);
+            $table->float('rating', 10)->default(0);
+            $table->string('comment', 100)->default('');
+            $table->tinyInteger('quantity_limit')->default(0);
             $table->timestamps();
         });
     }

@@ -1,36 +1,47 @@
 <?php
 
-use App\Http\Controllers\Client\KeywordController;
-use App\Http\Controllers\ProfileController;
-use App\Models\Product;
-use App\Service\GeminiService;
-use Illuminate\Http\Request;
+use App\Service\VnPayService;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group([
+    'namespace' => 'App\Http\Controllers\Client',
+], function () {
+
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index');
+    Route::get('/about', 'HomeController@about')->name('about');
+    Route::get('/blog', 'HomeController@blog')->name('blog');
+    Route::get('/contact', 'HomeController@contact')->name('contact');
+    Route::get('/cart', 'ProductController@cart')->name('cart');
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/checkout', 'ProductController@checkout');
+        Route::post('/checkout', 'ProductController@HandleCheckout');
+        Route::get('/checkout/vnpay/callback', 'ProductController@CheckoutCallback')
+            ->name('checkout.callback');
+    });
+
+    Route::prefix('products')->group(function () {
+        Route::get('/', 'ProductController@index')->name('products');
+        Route::get('/{slug}', 'ProductController@show')->name('product.show');
+        Route::get('/add-to-cart/{slug}', 'ProductController@addToCart');
+        Route::get('/update-from-cart/{slug}/{quantity}', 'ProductController@updateFromCart');
+    });
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/vnpay', function () {
+//     return view("clients.test");
+// });
+// Route::post('/vnpay', function () {
+//     $inputs = request()->validate([
+//         'amount' => 'required|numeric',
+//         'bill_id' => 'required',
+//     ]);
+//     $vnpService = new VnPayService();
+//     $url = $vnpService->vnpay($inputs);
+//     return redirect()->to($url);
+// });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-Route::prefix('kw')->group(function () {
-    Route::get('/search', [KeywordController::class, 'search'])->name('kw.search');
-    Route::get('/generate', [KeywordController::class, 'generate'])->name('kw.generate');
-});
-
-Route::get('/test', function (Request $request) {
-    $result = Product::search($request->q)->options([
-        'query_by' => 'name,description',
-    ])->get();
-    return response()->json($result);
-});
-
+// https://hotkicks.themealchemy.com/home/
 require __DIR__ . '/auth.php';

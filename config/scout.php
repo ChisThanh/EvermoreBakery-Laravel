@@ -185,10 +185,24 @@ return [
                         [
                             'name' => 'name',
                             'type' => 'string',
+                            'tokenization' => 'ngram',
+                            'ngram' => ['min' => 1, 'max' => 2]
                         ],
                         [
                             'name' => 'description',
                             'type' => 'string',
+                            'tokenization' => 'ngram',
+                            'ngram' => ['min' => 1, 'max' => 2]
+                        ],
+                        [
+                            'name' => 'category',
+                            'type' => 'string',
+                            'tokenization' => 'ngram',
+                            'ngram' => ['min' => 1, 'max' => 2]
+                        ],
+                        [
+                            'name' => 'price',
+                            'type' => 'float',
                         ],
                         [
                             'name' => 'updated_at',
@@ -198,7 +212,7 @@ return [
                     'default_sorting_field' => 'updated_at',
                 ],
                 'search-parameters' => [
-                    'query_by' => 'name,description',
+                    'query_by' => 'name,description,category',
                 ],
             ],
         ],

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -28,7 +30,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $token = Auth::user()
+            ->createToken(
+                'authToken',
+                ['*'],
+                Carbon::now()->addDays(30)
+            )->plainTextToken;
+
+        Session::put('apiToken', $token);
+
+        return redirect()->intended(route('home', absolute: false));
     }
 
     /**
