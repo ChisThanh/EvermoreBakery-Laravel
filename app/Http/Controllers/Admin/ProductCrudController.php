@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\Product;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Illuminate\Support\Str;
 
 /**
  * Class ProductCrudController
@@ -23,19 +21,19 @@ class ProductCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     *
+     * 
      * @return void
      */
     public function setup()
     {
-        CRUD::setModel(Product::class);
+        CRUD::setModel(\App\Models\Product::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/product');
         CRUD::setEntityNameStrings('product', 'products');
-
+        
         $this->crud->addColumn([
             'name' => 'category_id',
             'type' => 'select',
-            'label' => 'Category name',
+            'label' => 'Thể loại',
             'entity' => 'category',
             'attribute' => 'name',
             'model' => "App\Models\Category",
@@ -44,77 +42,27 @@ class ProductCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'image',
             'type' => 'image',
-            'label' => 'Image',
+            'label' => 'Hình ảnh',
             'width' => '50px',
             'height' => '50px',
             'value' => function ($entry) {
-                if (
-                    Str::startsWith(
-                        $entry->image,
-                        ['http', 'https']
-                    )
-                ) {
-                    return "http://localhost:9090/storage/images/products/gJeGtNP1pJhkYC6JV1M3ycB6W5mf26GEzLAkEzFA.jpg";
-                }
-                return asset('storage/' . $entry->image);
+                return optional($entry->images->first())->url
+                    ? asset('storage/' . $entry->images->first()->url)
+                    : null;
             }
         ]);
     }
 
-    public function store(ProductRequest $request)
-    {
-        $image = "";
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')
-            ->store('images/products', 'public'); 
-            $image = $imagePath; 
-        }
-        $product = $this->crud->model->create([
-            'name' => $request->input('name'),
-            'category_id' => $request->input('category_id'),
-            'price' => $request->input('price'),
-            'price_sale' => $request->input('price_sale'),
-            'description' => $request->input('description'),
-            'image' => $image,
-            'stock_quantity' => $request->input('stock_quantity')
-        ]);
-
-        \Alert::success(trans('backpack::crud.insert_success'))->flash();
-        return $this->crud->performSaveAction($product->id);
-    }
-
-    public function update()
-    {
-        $this->crud->hasAccessOrFail('update');
-
-        $request = $this->crud->validateRequest();
-        $array = $request->all();
-
-        $item = $this->crud->model->findOrFail($request->id);
-        if ($request->hasFile('image')) {
-                \Storage::disk('public')->delete($item->image);
-
-            $imagePath = $request->file('image')
-                ->store('images/products', 'public');
-            $array['image'] = $imagePath;
-        }
-
-        $item->update($array);
-
-        \Alert::success(trans('backpack::crud.update_success'))->flash();
-        return $this->crud->performSaveAction($item->getKey());
-    }
-
     /**
      * Define what happens when the List operation is loaded.
-     *
+     * 
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
     protected function setupListOperation()
     {
         CRUD::setFromDb(); // set columns from db columns.
-
+        $this->crud->addClause('with', 'images');
         /**
          * Columns can be defined using the fluent syntax:
          * - CRUD::column('price')->type('number');
@@ -123,7 +71,7 @@ class ProductCrudController extends CrudController
 
     /**
      * Define what happens when the Create operation is loaded.
-     *
+     * 
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
@@ -134,18 +82,17 @@ class ProductCrudController extends CrudController
 
         CRUD::addField([
             'name' => 'category_id',
-            'label' => "Category",
+            'label' => "Thể loại",
             'type' => 'select',
-            'entity' => 'category', // Tên phương thức quan hệ trong model
-            'model' => 'App\Models\Category', // Đường dẫn tới model Category
-            'attribute' => 'name', // Trường hiển thị tên category
-            'attributes' => ['required' => 'required'], // Đánh dấu là bắt buộc
+            'entity' => 'category',
+            'model' => 'App\Models\Category',
+            'attribute' => 'name',
         ]);
 
         CRUD::addField([
             'name' => 'price',
             'type' => 'number',
-            'label' => 'Price',
+            'label' => 'Giá',
             'prefix' => '$',
             'attributes' => ["step" => "1"]
         ]);
@@ -153,28 +100,101 @@ class ProductCrudController extends CrudController
         CRUD::addField([
             'name' => 'price_sale',
             'type' => 'number',
-            'label' => 'Price sale',
+            'label' => 'Giá giảm',
             'prefix' => '$',
             'attributes' => ["step" => "1"]
         ]);
 
         CRUD::addField([
-            'name' => 'image',
-            'type' => 'upload',
-            'label' => 'Image',
+            'name' => 'images',
+            'label' => 'Hình ảnh',
+            'type' => 'upload_multiple',
             'upload' => true,
-            'prefix' => 'storage/'
+            'disk' => 'public',
+            'prefix' => 'storage/',
+            'temporary' => 10,
+            'hint' => 'Tải lên nhiều hình ảnh.',
         ]);
+
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     *
+     * 
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+        $this->crud->removeField('images');
+        $currentEntry = $this->crud->getCurrentEntry();
+        $images = $currentEntry->images()->get();
+
+        CRUD::addField([
+            'name' => 'image_old',
+            'label' => 'Hình ảnh cũ',
+            'type' => 'view',
+            'view' => 'vendor.backpack.ui.custom.images',
+            'images' => $images,
+        ]);
+
+        CRUD::addField([
+            'name' => 'images_new',
+            'label' => 'Hình ảnh',
+            'type' => 'upload_multiple',
+            'upload' => true,
+            'temporary' => 10,
+            'hint' => 'Tải lên nhiều hình ảnh.',
+        ]);
     }
+
+    public function store(ProductRequest $request)
+    {
+        $product = $this->crud->model->create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'price' => $request->price,
+            'price_sale' => $request->price_sale,
+            'description' => $request->description,
+        ]);
+
+        if ($request->hasFile('images')) {
+            $images = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('images/products', 'public');
+                $images[] = ['url' => $path];
+            }
+            $product->images()->createMany($images);
+        }
+        \Alert::success(trans('backpack::crud.insert_success'))->flash();
+        return $this->crud->performSaveAction($product->id);
+    }
+
+    public function update(ProductRequest $request)
+    {
+        $item = $this->crud->model->findOrFail($request->id);
+        if ($request->has('old') && $request->hasFile('images_new')) {
+            $ids = [];
+            foreach ($request->old as $image) {
+                [$id, $url] = explode('_', $image);
+                $ids[] = $id;
+                \Storage::disk('public')->delete($url);
+            }
+            $item->images()->whereIn('id', $ids)->delete();
+
+            if ($request->hasFile('images_new')) {
+                $images = [];
+                foreach ($request->file('images_new') as $image) {
+                    $path = $image->store('images/products', 'public');
+                    $images[] = ['url' => $path];
+                }
+                $item->images()->createMany($images);
+            }
+        }
+        $item->update($request->all());
+        \Alert::success(trans('backpack::crud.update_success'))->flash();
+        return $this->crud->performSaveAction($item->getKey());
+    }
+
 }

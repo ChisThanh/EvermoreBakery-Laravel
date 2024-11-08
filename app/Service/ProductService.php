@@ -28,7 +28,7 @@ class ProductService extends BaseService
     {
         $model = $this->repository->getModel();
         $products = $model
-            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug', 'created_at')
+            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug', 'created_at')
             ->with([
                 'category:id,name',
                 'images:id,imageable_id,url',
@@ -64,7 +64,7 @@ class ProductService extends BaseService
         // dd($model->search($inputs['q'] ?? '')->raw());
         $query = $model->search($inputs['q'] ?? '')
             ->query(function ($query) use ($inputs) {
-                $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug')
+                $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug')
                     ->with([
                         'category:id,name',
                         'images:id,imageable_id,url',
