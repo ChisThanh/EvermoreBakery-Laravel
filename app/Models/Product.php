@@ -39,9 +39,9 @@ class Product extends Model
     {
         return [
             'id' => (string) $this->id,
-            'name' => (string) $this->name,
-            'description' => (string) $this->description,
-            'category' => (string) $this->category->name,
+            'name' => strtolower($this->name),
+            'description' => strtolower($this->description),
+            'category' => strtolower($this->category->name),
             'price' => (float) $this->price_sale,
             'updated_at' => $this->updated_at->timestamp ?? 0,
         ];

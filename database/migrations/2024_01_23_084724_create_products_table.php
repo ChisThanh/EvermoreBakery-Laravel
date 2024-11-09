@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->integer('like_count')->default(0);
             $table->tinyInteger('status')->default(1);
+            $table->boolean('is_display')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

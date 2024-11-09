@@ -12,20 +12,24 @@ class ProductService extends BaseService
     protected $repository;
     protected $cartRepository;
     protected $billRepository;
+    protected $dataProcessorService;
 
     public function __construct(
         ProductRepository $repository,
         CartRepository $cartRepository,
         BillRepository $billRepository,
+        DataProcessorService $dataProcessorService
 
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
+        $this->dataProcessorService = $dataProcessorService;
     }
 
     public function getProductHome()
     {
+        // \DB::enableQueryLog();
         $model = $this->repository->getModel();
         $products = $model
             ->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug', 'created_at')
@@ -51,18 +55,18 @@ class ProductService extends BaseService
                 return $product;
             });
         }
-
+        // dd(\DB::getQueryLog());
         return $products;
     }
 
     public function index(array $inputs): mixed
     {
         // \DB::enableQueryLog();
-        // dd(\DB::getQueryLog());
+
         $model = $this->repository->getModel();
 
         // dd($model->search($inputs['q'] ?? '')->raw());
-        $query = $model->search($inputs['q'] ?? '')
+        $query = $model->search(strtolower($inputs['q'] ?? ''))
             ->query(function ($query) use ($inputs) {
                 $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug')
                     ->with([
@@ -89,6 +93,7 @@ class ProductService extends BaseService
         }
 
         $this->getCart(request()->cookie('cart_id'));
+        // dd(\DB::getQueryLog());
         return $data;
     }
 
@@ -107,11 +112,13 @@ class ProductService extends BaseService
             $product = $model->first();
 
         $product->liked = false;
+        $userId = '';
         if (auth()->check()) {
             $userId = auth()->id();
             $product->liked = $product->likes->contains('id', $userId);
         }
-
+        $cookieId = request()->cookie('cart_id');
+        $this->dataProcessorService->sendPostRequest($userId, $cookieId, $product->id);
         return [
             'success' => true,
             'data' => $product,

@@ -207,6 +207,19 @@ return [
                         [
                             'name' => 'updated_at',
                             'type' => 'int64',
+                        ],
+                        [
+                            "name" => "embedding",
+                            "type" => "float[]",
+                            "embed" => [
+                                "from" => [
+                                    "name",
+                                    "description"
+                                ],
+                                "model_config" => [
+                                    "model_name" => "ts/all-MiniLM-L12-v2"
+                                ]
+                            ]
                         ]
                     ],
                     'default_sorting_field' => 'updated_at',

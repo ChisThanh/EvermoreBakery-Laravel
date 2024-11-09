@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('product_interactions', function (Blueprint $table) {
             $table->id();
-            $table->string("ip_address", 20);
+            $table->string("cookie_id");
             $table->integer("user_id")->nullable();
             $table->foreignId('product_id')->constrained();
             $table->string('type', 10)->default('view');
