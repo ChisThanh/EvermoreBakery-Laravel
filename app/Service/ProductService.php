@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\Jobs\SendService;
 use App\Repositories\BillRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\ProductRepository;
@@ -12,19 +13,16 @@ class ProductService extends BaseService
     protected $repository;
     protected $cartRepository;
     protected $billRepository;
-    protected $dataProcessorService;
 
     public function __construct(
         ProductRepository $repository,
         CartRepository $cartRepository,
         BillRepository $billRepository,
-        DataProcessorService $dataProcessorService
 
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
-        $this->dataProcessorService = $dataProcessorService;
     }
 
     public function getProductHome()
@@ -118,7 +116,7 @@ class ProductService extends BaseService
             $product->liked = $product->likes->contains('id', $userId);
         }
         $cookieId = request()->cookie('cart_id');
-        $this->dataProcessorService->sendPostRequest($userId, $cookieId, $product->id);
+        dispatch(new SendService($userId, $cookieId, $product->id));
         return [
             'success' => true,
             'data' => $product,

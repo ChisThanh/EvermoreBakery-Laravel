@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 
 class DataProcessorService
 {
-	protected $url = 'data-processor-service:8000';
+	protected $url = 'data-processor-service';
 	protected $client;
 
 	public function __construct()
@@ -18,7 +18,7 @@ class DataProcessorService
 	public function sendPostRequest($userId, $cookieId, $productId)
 	{
 		$data = [
-			'user_id' => $userId,
+			'user_id' => $userId == '' ? 0 : $userId,
 			'cookie_id' => $cookieId,
 			'product_id' => $productId,
 		];
