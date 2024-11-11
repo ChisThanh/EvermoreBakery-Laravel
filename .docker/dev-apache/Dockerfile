@@ -91,4 +91,7 @@ RUN  composer install --optimize-autoloader --no-interaction --no-progress
 # storage link
 RUN php artisan storage:link
 
+# optimize Laravel
+RUN php artisan optimize:clear
+
 USER root
