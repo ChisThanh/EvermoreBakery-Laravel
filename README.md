@@ -13,7 +13,7 @@
 ``` 4. lần đầu chạy bằng ``` docker docker compose up -d --build
 
 
-``` 5. docker exec -it evermorebakery-php-1 bash
+``` 5. docker exec -it evermorebakery-laravel-php-1 bash
 
 
 ``` 6. composer install
