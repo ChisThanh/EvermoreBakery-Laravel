@@ -25,16 +25,16 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     cron \
     sudo \
     libzip-dev \
+    libpng-dev \  
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install \
-    pdo_mysql \
+    && docker-php-ext-install gettext intl pdo_mysql gd opcache zip \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     intl \
     opcache \
     zip \
-    && rm -rf /tmp/* \
-    && rm -rf /var/list/apt/* \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/* /var/list/apt/* /var/lib/apt/lists/* \
     && apt-get clean
 
 # Add Microsoft SQL Server ODBC driver repository and install ODBC driver and PHP extensions for SQL Server
@@ -91,7 +91,5 @@ RUN  composer install --optimize-autoloader --no-interaction --no-progress
 # storage link
 RUN php artisan storage:link
 
-# optimize Laravel
-RUN php artisan optimize:clear
 
 USER root
