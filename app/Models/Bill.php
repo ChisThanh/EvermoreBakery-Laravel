@@ -13,6 +13,7 @@ class Bill extends Model
     public const STATUS_PROCESSING = 2;
     public const STATUS_DELIVERED = 3;
     public const STATUS_CANCEL = 4;
+    public const STATUS_FINISHED = 5;
 
     public const PAYMENT_METHOD_CASH = 1;
     public const PAYMENT_METHOD_CARD = 2;

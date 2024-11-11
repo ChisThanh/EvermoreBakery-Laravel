@@ -40,8 +40,11 @@ class AuthenticatedSessionController extends Controller
         Session::put('apiToken', $token);
         $cookie_id = request()->cookie('cart_id');
 
-        \DB::raw("UPDATE product_interactions SET user_id = " . Auth::id() . " WHERE cookie_id = '" . $cookie_id . "'");
-
+        \DB::statement("UPDATE product_interactions SET user_id = :user_id WHERE cookie_id = :cookie_id", [
+            'user_id' => Auth::id(),
+            'cookie_id' => $cookie_id,
+        ]);
+        
         return redirect()->intended(route('home', absolute: false));
     }
 
