@@ -1,0 +1,83 @@
+services:
+    nginx:
+        image: nginx:latest
+        ports:
+            - "9090:80"
+        volumes:
+            - ./:/var/www/html
+            - ./.docker/dev-nginx:/etc/nginx/conf.d
+        networks:
+            - custom_network
+
+    php:
+        build:
+            context: .
+            dockerfile: ./.docker/dev-nginx/Dockerfile
+        volumes:
+            - ./:/var/www/html
+            - ./.docker/dev-nginx/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
+            - ./.docker/dev-nginx/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+        networks:
+            - custom_network
+
+    redis:
+        container_name: redis
+        image: 'redis:alpine'
+        command: redis-server --requirepass someredispassword
+        networks:
+            - custom_network
+
+    queue-redis:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./.docker/dev-nginx/Dockerfile
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - custom_network
+        command: php artisan queue:work
+        depends_on:
+            - redis
+
+    typesense:
+        image: typesense/typesense:27.1
+        restart: on-failure
+        ports:
+            - "8108:8108"
+        volumes:
+            - typesense-data:/data
+        command: '--data-dir /data --api-key=masterKey --enable-cors'
+        networks:
+            - custom_network
+
+volumes:
+    typesense-data:
+
+
+networks:
+    custom_network:
+        external: true
+
+# typesense:
+#     image: typesense/typesense:0.25.2
+#     container_name: ${TYPESENSE_CONTAINER_NAME}
+#     restart: unless-stopped
+#     ports:
+#       - "${TYPESENSE_API_PORT}:${TYPESENSE_API_PORT}" # Typesense API port
+#       - "${TYPESENSE_PEERING_PORT}:${TYPESENSE_PEERING_PORT}" # Typesense peering port
+#     environment:
+#       - VIRTUAL_HOST=${VIRTUAL_HOST}
+#       - VIRTUAL_PORT=${TYPESENSE_API_PORT}
+#       - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+#       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+#     volumes:
+#       - ${TYPESENSE_DATA_VOLUME}:/data
+#     command:
+#       - '--data-dir=/data'
+#       - '--api-key=${TYPESENSE_API_KEY}'
+#       - '--api-port=${TYPESENSE_API_PORT}'
+#       - '--peering-port=${TYPESENSE_PEERING_PORT}'
+#       - '--enable-cors'
+#     networks:
+#       - nginxproxy_network
