@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\Jobs\SendService;
 use App\Repositories\BillRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\ProductRepository;
@@ -26,9 +27,10 @@ class ProductService extends BaseService
 
     public function getProductHome()
     {
+        // \DB::enableQueryLog();
         $model = $this->repository->getModel();
         $products = $model
-            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug', 'created_at')
+            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug', 'created_at')
             ->with([
                 'category:id,name',
                 'images:id,imageable_id,url',
@@ -51,20 +53,20 @@ class ProductService extends BaseService
                 return $product;
             });
         }
-
+        // dd(\DB::getQueryLog());
         return $products;
     }
 
     public function index(array $inputs): mixed
     {
         // \DB::enableQueryLog();
-        // dd(\DB::getQueryLog());
+
         $model = $this->repository->getModel();
 
         // dd($model->search($inputs['q'] ?? '')->raw());
-        $query = $model->search($inputs['q'] ?? '')
+        $query = $model->search(strtolower($inputs['q'] ?? ''))
             ->query(function ($query) use ($inputs) {
-                $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'stock_quantity', 'slug')
+                $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug')
                     ->with([
                         'category:id,name',
                         'images:id,imageable_id,url',
@@ -89,6 +91,7 @@ class ProductService extends BaseService
         }
 
         $this->getCart(request()->cookie('cart_id'));
+        // dd(\DB::getQueryLog());
         return $data;
     }
 
@@ -107,11 +110,13 @@ class ProductService extends BaseService
             $product = $model->first();
 
         $product->liked = false;
+        $userId = '';
         if (auth()->check()) {
             $userId = auth()->id();
             $product->liked = $product->likes->contains('id', $userId);
         }
-
+        $cookieId = request()->cookie('cart_id');
+        dispatch(new SendService($userId, $cookieId, $product->id));
         return [
             'success' => true,
             'data' => $product,

@@ -2,7 +2,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Listen for XDebug on Docker",
+            "name": "FastAPI",
+            "type": "python",
+            "request": "attach",
+            "port": 5678,
+            "host": "localhost",
+            "pathMappings": [
+                {
+                    "localRoot": "/home/chisthanh/php/EvermoreBakeryProject/data-processor-service/app",
+                    "remoteRoot": "/app"
+                }
+            ]
+        },
+        {
+            "name": "Laravel",
             "type": "php",
             "request": "launch",
             "port": 9003,

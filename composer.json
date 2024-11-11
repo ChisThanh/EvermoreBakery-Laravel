@@ -74,15 +74,5 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true,
-    "repositories": {
-        "backpack": {
-            "type": "composer",
-            "url": "https://repo.backpackforlaravel.com/"
-        },
-        "backpack": {
-            "type": "composer",
-            "url": "https://repo.backpackforlaravel.com/"
-        }
-    }
+    "prefer-stable": true
 }

@@ -18,9 +18,9 @@ return new class extends Migration {
             $table->bigInteger('price')->default(0);
             $table->bigInteger('price_sale')->default(0);
             $table->text('description')->nullable();
-            $table->integer('stock_quantity');
             $table->integer('like_count')->default(0);
             $table->tinyInteger('status')->default(1);
+            $table->boolean('is_display')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,21 +1,12 @@
 services:
-    nginx:
-        image: nginx:latest
-        ports:
-            - "9090:80"
-        volumes:
-            - ./:/var/www/html
-            - ./.docker/nginx:/etc/nginx/conf.d
-        networks:
-            - custom_network
-
-    php:
+    app:
         build:
             context: .
+            dockerfile: ./.docker/dev-apache/Dockerfile
         volumes:
             - ./:/var/www/html
-            - ./.docker/php/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
-            - ./.docker/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+        ports:
+            - "9090:80"
         networks:
             - custom_network
 
@@ -30,6 +21,7 @@ services:
         restart: always
         build:
             context: .
+            dockerfile: ./.docker/dev-apache/Dockerfile
         volumes:
             - ./:/var/www/html
         networks:
@@ -56,26 +48,3 @@ volumes:
 networks:
     custom_network:
         external: true
-
-# typesense:
-#     image: typesense/typesense:0.25.2
-#     container_name: ${TYPESENSE_CONTAINER_NAME}
-#     restart: unless-stopped
-#     ports:
-#       - "${TYPESENSE_API_PORT}:${TYPESENSE_API_PORT}" # Typesense API port
-#       - "${TYPESENSE_PEERING_PORT}:${TYPESENSE_PEERING_PORT}" # Typesense peering port
-#     environment:
-#       - VIRTUAL_HOST=${VIRTUAL_HOST}
-#       - VIRTUAL_PORT=${TYPESENSE_API_PORT}
-#       - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
-#       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
-#     volumes:
-#       - ${TYPESENSE_DATA_VOLUME}:/data
-#     command:
-#       - '--data-dir=/data'
-#       - '--api-key=${TYPESENSE_API_KEY}'
-#       - '--api-port=${TYPESENSE_API_PORT}'
-#       - '--peering-port=${TYPESENSE_PEERING_PORT}'
-#       - '--enable-cors'
-#     networks:
-#       - nginxproxy_network

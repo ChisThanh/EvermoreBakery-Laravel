@@ -24,15 +24,19 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rule = [
             'name' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric',
-            'price_sale' => 'nullable|numeric',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
-            'stock_quantity' => 'required|integer',
+            'price_sale' => 'required|numeric',
+            'description' => 'required|string',
+            'images' => 'required|min:4',
         ];
+        if ($this->isMethod('put')) {
+            $rule['id'] = 'required';
+            $rule['images'] = 'nullable';
+        }
+        return $rule;
     }
 
     /**

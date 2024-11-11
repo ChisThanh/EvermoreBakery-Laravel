@@ -74,7 +74,6 @@ class BillService extends BaseService
                 'district' => $data['district'],
                 'ward' => $data['ward'],
                 'phone' => $data['phone'],
-                'payment' => '',
             ];
 
             // if ($data['payment'] == 'card') {

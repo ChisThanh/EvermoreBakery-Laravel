@@ -30,7 +30,6 @@ class ProductSeeder extends Seeder
                 'name' => $fake->words(3, true),
                 'price' => $fake->randomNumber(5),
                 'price_sale' => $fake->randomNumber(5),
-                'stock_quantity' => $fake->randomNumber(2),
                 'description' => $fake->text,
             ]);
             $product->images()
