@@ -3,7 +3,7 @@
 
 namespace App\Service;
 
-use App\Jobs\SendService;
+use App\Jobs\ProductInteractionJob;
 use App\Repositories\BillRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\ProductRepository;
@@ -116,7 +116,7 @@ class ProductService extends BaseService
             $product->liked = $product->likes->contains('id', $userId);
         }
         $cookieId = request()->cookie('cart_id');
-        dispatch(new SendService($userId, $cookieId, $product->id));
+        dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
         return [
             'success' => true,
             'data' => $product,
@@ -291,33 +291,4 @@ class ProductService extends BaseService
             'liked' => !$hasLiked
         ];
     }
-
 }
-// SELECT 
-//     p.id AS product_id,
-//     p.name AS product_name,
-//     p.category_id,
-//     p.price,
-//     p.stock_quantity,
-//     c.id AS category_id,
-//     c.name AS category_name,
-//     i.id AS image_id,
-//     i.imageable_id,
-//     i.url AS image_url,
-//     u.id AS user_id,
-//     l.user_id AS liked_user_id
-// FROM 
-//     products p
-// LEFT JOIN 
-//     categories c ON p.category_id = c.id AND c.deleted_at IS NULL
-// LEFT JOIN 
-//     images i ON i.imageable_id = p.id AND i.imageable_type = 'App\Models\Product'
-// LEFT JOIN 
-//     likes l ON l.product_id = p.id
-// LEFT JOIN 
-//     users u ON u.id = l.user_id
-// WHERE 
-//     p.deleted_at IS NULL
-// ORDER BY 
-//     p.id
-// OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;

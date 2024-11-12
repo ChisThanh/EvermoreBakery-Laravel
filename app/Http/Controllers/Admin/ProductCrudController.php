@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ProductRequest;
+use App\Jobs\GenerateKeywordJob;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -29,7 +30,7 @@ class ProductCrudController extends CrudController
         CRUD::setModel(\App\Models\Product::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/product');
         CRUD::setEntityNameStrings('product', 'products');
-        
+
         $this->crud->addColumn([
             'name' => 'category_id',
             'type' => 'select',
@@ -168,6 +169,10 @@ class ProductCrudController extends CrudController
             $product->images()->createMany($images);
         }
         \Alert::success(trans('backpack::crud.insert_success'))->flash();
+        dispatch(new GenerateKeywordJob(
+            $product->id,
+            $product->name . ' ' . $product->description
+        ));
         return $this->crud->performSaveAction($product->id);
     }
 

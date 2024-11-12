@@ -15,7 +15,7 @@ class DataProcessorService
 		$this->client = new Client();
 	}
 
-	public function sendPostRequest($userId, $cookieId, $productId)
+	public function productInteraction($userId, $cookieId, $productId)
 	{
 		$data = [
 			'user_id' => $userId == '' ? 0 : $userId,
@@ -28,4 +28,13 @@ class DataProcessorService
 		]);
 		return $response->getBody()->getContents();
 	}
+
+	public function generateKeywords($productId, $text)
+    {
+        $url = $this->url . '/api/v1/generate-keywords/' . $productId . '?text=' . urlencode($text);
+        $response = $this->client->post($url, [
+            'json' => []  
+        ]);
+        return $response->getBody()->getContents();
+    }
 }

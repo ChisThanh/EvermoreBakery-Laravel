@@ -76,16 +76,6 @@ class BillService extends BaseService
                 'phone' => $data['phone'],
             ];
 
-            // if ($data['payment'] == 'card') {
-            //     $payment = [
-            //         "card_number" => $data['card-number'],
-            //         "holder_name" => $data['holder-name'],
-            //         "expiration_date" => $data['expiration-date'],
-            //         "cvc" => $data['cvc'],
-            //     ];
-            //     $address['payment'] = json_encode($payment);
-            // }
-
             if (isset($data['coupon_code'])) {
                 $coupon = $this->getCoupons($data['coupon_code'])['data'];
                 if (isset($coupon) && $coupon->quantity > 0) {
