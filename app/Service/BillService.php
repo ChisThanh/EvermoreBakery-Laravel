@@ -162,6 +162,7 @@ class BillService extends BaseService
 
             if ($bill) {
                 $bill->payment_status = Bill::PAYMENT_PAID;
+                $bill->status = Bill::STATUS_PROCESSING;
                 $bill->id_payment = $inputs['vnp_TxnRef'];
                 $bill->save();
 

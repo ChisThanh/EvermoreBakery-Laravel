@@ -19,6 +19,8 @@ Route::group([
     Route::crud('product', 'ProductCrudController');
     Route::crud('category', 'CategoryCrudController');
     Route::crud('coupon', 'CouponCrudController');
+    Route::crud('bill', 'BillCrudController');
+    Route::get('bill/{id}/update-status/{status}', 'BillCrudController@updateStatus');
 }); // this should be the absolute last line of this file
 
 /**

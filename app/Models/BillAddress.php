@@ -18,6 +18,5 @@ class BillAddress extends Model
         'district',
         'ward',
         'street',
-        'payment'
     ];
 }
