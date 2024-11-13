@@ -6,13 +6,8 @@ use App\Http\Requests\BillRequest;
 use App\Models\Bill;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-use Backpack\CRUD\app\Library\Widget;
 
-/**
- * Class BillCrudController
- * @package App\Http\Controllers\Admin
- * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
- */
+
 class BillCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
@@ -23,11 +18,6 @@ class BillCrudController extends CrudController
     }
 
 
-    /**
-     * Configure the CrudPanel object. Apply settings to all operations.
-     * 
-     * @return void
-     */
     public function setup()
     {
         CRUD::setModel(\App\Models\Bill::class);
@@ -36,7 +26,6 @@ class BillCrudController extends CrudController
         CRUD::denyAccess('delete');
         CRUD::denyAccess('update');
         CRUD::denyAccess('create');
-
 
         $this->crud->addColumn([
             'name' => 'status',
@@ -68,7 +57,6 @@ class BillCrudController extends CrudController
                 '2' => 'Chưa thanh toán',
             ],
         ]);
-
         $this->crud->addColumn([
             'name' => 'user_id',
             'type' => 'select',
@@ -77,7 +65,6 @@ class BillCrudController extends CrudController
             'attribute' => 'name',
             'model' => "App\Models\User",
         ]);
-
         $this->crud->addColumn([
             'name' => 'quick_update',
             'label' => 'Thay đổi trình trạng',
@@ -95,45 +82,20 @@ class BillCrudController extends CrudController
         ]);
     }
 
-    /**
-     * Define what happens when the List operation is loaded.
-     * 
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
-     */
+
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
-
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
+        CRUD::setFromDb();
     }
 
-    /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
+
     protected function setupCreateOperation()
     {
         CRUD::setValidation(BillRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
-
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        CRUD::setFromDb();
     }
 
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
+
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();

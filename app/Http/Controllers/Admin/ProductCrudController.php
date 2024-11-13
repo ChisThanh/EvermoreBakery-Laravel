@@ -7,11 +7,6 @@ use App\Jobs\GenerateKeywordJob;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
-/**
- * Class ProductCrudController
- * @package App\Http\Controllers\Admin
- * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
- */
 class ProductCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
@@ -19,19 +14,14 @@ class ProductCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use PermissionTrait;
 
-    /**
-     * Configure the CrudPanel object. Apply settings to all operations.
-     * 
-     * @return void
-     */
     public function setup()
     {
-        // dd(backpack_auth()->user());
         CRUD::setModel(\App\Models\Product::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/product');
         CRUD::setEntityNameStrings('product', 'products');
-
+        $this->checkPermission();
         $this->crud->addColumn([
             'name' => 'category_id',
             'type' => 'select',
@@ -40,7 +30,6 @@ class ProductCrudController extends CrudController
             'attribute' => 'name',
             'model' => "App\Models\Category",
         ]);
-
         $this->crud->addColumn([
             'name' => 'image',
             'type' => 'image',
@@ -53,35 +42,19 @@ class ProductCrudController extends CrudController
                     : null;
             }
         ]);
-        
     }
 
-    /**
-     * Define what happens when the List operation is loaded.
-     * 
-     * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
-     * @return void
-     */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // set columns from db columns.
+        CRUD::setFromDb();
         $this->crud->addClause('with', 'images');
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
     }
 
-    /**
-     * Define what happens when the Create operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-create
-     * @return void
-     */
+
     protected function setupCreateOperation()
     {
         CRUD::setValidation(ProductRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+        CRUD::setFromDb();
 
         CRUD::addField([
             'name' => 'category_id',
@@ -118,15 +91,9 @@ class ProductCrudController extends CrudController
             'temporary' => 10,
             'hint' => 'Tải lên nhiều hình ảnh.',
         ]);
-
     }
 
-    /**
-     * Define what happens when the Update operation is loaded.
-     * 
-     * @see https://backpackforlaravel.com/docs/crud-operation-update
-     * @return void
-     */
+
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
@@ -141,7 +108,6 @@ class ProductCrudController extends CrudController
             'view' => 'vendor.backpack.ui.custom.images',
             'images' => $images,
         ]);
-
         CRUD::addField([
             'name' => 'images_new',
             'label' => 'Hình ảnh',
@@ -203,5 +169,4 @@ class ProductCrudController extends CrudController
         \Alert::success(trans('backpack::crud.update_success'))->flash();
         return $this->crud->performSaveAction($item->getKey());
     }
-
 }

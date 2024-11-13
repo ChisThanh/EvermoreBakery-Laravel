@@ -7,22 +7,26 @@ use App\Jobs\ProductInteractionJob;
 use App\Repositories\BillRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProductReviewRepository;
 
 class ProductService extends BaseService
 {
     protected $repository;
     protected $cartRepository;
     protected $billRepository;
+    protected $productReviewRepository;
 
     public function __construct(
         ProductRepository $repository,
         CartRepository $cartRepository,
         BillRepository $billRepository,
+        ProductReviewRepository $productReviewRepository
 
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
+        $this->productReviewRepository = $productReviewRepository;
     }
 
     public function getProductHome()
@@ -103,6 +107,7 @@ class ProductService extends BaseService
                 'category',
                 'images',
                 'likes',
+                'events',
             ])
             ->first();
 
@@ -289,6 +294,23 @@ class ProductService extends BaseService
         return [
             'success' => true,
             'liked' => !$hasLiked
+        ];
+    }
+
+    public function productReview($inputs)
+    {
+        $userId = auth()->id();
+        $inputs['user_id'] = $userId;
+        $modelProductReview = $this->productReviewRepository->getModel();
+
+        $data = $modelProductReview->createOrFirst([
+            'user_id' => $inputs['user_id'],
+            'product_id' => $inputs['product_id'],
+        ], $inputs);
+
+        return [
+            'success' => true,
+            'data' => $data
         ];
     }
 }

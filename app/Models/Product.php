@@ -23,11 +23,7 @@ class Product extends Model
 
     public function sluggable(): array
     {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
+        return ['slug' => ['source' => 'name']];
     }
 
     public function searchableAs(): string
@@ -55,6 +51,24 @@ class Product extends Model
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_products');
+    }
+
+    public function currentEvent()
+    {
+        $event = $this->events()->latest()->first();
+        if (
+            $event
+            && $event->start_date <= now()->toDateString()
+            && $event->end_date >= now()->toDateString()
+        ) {
+            return $event;
+        }
+        return null;
     }
 
     public function likes()

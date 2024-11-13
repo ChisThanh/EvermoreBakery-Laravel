@@ -21,11 +21,12 @@ class ProductController extends Controller
 
     public function index()
     {
-        $data = $this->productService->index(request()->all());
+        // $data = $this->productService->index(request()->all());
 
-        if ($data['success'] === false)
-            return redirect()->back()->with('error', $data['message']);
-        return view('clients.products', compact('data'));
+        // if ($data['success'] === false)
+        //     return redirect()->back()->with('error', $data['message']);
+        // return view('clients.products', compact('data'));
+        return view('clients.products');
     }
 
     public function show($slug)

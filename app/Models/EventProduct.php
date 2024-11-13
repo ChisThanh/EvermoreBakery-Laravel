@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Delivery extends Model
+class EventProduct extends Model
 {
     use HasFactory;
-
+    protected $table = 'event_products';
     protected $fillable = [
-        'name',
-        'address',
+        'event_id',
+        'product_id',
     ];
 }

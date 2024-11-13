@@ -11,5 +11,4 @@ class ProductRepository extends BaseRepository
     {
         return new Product();
     }
-
 }

@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use App\Service\DataProcessorService;
-use App\Service\GeminiService;
-use App\Service\TypesenseService;
-use Illuminate\Pagination\Paginator;
+use App\Service\ProductService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,13 +13,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // $this->app->singleton(GeminiService::class, function ($app) {
-        //     return new GeminiService();
-        // });
-
-        // $this->app->singleton(TypesenseService::class, function ($app) {
-        //     return new TypesenseService();
-        // });
         $this->app->bind(DataProcessorService::class, function ($app) {
             return new DataProcessorService();
         });
