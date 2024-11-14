@@ -29,8 +29,7 @@ return new class extends Migration {
             $table->string('description');
             $table->date('start_date');
             $table->date('end_date');
-            $table->float('max_discount' )->nullable();
-            $table->float('min_purchase' )->nullable();
+            $table->float('percentage' )->nullable();
         });
 
         Schema::create('event_products', function (Blueprint $table) {
