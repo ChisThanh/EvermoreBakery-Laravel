@@ -501,4 +501,9 @@
 
 @push('scripts')
     <script src="{{ asset('js/home.js') }}"></script>
+    @if (session('verify-email'))
+        <script>
+            openModal("Xác nhận email", "Vui lòng kiểm tra email của bạn để xác nhận tài khoản", "Xác nhận", "Đóng", 0);
+        </script>
+    @endif
 @endpush

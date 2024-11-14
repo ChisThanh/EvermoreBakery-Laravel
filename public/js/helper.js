@@ -8,6 +8,8 @@ function extractNumbers(str) {
 function openModal(
     title = "Confirm Action",
     content = "Are you sure",
+    confirmText = "Confirm",
+    cancelText = "Cancel",
     timeout = 0,
 ) {
     const existingModal = document.getElementById('confirmationModal');
@@ -24,8 +26,8 @@ function openModal(
             <h2 class="text-lg font-bold mb-4">${title}</h2>
             <p class="text-gray-700 mb-6">${content}</p>
             <div class="flex justify-end">
-                <button id="cancelButton" class="bg-gray-500 px-4 py-2 rounded mr-2">Cancel</button>
-                <button id="confirmButton" class="bg-red-500 text-white px-4 py-2 rounded">Confirm</button>
+                <button id="cancelButton" class="bg-gray-500 px-4 py-2 rounded mr-2">${cancelText}</button>
+                <button id="confirmButton" class="bg-red-500 text-white px-4 py-2 rounded">${confirmText}</button>
             </div>
         </div>
     `;

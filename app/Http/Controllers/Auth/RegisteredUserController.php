@@ -10,8 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use Vonage\Client\Credentials\Basic;
-use Vonage\SMS\Message\SMS;
 
 class RegisteredUserController extends Controller
 {
@@ -30,33 +28,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // $basic = new Basic(
-        //     env("VONAGE_KEY"),
-        //     env("VONAGE_SECRET")
-        // );
-        // $client = new \Vonage\Client($basic);
-        // $BrandName = env("VONAGE_BRAND_NAME");
-        // $to = "84399323006";
-        // $randomNumber = rand(1000, 9999);
-        // $messageText = 'Mã xác thực của bạn là: ' . $randomNumber;
-
-        // try {
-        //     $response = $client->sms()->send(new SMS($to, $BrandName, $messageText));
-        //     $message = $response->current();
-
-        //     if ($message->getStatus() == 0) {
-        //         dd("The message was sent successfully\n");
-        //     } else {
-        //         dd("The message failed with status: " . $message->getStatus() . "\n");
-        //     }
-        // } catch (\Exception $e) {
-        //     dd("The message failed with exception: " . $e->getMessage() . "\n");
-        // }
-
-
-        // dd('ok');
-
-
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
@@ -73,6 +44,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('home', absolute: false));
+        dispatch(function () use ($user) {
+            $user->sendEmailVerificationNotification();
+        });
+
+        return redirect()->route('verification.notice')->with('verify-email', 'Bạn hãy kiểm tra email để xác thực tài khoản.');
     }
 }

@@ -17,7 +17,10 @@ class EmailVerificationNotificationController extends Controller
             return redirect()->intended(route('home', absolute: false));
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $user = $request->user();
+        dispatch(function () use ($user) {
+            $user->sendEmailVerificationNotification();
+        });
 
         return back()->with('status', 'verification-link-sent');
     }
