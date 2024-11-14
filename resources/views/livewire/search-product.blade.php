@@ -66,8 +66,8 @@
         <div class="mb-10 shrink-0 border-t lg:mx-4 lg:mb-0 lg:border-t-0"></div>
         <div class="relative flex-1">
             <div class="top-32 z-10 mb-3 items-center gap-5 space-y-5 bg-white py-10 lg:sticky lg:flex lg:space-y-0">
-                <div class="flex flex-1 items-center gap-2 rounded-full border border-neutral-300 px-4"><svg
-                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
+                <div class="flex flex-1 items-center gap-2 rounded-full border border-neutral-300 px-4">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
                         class="text-2xl text-neutral-500" height="1em" width="1em"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill="none" d="M0 0h24v24H0z"></path>
@@ -75,13 +75,16 @@
                             d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
                         </path>
                     </svg>
-                    <form wire:submit.prevent="searchSubmit" class="flex items-center">
-                        <input wire:model.defer="search"
-                            class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-full text-sm font-normal h-12 px-4 py-3 border-transparent bg-transparent placeholder:text-neutral-500 focus:border-transparent"
-                            placeholder="Search..." type="text">
+                    <form wire:submit.prevent="searchSubmit" class="block w-full">
+                        <input 
+                            wire:model.defer="search"
+                            id="js-search-product"
+                            class=" block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-full text-sm font-normal h-12 px-4 py-3 border-transparent bg-transparent placeholder:text-neutral-500 focus:border-transparent"
+                            placeholder="Search..." type="text" oninput="debouncedSearch(this)" autocomplete="off">
                     </form>
                 </div>
-                <button type="submit" wire:click="searchSubmit" class="ml-2 bg-blue-500 text-white rounded-full h-12 px-6 py-3">
+                <button type="submit" wire:click="searchSubmit"
+                    class="ml-2 bg-blue-500 text-white rounded-full h-12 px-6 py-3">
                     Tìm kiếm
                 </button>
                 <div class="flex items-center gap-5"><button
@@ -147,3 +150,5 @@
         </div>
     </div>
 </div>
+
+

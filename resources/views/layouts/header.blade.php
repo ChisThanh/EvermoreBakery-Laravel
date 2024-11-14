@@ -63,14 +63,17 @@
             <div
                 class="hidden w-full max-w-2xl items-center gap-5 rounded-full border border-neutral-300 py-1 pr-3 lg:flex">
                 <input type="text"
-                    class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-full text-sm font-normal h-11 px-4 py-3 border-transparent bg-white placeholder:text-neutral-500 focus:border-transparent"
-                    placeholder="try 'Nike Air Jordan'"><svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                    viewBox="0 0 24 24" class="text-2xl text-neutral-500" height="1em" width="1em"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z">
-                    </path>
-                </svg>
+                    class="js-search-main block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-full text-sm font-normal h-11 px-4 py-3 border-transparent bg-white placeholder:text-neutral-500 focus:border-transparent"
+                    placeholder="Nhập từ khóa tìm kiếm ..." oninput="debouncedSearch(this)">
+                <span class="cursor-pointer" onclick="handelSearch()">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
+                        class="text-2xl text-neutral-500" height="1em" width="1em"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z">
+                        </path>
+                    </svg>
+                </span>
             </div>
         </div>
         <div class="flex flex-1 items-center justify-end gap-5">

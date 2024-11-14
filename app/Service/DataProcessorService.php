@@ -37,4 +37,12 @@ class DataProcessorService
         ]);
         return $response->getBody()->getContents();
     }
+
+	public function recommendKeywords($query)
+	{
+		$url = $this->url . '/api/v1/search-keyword?query='. $query;
+		$response = $this->client->get($url);
+		$array = json_decode($response->getBody()->getContents(), true);
+		return $array;
+	}
 }

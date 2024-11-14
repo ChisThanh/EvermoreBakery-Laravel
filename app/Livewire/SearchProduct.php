@@ -7,18 +7,27 @@ use Livewire\WithPagination;
 
 class SearchProduct extends Component
 {
+    // <input type="text" wire:model.live="search">
     use WithPagination;
     public $search = '';
+    public $limit = 9;
+    protected $queryString = ['search', 'limit'];
+    protected $listeners = ['setSearch'];
 
-    protected $queryString = ['search'];
-    
     public function render()
     {
         return view('livewire.search-product', [
             'products' => $this->searchProduct(),
         ]);
     }
-    public function searchSubmit(){
+    public function setSearch($value)
+    {
+        if(!is_null($value))
+            $this->search = $value;
+    }
+
+    public function searchSubmit()
+    {
         return null;
     }
     public function searchProduct()
@@ -33,7 +42,7 @@ class SearchProduct extends Component
                     ]);
             });
 
-        $data = $query->paginate($inputs['limit'] ?? 9);
+        $data = $query->paginate($this->limit ?? 9);
         $data->transform(function ($product) {
             $product->category_name = $product->category->name;
             $product->image = $product->images->first()->url ?? null;
@@ -50,5 +59,4 @@ class SearchProduct extends Component
         }
         return $data;
     }
-
 }

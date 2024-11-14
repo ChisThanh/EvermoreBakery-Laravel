@@ -107,3 +107,15 @@ function openToast(type = 'success', message = 'Item moved successfully', timeou
         }, 1000);
     }
 }
+
+function debounce(func, wait = 100) {
+    let timeout;
+    return function (...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
