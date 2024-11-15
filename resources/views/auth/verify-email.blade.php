@@ -30,7 +30,7 @@
 @endsection
 
 @push('scripts')
-    @if (session('verify-email') || session('status') == 'verification-link-sent')
+    @if (session('verify-email') || session('status'))
         <script>
             openModal("Xác nhận email", "Vui lòng kiểm tra email của bạn để xác nhận tài khoản", "Xác nhận", "Đóng", 0);
         </script>

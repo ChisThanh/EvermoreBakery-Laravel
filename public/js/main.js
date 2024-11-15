@@ -92,16 +92,16 @@ function applyCoupon(element) {
                     totalNumber = parseInt(totalNumber);
 
                     jsTotal.textContent = `${totalNumber} Đ`;
-                    openModal("Áp dụng mã giảm giá thành công", "Bạn đã áp dụng mã giảm giá thành công", 3000);
+                    openModal("Áp dụng mã giảm giá thành công", "Bạn đã áp dụng mã giảm giá thành công", "Xác nhận", "Đóng", 3000);
                     element.setAttribute('data-click', 'false');
                 } else {
                     input.value = '';
-                    openModal("Mã giảm giá không hợp lệ", "Vui lòng thử lại sau", 3000);
+                    openModal("Mã giảm giá không hợp lệ", "Vui lòng thử lại sau", "Xác nhận", "Đóng", 3000);
                 }
             })
             .catch(error => {
                 input.value = '';
-                openModal("Có lỗi xảy ra", "Vui lòng thư lại sau", 3000);
+                openModal("Có lỗi xảy ra", "Vui lòng thư lại sau", "Xác nhận", "Đóng", 3000);
             });
     }
 }
@@ -175,7 +175,7 @@ function searchMain(element) {
     fetch(url, options)
         .then(response => response.json())
         .then(data => {
-            if (data ) {
+            if (data && data.status_code === 200) {
                 data = data.data;
                 suggestionsBox.innerHTML = '';
                 data.forEach(item => {
@@ -185,7 +185,7 @@ function searchMain(element) {
                     suggestionItem.onclick = () => {
                         element.value = item;
                         suggestionsBox.remove();
-                        if(Livewire){
+                        if (Livewire) {
                             Livewire.dispatch('setSearch', { value: item }); // mất 1 ngày để tìm ra cách này
                         }
                     };
@@ -195,7 +195,7 @@ function searchMain(element) {
             }
         });
     window.addEventListener('click', function (e) {
-        if (!element.contains(suggestionsBox)) {
+        if (!e.contains(suggestionsBox)) {
             suggestionsBox.remove();
         }
     });

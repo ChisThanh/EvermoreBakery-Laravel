@@ -17,10 +17,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="{{ asset('js/tailwindcss.js') }}"></script>
     <script src="{{ asset('js/tailwind.config.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     @livewireStyles
     @stack('css')
 </head>

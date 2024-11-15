@@ -30,19 +30,26 @@ class DataProcessorService
 	}
 
 	public function generateKeywords($productId, $text)
-    {
-        $url = $this->url . '/api/v1/generate-keywords/' . $productId . '?text=' . urlencode($text);
-        $response = $this->client->post($url, [
-            'json' => []  
-        ]);
-        return $response->getBody()->getContents();
-    }
+	{
+		$url = $this->url . '/api/v1/generate-keywords/' . $productId . '?text=' . urlencode($text);
+		$response = $this->client->post($url, [
+			'json' => []
+		]);
+		return $response->getBody()->getContents();
+	}
 
 	public function recommendKeywords($query)
 	{
-		$url = $this->url . '/api/v1/search-keyword?query='. $query;
+		$url = $this->url . '/api/v1/search-keyword?query=' . $query;
 		$response = $this->client->get($url);
 		$array = json_decode($response->getBody()->getContents(), true);
-		return $array;
+		if (count($array) <= 0)
+			return [
+				'success' => false,
+			];
+		return [
+			'success' => true,
+			'data' => $array,
+		];
 	}
 }

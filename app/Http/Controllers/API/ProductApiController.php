@@ -53,6 +53,8 @@ class ProductApiController extends BaseApiController
     public function recommendKeywords($query)
     {
         $res = $this->dataProcessorService->recommendKeywords($query);
-        return $this->makeResponse("Recommend keywords successfully", 200, $res);
+        if($res['success'] === false)
+            return $this->makeResponse("No recommend",  400);
+        return $this->makeResponse("Recommend keywords successfully", 200, $res['data']);
     }
 }
