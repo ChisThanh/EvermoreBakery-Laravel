@@ -1,17 +1,32 @@
 function generateRandomString(length) {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
     const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
+    let result = new Array(length);
+    for (let i = 0; i < length; i++)
+        result[i] = characters.charAt(Math.floor(Math.random() * charactersLength));
+    return result.join('');
 }
 
 function extractNumbers(str) {
     const numbers = str.match(/\d+/g);
     const joinedNumbers = numbers ? numbers.join('') : '';
     return parseInt(joinedNumbers);
+}
+
+const toggleVisibility = (element) => {
+    element.classList.toggle('hidden');
+};
+
+function debounce(func, wait = 100) {
+    let timeout;
+    return function (...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
 function openModal(
@@ -119,14 +134,4 @@ function openToast(type = 'success', message = 'Item moved successfully', timeou
     }
 }
 
-function debounce(func, wait = 100) {
-    let timeout;
-    return function (...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
+

@@ -4,53 +4,40 @@ namespace App\Http\Controllers\API;
 
 use App\Events\PusherBroadcast;
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
+use App\Service\ChatService;
 use App\Service\DataProcessorService;
 use Illuminate\Http\Request;
 
 class ChatApiController extends BaseApiController
 {
-    protected DataProcessorService $dataProcessorService;
+    protected $chatService;
     public function __construct(
-        DataProcessorService $dataProcessorService
-    )
+        ChatService $chatService
+    ) {
+        $this->chatService = $chatService;
+    }
+
+    public function getHistory($chatId)
     {
-        $this->dataProcessorService = $dataProcessorService;
+        $res = $this->chatService->getHistory($chatId);
+        if ($res['success'] == false) {
+            return $this->makeResponse($res['message'], 404);
+        }
+        return $this->makeResponse("Chat history fetched successfully", 200, $res['data']);
     }
     public function broadcast(Request $request)
     {
-        $validatedData = $request->validate([
+        $inputs = $request->validate([
             'message' => 'required',
             'channel' => 'required',
         ]);
-
+        
         $user = auth()->user();
-
-        if (is_null($user->chat_id)) {
-            $user->chat_id = $validatedData['channel'];
-            $user->save();
+        $res = $this->chatService->broadcast($inputs, $user);
+        if ($res['success'] == false) {
+            return $this->makeResponse($res['message'], 400);
         }
-        if($user->is_chatbot == 0){
-            $res = $this->dataProcessorService->chatbot($validatedData);
-            if($res['success'] == true){
-                $data = [
-                    'user' => $res['data']['user'],
-                    'answer' => $res['data']['answer'],
-                    'message' => $validatedData['message'],
-                ];
-            }
-        }else{
-            broadcast(new PusherBroadcast(
-                $validatedData['channel'],
-                $user->name,
-                $validatedData['message']
-            ));
-            $data = ['message' => $validatedData['message']];
-        }
-
-        return $this->makeResponse(
-            "Broadcasted successfully",
-            200,
-            $data
-        );
+        return $this->makeResponse("Message broadcasted successfully", 200, $res['data']);
     }
 }

@@ -22,6 +22,7 @@ Route::group([
     Route::crud('bill', 'BillCrudController');
     Route::get('bill/{id}/update-status/{status}', 'BillCrudController@updateStatus');
     Route::get('chat', 'ChatController@index');
+    Route::post('chat/broadcast', 'ChatController@broadcast');
 });
 
 /**

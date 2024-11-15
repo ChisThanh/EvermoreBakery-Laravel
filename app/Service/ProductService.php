@@ -31,7 +31,6 @@ class ProductService extends BaseService
 
     public function getProductHome()
     {
-        // \DB::enableQueryLog();
         $model = $this->repository->getModel();
         $products = $model
             ->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug', 'created_at')
@@ -57,17 +56,12 @@ class ProductService extends BaseService
                 return $product;
             });
         }
-        // dd(\DB::getQueryLog());
         return $products;
     }
 
     public function index(array $inputs): mixed
     {
-        // \DB::enableQueryLog();
-
         $model = $this->repository->getModel();
-
-        // dd($model->search($inputs['q'] ?? '')->raw());
         $query = $model->search(strtolower($inputs['q'] ?? ''))
             ->query(function ($query) use ($inputs) {
                 $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug')
@@ -95,7 +89,6 @@ class ProductService extends BaseService
         }
 
         $this->getCart(request()->cookie('cart_id'));
-        // dd(\DB::getQueryLog());
         return $data;
     }
 
@@ -122,10 +115,8 @@ class ProductService extends BaseService
         }
         $cookieId = request()->cookie('cart_id');
         dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
-        return [
-            'success' => true,
-            'data' => $product,
-        ];
+
+        return ['success' => true, 'data' => $product];
     }
 
     public function showCart()
@@ -145,9 +136,9 @@ class ProductService extends BaseService
             $carts = $model->where('cookie_id', $cookie)->first();
         }
         $cartDetails = [];
-        if ($carts) {
+        if ($carts)
             $cartDetails = json_decode($carts->cart_details, true) ?? [];
-        }
+
         return [
             "success" => true,
             "cartDetails" => $cartDetails,
@@ -164,21 +155,16 @@ class ProductService extends BaseService
             \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
         }
 
-        $product = $this->repository->getModel()->where('slug', $slug)->first();
-        if (!$product) {
-            return [
-                'success' => false,
-                'message' => 'Product not found'
-            ];
-        }
+        $product = $this->repository->getModel()
+            ->where('slug', $slug)
+            ->first();
+
+        if (!$product)
+            return ['success' => false, 'message' => 'Product not found'];
 
         $cart = $this->getCart($cookie_id)['data'];
-        if (!$cart) {
-            return [
-                'success' => false,
-                'message' => 'Cart not found'
-            ];
-        }
+        if (!$cart)
+            return ['success' => false, 'message' => 'Cart not found'];
 
         $cartDetails = json_decode($cart->cart_details, true) ?? [];
         $productId = $product->id;
@@ -204,10 +190,7 @@ class ProductService extends BaseService
 
         $cart->save();
 
-        return [
-            'success' => true,
-            'data' => $product,
-        ];
+        return ['success' => true, 'data' => $product];
     }
 
     public function getCart($cookie_id)
@@ -239,11 +222,7 @@ class ProductService extends BaseService
         }
 
         $cart = $cartModel->firstOrCreate(['cookie_id' => $cookie_id]);
-
-        return [
-            'success' => true,
-            'data' => $cart,
-        ];
+        return ['success' => true, 'data' => $cart];
     }
 
     public function updateFromCart($slug, $quantity)
@@ -279,10 +258,7 @@ class ProductService extends BaseService
     {
         $product = $this->repository->getModel()->where('slug', $slug)->first();
         if (!$product)
-            return [
-                'success' => false,
-                'message' => 'Product not found'
-            ];
+            return ['success' => false, 'message' => 'Product not found'];
 
         $userId = auth()->id();
         $hasLiked = $product->likes()->where('user_id', $userId)->exists();
@@ -291,10 +267,7 @@ class ProductService extends BaseService
         $product->like_count = $hasLiked ? max(0, $product->like_count - 1) : $product->like_count + 1;
         $product->save();
 
-        return [
-            'success' => true,
-            'liked' => !$hasLiked
-        ];
+        return ['success' => true, 'liked' => !$hasLiked];
     }
 
     public function productReview($inputs)
@@ -308,9 +281,6 @@ class ProductService extends BaseService
             'product_id' => $inputs['product_id'],
         ], $inputs);
 
-        return [
-            'success' => true,
-            'data' => $data
-        ];
+        return ['success' => true, 'data' => $data];
     }
 }

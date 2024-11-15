@@ -48,10 +48,7 @@ class DataProcessorService
 			return [
 				'success' => false,
 			];
-		return [
-			'success' => true,
-			'data' => $array,
-		];
+		return ['success' => true, 'data' => $array];
 	}
 
 	public function chatbot($inputs)
@@ -70,10 +67,7 @@ class DataProcessorService
 				'user' => $res['user'],
 				'answer' => $res['answer'],
 			];
-			return [
-				'success' => true,
-				'data' => $res,
-			];
+			return ['success' => true, 'data' => $res];
 		}
 		return ['success' => false];
 	}

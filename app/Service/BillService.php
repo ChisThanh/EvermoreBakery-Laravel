@@ -107,10 +107,7 @@ class BillService extends BaseService
             \DB::commit();
         } catch (\Exception $th) {
             \DB::rollBack();
-            return [
-                'success' => false,
-                'message' => $th->getMessage(),
-            ];
+            return ['success' => false, 'message' => $th->getMessage()];
         }
         return ['success' => true];
     }
@@ -130,25 +127,19 @@ class BillService extends BaseService
             ];
         }
         $data = $data->address;
-        return [
-            'success' => true,
-            'data' => $data,
-        ];
+        return ['success' => true, 'data' => $data];
     }
 
     public function getCoupons($code): mixed
     {
-        $coupons = $this->couponRepository->getModel()->where('code', $code)->first();
-        if (!$coupons) {
-            return [
-                'success' => false,
-                'message' => 'Coupon not found',
-            ];
-        }
-        return [
-            'success' => true,
-            'data' => $coupons,
-        ];
+        $coupons = $this->couponRepository->getModel()
+            ->where('code', $code)
+            ->first();
+
+        if (!$coupons)
+            return ['success' => false, 'message' => 'Coupon not found'];
+
+        return ['success' => true, 'data' => $coupons];
     }
 
     public function updateBillStatusPayment($inputs): mixed
@@ -167,25 +158,21 @@ class BillService extends BaseService
                 $bill->save();
 
                 $this->clearUserCart();
-                return [
-                    'success' => true,
-                    'message' => 'Thanh toán hóa đơn thành công',
-                ];
+                return ['success' => true, 'message' => 'Thanh toán hóa đơn thành công'];
             }
         }
 
         $this->clearUserCart();
-        return [
-            'success' => false,
-            'message' => 'Thanh toán hóa đơn thất bại',
-        ];
+        return ['success' => false, 'message' => 'Thanh toán hóa đơn thất bại'];
     }
 
     private function clearUserCart(): void
     {
         $userId = auth()->id();
         cookie()->forget('cart_id');
-        $this->cartRepository->getModel()->where('user_id', $userId)->delete();
+        $this->cartRepository->getModel()
+            ->where('user_id', $userId)
+            ->delete();
     }
 
 }

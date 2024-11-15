@@ -11,19 +11,8 @@ class Chat extends Model
 
     protected $fillable = [
         'chat_id',
-        'sender',
-        'receiver',
         'message',
+        'user_name',
+        'is_customer',
     ];
-
-    public static function getHistory($sender_id, $receiver_id)
-    {
-        return Chat::where(function ($query) use ($sender_id, $receiver_id) {
-            $query->where('sender_id', $sender_id)
-                ->where('receiver_id', $receiver_id);
-        })->orWhere(function ($query) use ($sender_id, $receiver_id) {
-            $query->where('sender_id', $receiver_id)
-                ->where('receiver_id', $sender_id);
-        })->get();
-    }
 }

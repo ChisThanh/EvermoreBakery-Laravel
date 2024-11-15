@@ -1,7 +1,5 @@
 // function
-const toggleVisibility = (element) => {
-    element.classList.toggle('hidden');
-};
+
 
 // Cart 
 const cartButton = document.querySelector('#cart-button');
@@ -13,8 +11,6 @@ const mainCartClose = document.querySelector('#main-cart-close');
 const menuToggle = document.querySelector('#menu-toggle');
 const mainMenuToggle = document.querySelector('#main-menu-toggle');
 const closeMenuToggle = document.querySelector('#close-menu-toggle');
-
-
 
 // document ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -169,36 +165,38 @@ function searchMain(element) {
         suggestionsBox.className = 'absolute z-[9999] bg-white border border-neutral-300 rounded-md shadow-md max-h-60 overflow-y-auto mt-1 top-[120px]';
         element.parentNode.appendChild(suggestionsBox);
     }
-
-    const url = `/api/v1/recommend-keywords/${value}`;
-    const options = optionAPI('GET');
-    fetch(url, options)
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.status_code === 200) {
-                data = data.data;
-                suggestionsBox.innerHTML = '';
-                data.forEach(item => {
-                    const suggestionItem = document.createElement('div');
-                    suggestionItem.textContent = item;
-                    suggestionItem.className = 'px-4 py-4 text-sm cursor-pointer hover:bg-gray-200';
-                    suggestionItem.onclick = () => {
-                        element.value = item;
-                        suggestionsBox.remove();
-                        if (Livewire) {
-                            Livewire.dispatch('setSearch', { value: item }); // mất 1 ngày để tìm ra cách này
-                        }
-                    };
-                    suggestionsBox.appendChild(suggestionItem);
-                });
-                suggestionsBox.style.display = 'block';
+    if (value.trim() !== '') {
+        const url = `/api/v1/recommend-keywords/${value}`;
+        const options = optionAPI('GET');
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.status_code === 200) {
+                    data = data.data;
+                    suggestionsBox.innerHTML = '';
+                    data.forEach(item => {
+                        const suggestionItem = document.createElement('div');
+                        suggestionItem.textContent = item;
+                        suggestionItem.className = 'px-4 py-4 text-sm cursor-pointer hover:bg-gray-200';
+                        suggestionItem.onclick = () => {
+                            element.value = item;
+                            suggestionsBox.remove();
+                            if (Livewire) {
+                                Livewire.dispatch('setSearch', { value: item }); // mất 1 ngày để tìm ra cách này
+                            }
+                        };
+                        suggestionsBox.appendChild(suggestionItem);
+                    });
+                    suggestionsBox.style.display = 'block';
+                }
+            });
+            
+        window.addEventListener('click', function (e) {
+            if (!element.contains(suggestionsBox)) {
+                suggestionsBox.remove();
             }
         });
-    window.addEventListener('click', function (e) {
-        if (!e.contains(suggestionsBox)) {
-            suggestionsBox.remove();
-        }
-    });
+    }
 }
 
 const debouncedSearch = debounce(function (element) {
