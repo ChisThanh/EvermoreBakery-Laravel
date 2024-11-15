@@ -10,12 +10,13 @@ class Chat extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sender_id',
-        'receiver_id',
-        'message'
+        'chat_id',
+        'sender',
+        'receiver',
+        'message',
     ];
 
-    public static  function getHistory($sender_id, $receiver_id)
+    public static function getHistory($sender_id, $receiver_id)
     {
         return Chat::where(function ($query) use ($sender_id, $receiver_id) {
             $query->where('sender_id', $sender_id)

@@ -10,6 +10,7 @@ Route::group([
         Route::apiResource('/products', 'ProductApiController');
         Route::post('/products/{slug}/like', 'ProductApiController@likeProduct');
         Route::post('/coupons/{code}', 'ProductApiController@getCoupons');
+        Route::post('/chat', 'ChatApiController@broadcast');
     });
 
     Route::post('/update-from-cart/{slug}/{quantity}', 'ProductApiController@updateFromCart');

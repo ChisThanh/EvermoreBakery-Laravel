@@ -1,54 +1,70 @@
-const chatId = document.querySelector('meta[name="chat-id"]').getAttribute('content');
+
+const metaChatId = document.querySelector('meta[name="chat-id"]');
+var chatId = metaChatId.getAttribute('content');
 const token = document.querySelector('meta[name="api-token"]').getAttribute('content');
 const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const messageE = document.querySelector("#form-chat #message");
 const chatList = document.querySelector('.chat-list');
-
-Pusher.logToConsole = true;
+let tmp = '';
 
 var pusher = new Pusher('d6f74e9b3067a24fb319', { cluster: 'ap1' });
 var channel = pusher.subscribe(chatId);
 
-channel.bind('chat', function (data) {
-	var newLi = $(
-		`<li class="in"><div class="chat-img"><img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar1.png"></div><div class="chat-body"><div class="chat-message"><h5 class="capitalize">Admin</h5><p>${data.message}</p></div></div></li>`
-	);
-	chatList.append(newLi);
+channel.bind('pusher:subscription_succeeded', function (data) {
+	console.log('Subscription succeeded!', data);
 });
 
-document
-	.querySelector("#form-chat")
-	.addEventListener("submit", function (event) {
-		event.preventDefault();
+channel.bind('chat', function (data) {
+	if (data.message === tmp) return;
+	addBotMessage(data.message);
+});
 
-		const message = messageE.value;
+function sendMsg(userMessage) {
+	fetch(`api/v1/chat`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'X-CSRF-TOKEN': csrf,
+			'Authorization': `Bearer ${token}`
+		},
+		body: JSON.stringify({ message: userMessage, channel: chatId })
+	})
+		.then(response => response.json())
+		.then(data => {
+			if (data.status_code === 200) {
+				tmp = userMessage;
+				addUserMessage(userMessage);
 
-		fetch(`/chat/broadcast`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-CSRF-TOKEN': csrf,
-				'Authorization': `Bearer ${token}`
-			},
-			body: JSON.stringify({ message, chatId })
+				if (data.data.answer) {
+					setTimeout(() => {
+						addBotMessage(data.data.answer);
+					}, 500);
+				}
+
+			}
 		})
-			.then(response => response.json())
-			.then(mgs => {
+}
+document.addEventListener('DOMContentLoaded', () => {
 
-				const newLi = document.createElement('li');
-				newLi.classList.add('out');
+	if (chatId === '') {
+		chatId = generateRandomString(20);
+		metaChatId.setAttribute('content', chatId);
+	}
 
-				newLi.innerHTML = `
-					<div class="chat-img">
-							<img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar6.png">
-					</div>
-					<div class="chat-body">
-							<div class="chat-message">
-									<h5 class="capitalize">Bạn</h5>
-									<p>${mgs}</p>
-							</div></div>`;
-
-				chatList.appendChild(newLi);
-			})
-		messageE.value = "";
+	sendButton.addEventListener("click", function () {
+		const userMessage = userInput.value;
+		if (userMessage.trim() !== "") {
+			sendMsg(userMessage);
+			userInput.value = "";
+		}
 	});
+
+	userInput.addEventListener("keyup", function (event) {
+		if (event.key === "Enter") {
+			const userMessage = userInput.value;
+			sendMsg(userMessage);
+			userInput.value = "";
+		}
+	});
+});

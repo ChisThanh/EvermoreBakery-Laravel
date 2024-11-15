@@ -31,19 +31,5 @@ Route::group([
     });
 });
 
-// Route::get('/vnpay', function () {
-//     return view("clients.test");
-// });
-// Route::post('/vnpay', function () {
-//     $inputs = request()->validate([
-//         'amount' => 'required|numeric',
-//         'bill_id' => 'required',
-//     ]);
-//     $vnpService = new VnPayService();
-//     $url = $vnpService->vnpay($inputs);
-//     return redirect()->to($url);
-// });
-
-
 // https://hotkicks.themealchemy.com/home/
 require __DIR__ . '/auth.php';

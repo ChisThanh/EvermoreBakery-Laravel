@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Events\PusherBroadcast;
 use GuzzleHttp\Client;
 
 
@@ -52,4 +53,29 @@ class DataProcessorService
 			'data' => $array,
 		];
 	}
+
+	public function chatbot($inputs)
+	{
+		$url = $this->url . '/api/v1/chat-bot';
+
+		$response = $this->client->post($url, [
+			'json' => $inputs['message'],
+		]);
+
+		$res = $response->getBody()->getContents();
+
+		$res = json_decode($res, true);
+		if (isset($res['user'])) {
+			$res['data'] = [
+				'user' => $res['user'],
+				'answer' => $res['answer'],
+			];
+			return [
+				'success' => true,
+				'data' => $res,
+			];
+		}
+		return ['success' => false];
+	}
+
 }
