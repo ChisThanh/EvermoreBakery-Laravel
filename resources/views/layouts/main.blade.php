@@ -5,17 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @if (session()->has('apiToken'))
-        <meta name="api-token" content="{{ session('apiToken') }}">
-    @else
-        <meta name="api-token" content="">
-    @endif
-
-    @if ($cartId = request()->cookie('cart_id'))
-        <meta name="cart-id" content="{{ $cartId }}">
-    @endif
-
+    <meta name="api-token" content="{{ session('apiToken') ?? '' }}">
+    <meta name="cart-id" content="{{ request()->cookie('cart_id') ?? '' }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    @auth
+        <meta name="chat-id" content="{{ auth()->user()->chat_id ?? '' }}">
+        <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+        <script src="{{ asset('js/pusher.js') }}"></script>
+    @endauth
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="{{ asset('js/tailwindcss.js') }}"></script>
