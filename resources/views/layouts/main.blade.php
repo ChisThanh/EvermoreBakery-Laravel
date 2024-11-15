@@ -52,6 +52,7 @@
     @endphp
     @include('layouts.header')
     @yield('content')
+    @include('layouts.chatbot')
     @include('layouts.footer')
     @livewireScripts
 </body>
