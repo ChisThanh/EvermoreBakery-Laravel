@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->date('delivery_date')->default(today());
+            $table->date('delivery_date')->nullable();
             $table->float('total')->default(0);
             $table->tinyInteger('payment_status')->default(0);
             $table->tinyInteger('payment_method')->default(0);

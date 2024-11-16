@@ -28,18 +28,6 @@ class BillCrudController extends CrudController
         CRUD::denyAccess('create');
 
         $this->crud->addColumn([
-            'name' => 'status',
-            'label' => 'Trình tạng đơn hàng',
-            'type' => 'select_from_array',
-            'options' => [
-                '1' => 'Chờ xác nhận',
-                '2' => 'Đang xử lý',
-                '3' => 'Đã giao hàng',
-                '4' => 'Hũy bỏ',
-                '5' => 'Hoàn thành',
-            ],
-        ]);
-        $this->crud->addColumn([
             'name' => 'payment_method',
             'label' => 'Phương thức thanh toán',
             'type' => 'select_from_array',
@@ -74,8 +62,9 @@ class BillCrudController extends CrudController
                 <select class="form-select"  onchange="updateStatusBill(' . $entry->id . ', this)">
                     <option value="1" ' . ($entry->status == 1 ? 'selected' : '') . '>Chờ xác nhận</option>
                     <option value="2" ' . ($entry->status == 2 ? 'selected' : '') . '>Đang xử lý</option>
-                    <option value="3" ' . ($entry->status == 3 ? 'selected' : '') . '>Đã giao hàng</option>
-                    <option value="4" ' . ($entry->status == 4 ? 'selected' : '') . '>Hủy bỏ</option>
+                    <option value="3" ' . ($entry->status == 3 ? 'selected' : '') . '>Đang giao hàng</option>
+                    <option value="4" ' . ($entry->status == 4 ? 'selected' : '') . '>Đã giao hàng</option>
+                    <option value="5" ' . ($entry->status == 5 ? 'selected' : '') . '>Hủy bỏ</option>
                 </select>
                 ';
             },
@@ -108,7 +97,7 @@ class BillCrudController extends CrudController
         $billDetails = $bill->details;
         $billAddress = $bill->address;
         return view(
-            "vendor.backpack.ui.custom.bill-details",
+            "vendor.backpack.ui.customs.bill-details",
             compact('bill', 'billDetails', 'billAddress')
         );
     }
@@ -116,14 +105,19 @@ class BillCrudController extends CrudController
     public function updateStatus($id, $status)
     {
         $bill = Bill::findOrFail($id);
-        $statusBase = [Bill::STATUS_PENDING, Bill::STATUS_PROCESSING, Bill::STATUS_DELIVERY, Bill::STATUS_CANCEL, Bill::STATUS_COMPLETED];
+        $statusBase = [Bill::STATUS_PENDING, Bill::STATUS_PROCESSING, Bill::STATUS_DELIVERY, Bill::STATUS_COMPLETED, Bill::STATUS_CANCEL];
+
         if (!in_array($status, $statusBase)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Trạng thái không hợp lệ'
             ]);
         }
+
         $bill->status = $status;
+        if ($status == Bill::STATUS_DELIVERY)
+            $bill->delivery_date = now();
+
         $bill->save();
         return response()->json([
             'success' => true,

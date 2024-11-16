@@ -64,6 +64,9 @@ class SearchProduct extends Component
                     'category:id,name',
                     'images:id,imageable_id,url',
                     'likes:id',
+                    'events' => function ($query) {
+                        $query->orderBy('event_products.created_at', 'desc')->limit(1);
+                    },
                 ]);
         });
 

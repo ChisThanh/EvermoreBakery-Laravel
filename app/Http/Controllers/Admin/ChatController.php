@@ -19,7 +19,7 @@ class ChatController extends Controller
     {
         $userId = backpack_auth()->user()->id;
         $users = User::whereNotIn('id', [$userId])->get();
-        return view('vendor.backpack.ui.custom.chat', compact('users'));
+        return view('vendor.backpack.ui.customs.chat', compact('users'));
     }
 
     public function broadcast(Request $request)

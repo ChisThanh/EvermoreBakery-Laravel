@@ -70,7 +70,7 @@ class CategoryCrudController extends CrudController
             'name' => 'image_old',
             'label' => 'Hình ảnh cũ',
             'type' => 'view',
-            'view' => 'vendor.backpack.ui.custom.images',
+            'view' => 'vendor.backpack.ui.customs.images',
             'images' => $images,
         ]);
         CRUD::addField([

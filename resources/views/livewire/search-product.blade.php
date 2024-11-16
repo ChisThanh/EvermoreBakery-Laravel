@@ -26,7 +26,8 @@
                             <h3 class="mb-2.5 text-xl font-medium">Thể loại</h3>
                             <div class="grid gap-4">
                                 <button type="button" wire:click="setCategory(null)"
-                                    class="rounded-lg py-2  @if ($categoryName != null || $categoryName != '') bg-gray @else bg-primary text-white @endif">Tất cả</button>
+                                    class="rounded-lg py-2  @if ($categoryName != null || $categoryName != '') bg-gray @else bg-primary text-white @endif">Tất
+                                    cả</button>
                                 @foreach ($categories as $category)
                                     <button type="button"
                                         class="rounded-lg py-2 bg-gray @if ($category->name == $categoryName) bg-primary text-white @endif"
@@ -81,6 +82,13 @@
                     @foreach ($products as $each)
                         <div class="transitionEffect relative rounded-2xl p-3 shadow-md undefined">
                             <div class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
+                                @php $event = $each->events->first(); @endphp
+                                @if ($event)
+                                    <div
+                                        class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
+                                        {{ (int) $event->pivot->percentage }}%
+                                    </div>
+                                @endif
                                 <button type="button" onclick="likeProduct('{{ $each['slug'] }}', this)"
                                     data-liked="{{ $each['liked'] }}"
                                     class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2 border-0">

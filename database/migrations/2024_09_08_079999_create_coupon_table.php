@@ -29,13 +29,13 @@ return new class extends Migration {
             $table->string('description');
             $table->date('start_date');
             $table->date('end_date');
-            $table->float('percentage' )->nullable();
         });
 
         Schema::create('event_products', function (Blueprint $table) {
             $table->foreignId('event_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->primary(['event_id', 'product_id']);
+            $table->float('percentage' )->nullable();
             $table->timestamps();
         });
     }

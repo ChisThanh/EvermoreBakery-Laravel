@@ -38,10 +38,14 @@ class ProductService extends BaseService
                 'category:id,name',
                 'images:id,imageable_id,url',
                 'likes:id',
+                'events' => function ($query) {
+                    $query->orderBy('event_products.created_at', 'desc')->limit(1);
+                },
             ])
             ->orderBy('created_at', 'desc')
             ->limit(8)
             ->get();
+
         $products->transform(function ($product) {
             $product->category_name = $product->category->name;
             $product->image = $product->images->first()->url ?? null;
@@ -69,6 +73,9 @@ class ProductService extends BaseService
                         'category:id,name',
                         'images:id,imageable_id,url',
                         'likes:id',
+                        'events' => function ($query) {
+                            $query->orderBy('event_products.created_at', 'desc')->limit(1);
+                        },
                     ]);
             });
 
@@ -100,7 +107,7 @@ class ProductService extends BaseService
                 'category',
                 'images',
                 'likes',
-                'events',
+                'latestEvent',
             ])
             ->first();
 
@@ -113,6 +120,7 @@ class ProductService extends BaseService
             $userId = auth()->id();
             $product->liked = $product->likes->contains('id', $userId);
         }
+
         $cookieId = request()->cookie('cookie_id');
         dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
 

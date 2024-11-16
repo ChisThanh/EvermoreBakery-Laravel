@@ -55,20 +55,16 @@ class Product extends Model
 
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'event_products');
+        return $this->belongsToMany(Event::class, 'event_products')
+            ->withPivot('percentage');
     }
 
-    public function currentEvent()
+    public function latestEvent()
     {
-        $event = $this->events()->latest()->first();
-        if (
-            $event
-            && $event->start_date <= now()->toDateString()
-            && $event->end_date >= now()->toDateString()
-        ) {
-            return $event;
-        }
-        return null;
+        return $this->belongsToMany(Event::class, 'event_products')
+            ->withPivot(['percentage', 'created_at']) 
+            ->orderBy('event_products.created_at', 'desc')
+            ->limit(1);
     }
 
     public function likes()
