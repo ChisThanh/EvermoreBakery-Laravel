@@ -7,13 +7,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="api-token" content="{{ session('apiToken') ?? '' }}">
     <meta name="cart-id" content="{{ request()->cookie('cookie_id') ?? '' }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Evermore Bakery</title>
     @auth
         <meta name="chat-id" content="{{ auth()->user()->chat_id ?? '' }}">
         <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
         <script src="{{ asset('js/pusher.js') }}"></script>
     @endauth
-
+    <link rel="icon" type="image/x-icon" href="/images/static/logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="{{ asset('js/tailwindcss.js') }}"></script>
     <script src="{{ asset('js/tailwind.config.js') }}"></script>
@@ -48,8 +48,9 @@
         }
     @endphp
     @include('layouts.header')
-    @yield('content')
     @include('layouts.chatbot')
+    @include('layouts.dialog')
+    @yield('content')
     @include('layouts.footer')
     @livewireScripts
 </body>

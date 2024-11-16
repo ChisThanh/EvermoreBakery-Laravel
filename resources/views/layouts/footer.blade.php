@@ -1,220 +1,61 @@
-<div class="bg-black text-white">
-    <div class="container grid gap-10 py-16 lg:grid-cols-2 lg:gap-0">
-        <div class="space-y-10 md:pr-20"><a class="flex cursor-pointer items-center gap-2"
-                href="https://hotkicks.themealchemy.com/"><svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                    viewBox="0 0 24 24" class="text-3xl text-primary" height="1em" width="1em"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M22 12C22 17.5228 17.5228 22 12 22H6.66472C8.68458 20.5479 10 18.1776 10 15.5H12C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12V15.5C8.5 19.0899 5.58985 22 2 22V12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z">
-                    </path>
-                </svg> <span class="block text-2xl font-bold">HotKicks.</span></a>
-            <p class="">HotKicks was designed and founded in 2023 by Person. The theme is about
-                sneakers
-                ecommerce thet use for shoes selling around the world.</p>
-            <div class="items-stretch justify-between space-y-5 rounded-2xl bg-white/10 p-5 md:flex md:space-y-0">
-                <div class="basis-[52%] space-y-5">
-                    <h3 class="text-2xl font-medium">Don't wanna miss our offers?</h3><input type="text"
-                        class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-none text-sm font-normal h-12 px-0 py-3 border-b-2 border-transparent border-b-neutral-400 bg-transparent placeholder:text-sm placeholder:text-neutral-200 focus:border-transparent"
-                        placeholder="Your email@email.com">
-                </div>
-                <div class="basis-[43%] space-y-7">
-                    <p class="text-neutral-400">Drop your email below and start receiving the best
-                        offers
-                        from
-                        HotKicks</p><button
-                        class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">Subscribe</button>
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-cols-2 gap-5 md:grid-cols-3">
-            <div class="space-y-5">
-                <h4 class="text-2xl font-medium">Main Pages</h4>
-                <div><a href="https://hotkicks.themealchemy.com/home">Home</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/products">Collections</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/cart">Cart</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/checkout">Checkout</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/blog">Blogs</a></div>
-            </div>
-            <div>
-                <div class="grid gap-5">
-                    <div class="space-y-5">
-                        <h4 class="text-2xl font-medium">Single Pages</h4>
-                        <div><a href="https://hotkicks.themealchemy.com/product/yellowLow">Product
-                                Single</a>
-                        </div>
-                        <div><a
-                                href="https://hotkicks.themealchemy.com/blog/the-evolution-of-sneaker-culture-a-historical-perspective">Blog
-                                Single</a></div>
-                    </div>
-                    <div class="space-y-5">
-                        <h4 class="text-2xl font-medium">Other Pages</h4>
-                        <div><a href="https://hotkicks.themealchemy.com/rt">Not Found</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="space-y-5">
-                <h4 class="text-2xl font-medium">Utility Pages</h4>
-                <div><a href="https://hotkicks.themealchemy.com/faq">FAQS</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/contact">Contact</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/forgot-pass">Forgot Password</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/login">Login</a></div>
-                <div><a href="https://hotkicks.themealchemy.com/signup">Signup</a></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-{{-- cart right --}}
-<div class="fixed inset-0 z-[9999999999999999] overflow-y-auto hidden" id="main-cart">
-    <div class="z-max fixed inset-y-0 right-0 w-full max-w-md outline-none focus:outline-none md:max-w-md">
-        <div class="relative z-20 opacity-100 translate-x-0">
-            <div class="overflow-hidden shadow-lg ring-1 ring-black/5">
-                <div class="relative h-screen bg-white">
-                    <div class="hiddenScrollbar h-screen overflow-y-auto p-5 d-none">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-xl font-semibold">Shopping cart</h3>
-                            <button type="button" id="main-cart-close"
-                                class="flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70    ">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                                    class="text-2xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="none" d="M0 0h24v24H0z"></path>
-                                    <path
-                                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
-                                    </path>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="divide-y divide-neutral-300">
-                            @foreach ($cartDetails as $item)
-                                <div class="flex py-5 last:pb-0 js-cart-item">
-                                    <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl">
-                                        <img alt="" loading="lazy" decoding="async" data-nimg="fill"
-                                            class="h-full w-full object-contain object-center" sizes="100vw"
-                                            style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
-                                            src="{{ asset('storage/' . $item['image']) }}">
-                                        <a class="absolute inset-0" href="/products/{{ $item['slug'] ?? '' }}"></a>
-                                    </div>
-                                    <div class="ml-4 flex flex-1 flex-col justify-between">
-                                        <div>
-                                            <div class="flex justify-between ">
-                                                <div>
-                                                    <h3 class="font-medium ">
-                                                        <a href="/products/{{ $item['slug'] ?? '' }}">
-                                                            {{ $item['product_name'] }}
-                                                        </a>
-                                                    </h3>
-                                                    <span class="my-1 text-sm text-neutral-500">
-                                                        {{ $item['category_name'] }}
-                                                    </span>
-                                                </div>
-                                                <span class=" font-medium js-item-price">{{ $item['price'] }} Đ</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex w-full items-end justify-between text-sm">
-                                            <button onclick="removeItemCart(this,'{{ $item['slug'] }}')">
-                                                <div class="flex items-center gap-3 cursor-pointer">
-                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                                                        viewBox="0 0 1024 1024" class="text-2xl" height="1em"
-                                                        width="1em" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                            </button>
-                                            <div>
-                                                <div class=" flex items-center justify-between space-x-5 w-full">
-                                                    <div
-                                                        class=" flex w-[104px] items-center justify-between sm:w-28 js-item-quantity-container">
-                                                        <button
-                                                            onclick="updateQuantity(this, '{{ $item['slug'] }}', -1)"
-                                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
-                                                            type="button">
-                                                            -
-                                                        </button>
-                                                        <span
-                                                            class="block flex-1 select-none text-center leading-none js-item-quantity">
-                                                            {{ $item['quantity'] }}
-                                                        </span>
-                                                        <button
-                                                            onclick="updateQuantity(this, '{{ $item['slug'] }}', 1)"
-                                                            class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
-                                                            type="button">
-                                                            +
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-
-
-                        </div>
-                    </div>
-                    <div class="absolute bottom-0 left-0 w-full bg-neutral-50 p-5">
-                        <p class="flex justify-between">
-                            <span>
-                                <span class="font-medium">Subtotal</span>
-                                <span class="block text-sm text-neutral-500">
-                                    Shipping and taxes calculated at checkout.
-                                </span>
-                            </span>
-                            <span class="text-xl font-medium js-cart-total">
-                                {{ isset($carts['total']) ? (int) $carts['total'] : 0 }} Đ
-                            </span>
-                        </p>
-                        <div class="mt-5 flex items-center gap-5"><a
-                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 w-full flex-1"
-                                href="/checkout">Checkout</a><a
-                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  w-full flex-1 border-2 border-primary text-primary"
-                                href="/cart">View cart</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="fixed inset-0 bg-neutral-900/60 opacity-100" id="headlessui-dialog-overlay-:r7:"
-            aria-hidden="true" data-headlessui-state="open"></div>
-    </div>
-</div>
-
-{{-- menu phone --}}
-<div class="fixed inset-0 z-50 overflow-y-auto hidden" id="main-menu-toggle">
-    <div class="z-max fixed inset-y-0 left-0 w-full max-w-md outline-none focus:outline-none md:w-auto">
-        <div class="relative z-20 opacity-100 translate-x-0">
-            <div
-                class="h-screen w-full divide-y divide-neutral-300 overflow-y-auto bg-white py-2 shadow-lg ring-1 transition">
-                <div class="px-5 py-2"><a class="flex cursor-pointer items-center gap-2" href="/">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                            class="text-3xl text-primary" height="1em" width="1em"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M22 12C22 17.5228 17.5228 22 12 22H6.66472C8.68458 20.5479 10 18.1776 10 15.5H12C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12V15.5C8.5 19.0899 5.58985 22 2 22V12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z">
-                            </path>
-                        </svg>
-                        <span class="block text-2xl font-bold">HotKicks.</span>
-                    </a>
-                    <span class="absolute right-2 top-2 p-1 cursor-pointer" id="close-menu-toggle">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                            height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path fill="none" d="M0 0h24v24H0z"></path>
-                            <path
-                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
-                            </path>
-                        </svg>
+<div class="bg-[#fff9ed] text-[#451c0d] border-t border-neutral-200">
+    <div class="container flex lg:flex-row flex-col items-start justify-between gap-10 py-10 lg:divide-y-0 divide-y-2 divide-[#451c0d]">
+        <div class="lg:w-1/2 w-full space-y-4">
+            <a class="flex cursor-pointer items-center gap-2 lg:justify-start justify-center" href="/">
+                <img src="/images/static/logo.png" alt="Logo" class="w-16 h-16">
+                <span class="text-2xl font-semibold">Evermore Bakery</span>
+            </a>
+            <p class="text-justify">
+                Tại Evermore Bakery, chúng tôi tự hào mang đến những chiếc bánh thủ công được làm từ những nguyên liệu tốt nhất và niềm đam mê thuần khiết. Hãy ghé thăm để thưởng thức hương vị ngọt ngào, nơi mỗi chiếc bánh đều chứa đựng tình yêu và sự sáng tạo.
+            </p>
+            <div class="flex lg:flex-row flex-col space-y-4 lg:space-y-0 items-center justify-between">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <span class="text-xs lg:text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                        © 2024
+                        <a href="https://flowbite.com/" class="hover:underline">Evermore Bakery™</a>. 
+                        Tất Cả Các Quyền Được Bảo Lưu
                     </span>
                 </div>
-                <ul class="flex flex-col space-y-5 px-5 py-6"><a class="capitalize" href="/home">Home</a><a
-                        class="capitalize" href="/blog">Blog</a><a class="capitalize"
-                        href="/products">Collection</a><a class="capitalize" href="/contact">Contact</a><a
-                        class="capitalize" href="/faqs">FAQ</a><a class="capitalize"
-                        href="/checkout">Checkout</a><a class="capitalize" href="/cart">Cart</a></ul>
+                <div class="flex space-x-4">
+                    <a href="#">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                            <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 21 16">
+                            <path d="M16.942 1.556a16.3 16.3 0 0 0-4.126-1.3 12.04 12.04 0 0 0-.529 1.1 15.175 15.175 0 0 0-4.573 0 11.585 11.585 0 0 0-.535-1.1 16.274 16.274 0 0 0-4.129 1.3A17.392 17.392 0 0 0 .182 13.218a15.785 15.785 0 0 0 4.963 2.521c.41-.564.773-1.16 1.084-1.785a10.63 10.63 0 0 1-1.706-.83c.143-.106.283-.217.418-.33a11.664 11.664 0 0 0 10.118 0c.137.113.277.224.418.33-.544.328-1.116.606-1.71.832a12.52 12.52 0 0 0 1.084 1.785 16.46 16.46 0 0 0 5.064-2.595 17.286 17.286 0 0 0-2.973-11.59ZM6.678 10.813a1.941 1.941 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.919 1.919 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Zm6.644 0a1.94 1.94 0 0 1-1.8-2.045 1.93 1.93 0 0 1 1.8-2.047 1.918 1.918 0 0 1 1.8 2.047 1.93 1.93 0 0 1-1.8 2.045Z"/>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 17">
+                            <path fill-rule="evenodd" d="M20 1.892a8.178 8.178 0 0 1-2.355.635 4.074 4.074 0 0 0 1.8-2.235 8.344 8.344 0 0 1-2.605.98A4.13 4.13 0 0 0 13.85 0a4.068 4.068 0 0 0-4.1 4.038 4 4 0 0 0 .105.919A11.705 11.705 0 0 1 1.4.734a4.006 4.006 0 0 0 1.268 5.392 4.165 4.165 0 0 1-1.859-.5v.05A4.057 4.057 0 0 0 4.1 9.635a4.19 4.19 0 0 1-1.856.07 4.108 4.108 0 0 0 3.831 2.807A8.36 8.36 0 0 1 0 14.184 11.732 11.732 0 0 0 6.291 16 11.502 11.502 0 0 0 17.964 4.5c0-.177 0-.35-.012-.523A8.143 8.143 0 0 0 20 1.892Z" clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 576 512">
+                            <path fill-rule="evenodd" d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z" clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
-        <div class="fixed inset-0 bg-neutral-900/60 opacity-100" id="headlessui-dialog-overlay-:r1:"
-            aria-hidden="true" data-headlessui-state="open"></div>
+        <div class="lg:w-1/4 w-full lg:pt-0 pt-6">
+            <div class="text-2xl font-semibold flex items-center justify-center mb-4 h-16">Được Thiết Kế Bởi</div>
+            <ul class="list-decimal text-base font-normal mx-4 lg:mx-0">
+                <li class="lg:px-2">2001210745 - Nguyễn Bảo Long</li>
+                <li class="lg:px-2">2001210055 - Nguyễn Văn Chí Thanh</li>
+                <li class="lg:px-2">2001216329 - Nguyễn Thường An Vy</li>
+                <li class="lg:px-2">2001215644 - Trần Chí Công</li>
+                <li class="lg:px-2">2001216004 - Nguyễn Ngọc Ái Nhi</li>
+                <li class="lg:px-2">2001210004 - Lưu Đức Vinh</li>
+            </ul>
+        </div>
     </div>
 </div>
 

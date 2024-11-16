@@ -3,6 +3,9 @@ const cartButton = document.querySelector('#cart-button');
 const mainCart = document.querySelector('#main-cart');
 const mainCartClose = document.querySelector('#main-cart-close');
 
+// Searchbar
+const searchButton = document.querySelector('#search-button');
+const searchBar = document.querySelector('#search-section');
 
 // Menu toggle 
 const menuToggle = document.querySelector('#menu-toggle');
@@ -15,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainCartClose.addEventListener('click', () => toggleVisibility(mainCart));
     menuToggle.addEventListener('click', () => toggleVisibility(mainMenuToggle));
     closeMenuToggle.addEventListener('click', () => toggleVisibility(mainMenuToggle));
+    searchButton.addEventListener('click', () => toggleVisibility(searchBar));
 });
 
 
