@@ -38,6 +38,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@mail.com',
             'password' => bcrypt('123'),
         ]);
-
+        $user->addRole('user');
     }
 }

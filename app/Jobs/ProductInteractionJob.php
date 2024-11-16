@@ -6,7 +6,7 @@ use App\Service\DataProcessorService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class SendService implements ShouldQueue
+class ProductInteractionJob implements ShouldQueue
 {
     use Queueable;
 
@@ -30,7 +30,7 @@ class SendService implements ShouldQueue
     public function handle(): void
     {
         $dataProcessorService = app(DataProcessorService::class);
-        $dataProcessorService->sendPostRequest(
+        $dataProcessorService->productInteraction(
             $this->userId,
             $this->cookieId,
             $this->productId

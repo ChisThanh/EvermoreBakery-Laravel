@@ -1,8 +1,3 @@
-// function
-const toggleVisibility = (element) => {
-    element.classList.toggle('hidden');
-};
-
 // Cart 
 const cartButton = document.querySelector('#cart-button');
 const mainCart = document.querySelector('#main-cart');
@@ -13,7 +8,6 @@ const mainCartClose = document.querySelector('#main-cart-close');
 const menuToggle = document.querySelector('#menu-toggle');
 const mainMenuToggle = document.querySelector('#main-menu-toggle');
 const closeMenuToggle = document.querySelector('#close-menu-toggle');
-
 
 // document ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -91,16 +85,16 @@ function applyCoupon(element) {
                     totalNumber = parseInt(totalNumber);
 
                     jsTotal.textContent = `${totalNumber} Đ`;
-                    openModal("Áp dụng mã giảm giá thành công", "Bạn đã áp dụng mã giảm giá thành công", 3000);
+                    openModal("Áp dụng mã giảm giá thành công", "Bạn đã áp dụng mã giảm giá thành công", "Xác nhận", "Đóng", 3000);
                     element.setAttribute('data-click', 'false');
                 } else {
                     input.value = '';
-                    openModal("Mã giảm giá không hợp lệ", "Vui lòng thử lại sau", 3000);
+                    openModal("Mã giảm giá không hợp lệ", "Vui lòng thử lại sau", "Xác nhận", "Đóng", 3000);
                 }
             })
             .catch(error => {
                 input.value = '';
-                openModal("Có lỗi xảy ra", "Vui lòng thư lại sau", 3000);
+                openModal("Có lỗi xảy ra", "Vui lòng thư lại sau", "Xác nhận", "Đóng", 3000);
             });
     }
 }
@@ -156,4 +150,59 @@ function updateQuantity(element, slug, quantity) {
         // const total = (oldTotal - (price * _quantity)) + (price * newQuantity);
         // totalElement.textContent = `${total} Đ`;
     }
+}
+
+function searchMain(element) {
+    const value = element.value;
+
+    let suggestionsBox = document.getElementById('suggestions-box');
+    if (!suggestionsBox) {
+        suggestionsBox = document.createElement('div');
+        suggestionsBox.id = 'suggestions-box';
+        suggestionsBox.className = 'absolute z-[9999] bg-white border border-neutral-300 rounded-md shadow-md max-h-60 overflow-y-auto mt-1 top-[120px]';
+        element.parentNode.appendChild(suggestionsBox);
+    }
+    if (value.trim() !== '') {
+        const url = `/api/v1/recommend-keywords/${value}`;
+        const options = optionAPI('GET');
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.status_code === 200) {
+                    data = data.data;
+                    suggestionsBox.innerHTML = '';
+                    data.forEach(item => {
+                        const suggestionItem = document.createElement('div');
+                        suggestionItem.textContent = item;
+                        suggestionItem.className = 'px-4 py-4 text-sm cursor-pointer hover:bg-gray-200';
+                        suggestionItem.onclick = () => {
+                            element.value = item;
+                            suggestionsBox.remove();
+                            if (Livewire) {
+                                Livewire.dispatch('setSearch', { value: item }); // mất 1 ngày để tìm ra cách này
+                            }
+                        };
+                        suggestionsBox.appendChild(suggestionItem);
+                    });
+                    suggestionsBox.style.display = 'block';
+                }
+            });
+            
+        window.addEventListener('click', function (e) {
+            if (!element.contains(suggestionsBox)) {
+                suggestionsBox.remove();
+            }
+        });
+    }
+}
+
+const debouncedSearch = debounce(function (element) {
+    searchMain(element);
+}, 200);
+
+
+function handelSearch() {
+    const searchInput = document.querySelector('.js-search-main');
+    const value = searchInput.value;
+    window.location.href = `/products?search=${value}`;
 }

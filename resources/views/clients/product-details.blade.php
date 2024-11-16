@@ -227,8 +227,9 @@
                     </div>
                     <div class="mt-5 flex items-center gap-5">
                         <button
-                            class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 w-full">Buy
-                            Now
+                            onclick="window.location.href='/products/buy-now/{{ $data->slug }}'"
+                            class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 w-full">
+                            Buy Now
                         </button>
                         <button
                             class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  flex w-full items-center gap-1 border-2 border-primary text-primary"

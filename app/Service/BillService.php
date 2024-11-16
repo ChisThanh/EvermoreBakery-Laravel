@@ -76,16 +76,6 @@ class BillService extends BaseService
                 'phone' => $data['phone'],
             ];
 
-            // if ($data['payment'] == 'card') {
-            //     $payment = [
-            //         "card_number" => $data['card-number'],
-            //         "holder_name" => $data['holder-name'],
-            //         "expiration_date" => $data['expiration-date'],
-            //         "cvc" => $data['cvc'],
-            //     ];
-            //     $address['payment'] = json_encode($payment);
-            // }
-
             if (isset($data['coupon_code'])) {
                 $coupon = $this->getCoupons($data['coupon_code'])['data'];
                 if (isset($coupon) && $coupon->quantity > 0) {
@@ -112,15 +102,12 @@ class BillService extends BaseService
                     'url' => $url,
                 ];
             }
-            cookie()->forget('cart_id');
+            cookie()->forget('cookie_id');
             $this->cartRepository->getModel()->where('user_id', $user->id)->delete();
             \DB::commit();
         } catch (\Exception $th) {
             \DB::rollBack();
-            return [
-                'success' => false,
-                'message' => $th->getMessage(),
-            ];
+            return ['success' => false, 'message' => $th->getMessage()];
         }
         return ['success' => true];
     }
@@ -140,25 +127,19 @@ class BillService extends BaseService
             ];
         }
         $data = $data->address;
-        return [
-            'success' => true,
-            'data' => $data,
-        ];
+        return ['success' => true, 'data' => $data];
     }
 
     public function getCoupons($code): mixed
     {
-        $coupons = $this->couponRepository->getModel()->where('code', $code)->first();
-        if (!$coupons) {
-            return [
-                'success' => false,
-                'message' => 'Coupon not found',
-            ];
-        }
-        return [
-            'success' => true,
-            'data' => $coupons,
-        ];
+        $coupons = $this->couponRepository->getModel()
+            ->where('code', $code)
+            ->first();
+
+        if (!$coupons)
+            return ['success' => false, 'message' => 'Coupon not found'];
+
+        return ['success' => true, 'data' => $coupons];
     }
 
     public function updateBillStatusPayment($inputs): mixed
@@ -172,29 +153,26 @@ class BillService extends BaseService
 
             if ($bill) {
                 $bill->payment_status = Bill::PAYMENT_PAID;
+                $bill->status = Bill::STATUS_PROCESSING;
                 $bill->id_payment = $inputs['vnp_TxnRef'];
                 $bill->save();
 
                 $this->clearUserCart();
-                return [
-                    'success' => true,
-                    'message' => 'Thanh toán hóa đơn thành công',
-                ];
+                return ['success' => true, 'message' => 'Thanh toán hóa đơn thành công'];
             }
         }
 
         $this->clearUserCart();
-        return [
-            'success' => false,
-            'message' => 'Thanh toán hóa đơn thất bại',
-        ];
+        return ['success' => false, 'message' => 'Thanh toán hóa đơn thất bại'];
     }
 
     private function clearUserCart(): void
     {
         $userId = auth()->id();
-        cookie()->forget('cart_id');
-        $this->cartRepository->getModel()->where('user_id', $userId)->delete();
+        cookie()->forget('cookie_id');
+        $this->cartRepository->getModel()
+            ->where('user_id', $userId)
+            ->delete();
     }
 
 }

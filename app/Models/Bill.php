@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Bill extends Model
 {
+    use CrudTrait;
     use HasFactory;
 
     public const STATUS_PENDING = 1;
     public const STATUS_PROCESSING = 2;
-    public const STATUS_DELIVERED = 3;
-    public const STATUS_CANCEL = 4;
-    public const STATUS_FINISHED = 5;
+    public const STATUS_DELIVERY = 3;
+    public const STATUS_COMPLETED = 4;
+    public const STATUS_CANCEL = 5;
 
     public const PAYMENT_METHOD_CASH = 1;
     public const PAYMENT_METHOD_CARD = 2;

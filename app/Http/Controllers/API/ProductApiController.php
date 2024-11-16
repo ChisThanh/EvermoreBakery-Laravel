@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\API;
 
 use App\Service\BillService;
+use App\Service\DataProcessorService;
 use App\Service\ProductService;
 
 class ProductApiController extends BaseApiController
 {
     protected $billService;
+    protected $dataProcessorService;
     public function __construct(
         ProductService $service,
-        BillService $billService
+        BillService $billService,
+        DataProcessorService $dataProcessorService
     ) {
         $this->service = $service;
         $this->billService = $billService;
+        $this->dataProcessorService = $dataProcessorService;
     }
 
     public function likeProduct($slug)
@@ -44,5 +48,23 @@ class ProductApiController extends BaseApiController
         if (!$check)
             return $this->makeResponse("Update from cart failed", 400);
         return $this->makeResponse("Update from cart successfully", 200);
+    }
+
+    public function recommendKeywords($query)
+    {
+        $res = $this->dataProcessorService->recommendKeywords($query);
+        if ($res['success'] === false)
+            return $this->makeResponse("No recommend", 400);
+        return $this->makeResponse("Recommend keywords successfully", 200, $res['data']);
+    }
+
+    public function recommendProducts()
+    {
+        $inputs = [
+            'user_id' => auth()->id() ?? 0,
+            'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
+        ];
+        $res = $this->dataProcessorService->recommendProducts($inputs);
+        return $this->makeResponse("Recommend products successfully", 200, $res['data']);
     }
 }

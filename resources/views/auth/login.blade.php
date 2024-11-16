@@ -4,7 +4,7 @@
         <div class="container mb-24 lg:mb-32">
             <h2
                 class="my-20 flex items-center justify-center text-3xl font-semibold leading-[115%] md:text-5xl md:leading-[115%]">
-                Login</h2>
+                Đăng Nhập</h2>
             <div class="mx-auto max-w-md">
                 <div class="space-y-6">
                     <div class="">

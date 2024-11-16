@@ -3,31 +3,34 @@
 
 namespace App\Service;
 
-use App\Jobs\SendService;
+use App\Jobs\ProductInteractionJob;
 use App\Repositories\BillRepository;
 use App\Repositories\CartRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\ProductReviewRepository;
 
 class ProductService extends BaseService
 {
     protected $repository;
     protected $cartRepository;
     protected $billRepository;
+    protected $productReviewRepository;
 
     public function __construct(
         ProductRepository $repository,
         CartRepository $cartRepository,
         BillRepository $billRepository,
+        ProductReviewRepository $productReviewRepository
 
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
+        $this->productReviewRepository = $productReviewRepository;
     }
 
     public function getProductHome()
     {
-        // \DB::enableQueryLog();
         $model = $this->repository->getModel();
         $products = $model
             ->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug', 'created_at')
@@ -53,17 +56,12 @@ class ProductService extends BaseService
                 return $product;
             });
         }
-        // dd(\DB::getQueryLog());
         return $products;
     }
 
     public function index(array $inputs): mixed
     {
-        // \DB::enableQueryLog();
-
         $model = $this->repository->getModel();
-
-        // dd($model->search($inputs['q'] ?? '')->raw());
         $query = $model->search(strtolower($inputs['q'] ?? ''))
             ->query(function ($query) use ($inputs) {
                 $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug')
@@ -90,8 +88,7 @@ class ProductService extends BaseService
             });
         }
 
-        $this->getCart(request()->cookie('cart_id'));
-        // dd(\DB::getQueryLog());
+        $this->getCart(request()->cookie('cookie_id'));
         return $data;
     }
 
@@ -103,6 +100,7 @@ class ProductService extends BaseService
                 'category',
                 'images',
                 'likes',
+                'events',
             ])
             ->first();
 
@@ -115,34 +113,32 @@ class ProductService extends BaseService
             $userId = auth()->id();
             $product->liked = $product->likes->contains('id', $userId);
         }
-        $cookieId = request()->cookie('cart_id');
-        dispatch(new SendService($userId, $cookieId, $product->id));
-        return [
-            'success' => true,
-            'data' => $product,
-        ];
+        $cookieId = request()->cookie('cookie_id');
+        dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
+
+        return ['success' => true, 'data' => $product];
     }
 
     public function showCart()
     {
         $model = $this->cartRepository->getModel();
-        if (auth()->check() && empty(request()->cookie('cart_id'))) {
+        if (auth()->check() && empty(request()->cookie('cookie_id'))) {
             $userId = auth()->id();
             $carts = $model->where('user_id', $userId)->first();
             $cookie_id = \Str::random(32);
-            \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
+            \Cookie::queue('cookie_id', $cookie_id, 60 * 24 * 30);
             if ($carts) {
                 $carts->cookie_id = $cookie_id;
                 $carts->save();
             }
         } else {
-            $cookie = request()->cookie('cart_id');
+            $cookie = request()->cookie('cookie_id');
             $carts = $model->where('cookie_id', $cookie)->first();
         }
         $cartDetails = [];
-        if ($carts) {
+        if ($carts)
             $cartDetails = json_decode($carts->cart_details, true) ?? [];
-        }
+
         return [
             "success" => true,
             "cartDetails" => $cartDetails,
@@ -152,28 +148,23 @@ class ProductService extends BaseService
 
     public function addToCart($slug)
     {
-        $cookie_id = request()->cookie('cart_id');
+        $cookie_id = request()->cookie('cookie_id');
 
-        if (!auth()->check() && !request()->cookie('cart_id')) {
+        if (!auth()->check() && !request()->cookie('cookie_id')) {
             $cookie_id = \Str::random(32);
-            \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
+            \Cookie::queue('cookie_id', $cookie_id, 60 * 24 * 30);
         }
 
-        $product = $this->repository->getModel()->where('slug', $slug)->first();
-        if (!$product) {
-            return [
-                'success' => false,
-                'message' => 'Product not found'
-            ];
-        }
+        $product = $this->repository->getModel()
+            ->where('slug', $slug)
+            ->first();
+
+        if (!$product)
+            return ['success' => false, 'message' => 'Product not found'];
 
         $cart = $this->getCart($cookie_id)['data'];
-        if (!$cart) {
-            return [
-                'success' => false,
-                'message' => 'Cart not found'
-            ];
-        }
+        if (!$cart)
+            return ['success' => false, 'message' => 'Cart not found'];
 
         $cartDetails = json_decode($cart->cart_details, true) ?? [];
         $productId = $product->id;
@@ -199,10 +190,7 @@ class ProductService extends BaseService
 
         $cart->save();
 
-        return [
-            'success' => true,
-            'data' => $product,
-        ];
+        return ['success' => true, 'data' => $product];
     }
 
     public function getCart($cookie_id)
@@ -234,11 +222,7 @@ class ProductService extends BaseService
         }
 
         $cart = $cartModel->firstOrCreate(['cookie_id' => $cookie_id]);
-
-        return [
-            'success' => true,
-            'data' => $cart,
-        ];
+        return ['success' => true, 'data' => $cart];
     }
 
     public function updateFromCart($slug, $quantity)
@@ -246,8 +230,7 @@ class ProductService extends BaseService
         if (request()->has('cartId'))
             $cookie_id = request()->get('cartId');
         else
-            $cookie_id = request()->cookie('cart_id');
-
+            $cookie_id = request()->cookie('cookie_id');
 
         $cart = $this->getCart($cookie_id)['data'];
         $cartDetails = json_decode($cart->cart_details, true) ?? [];
@@ -274,10 +257,7 @@ class ProductService extends BaseService
     {
         $product = $this->repository->getModel()->where('slug', $slug)->first();
         if (!$product)
-            return [
-                'success' => false,
-                'message' => 'Product not found'
-            ];
+            return ['success' => false, 'message' => 'Product not found'];
 
         $userId = auth()->id();
         $hasLiked = $product->likes()->where('user_id', $userId)->exists();
@@ -286,38 +266,20 @@ class ProductService extends BaseService
         $product->like_count = $hasLiked ? max(0, $product->like_count - 1) : $product->like_count + 1;
         $product->save();
 
-        return [
-            'success' => true,
-            'liked' => !$hasLiked
-        ];
+        return ['success' => true, 'liked' => !$hasLiked];
     }
 
+    public function productReview($inputs)
+    {
+        $userId = auth()->id();
+        $inputs['user_id'] = $userId;
+        $modelProductReview = $this->productReviewRepository->getModel();
+
+        $data = $modelProductReview->createOrFirst([
+            'user_id' => $inputs['user_id'],
+            'product_id' => $inputs['product_id'],
+        ], $inputs);
+
+        return ['success' => true, 'data' => $data];
+    }
 }
-// SELECT 
-//     p.id AS product_id,
-//     p.name AS product_name,
-//     p.category_id,
-//     p.price,
-//     p.stock_quantity,
-//     c.id AS category_id,
-//     c.name AS category_name,
-//     i.id AS image_id,
-//     i.imageable_id,
-//     i.url AS image_url,
-//     u.id AS user_id,
-//     l.user_id AS liked_user_id
-// FROM 
-//     products p
-// LEFT JOIN 
-//     categories c ON p.category_id = c.id AND c.deleted_at IS NULL
-// LEFT JOIN 
-//     images i ON i.imageable_id = p.id AND i.imageable_type = 'App\Models\Product'
-// LEFT JOIN 
-//     likes l ON l.product_id = p.id
-// LEFT JOIN 
-//     users u ON u.id = l.user_id
-// WHERE 
-//     p.deleted_at IS NULL
-// ORDER BY 
-//     p.id
-// OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;

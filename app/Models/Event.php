@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     use HasFactory;
-
+    
+    public $timestamps = false;
     protected $fillable = [
         'coupon_id',
         'user_id',
@@ -16,4 +17,5 @@ class Event extends Model
         'used_at',
         'status',
     ];
+
 }

@@ -19,7 +19,11 @@ Route::group([
     Route::crud('product', 'ProductCrudController');
     Route::crud('category', 'CategoryCrudController');
     Route::crud('coupon', 'CouponCrudController');
-}); // this should be the absolute last line of this file
+    Route::crud('bill', 'BillCrudController');
+    Route::get('bill/{id}/update-status/{status}', 'BillCrudController@updateStatus');
+    Route::get('chat', 'ChatController@index');
+    Route::post('chat/broadcast', 'ChatController@broadcast');
+});
 
 /**
  * DO NOT ADD ANYTHING HERE.

@@ -28,8 +28,9 @@ class CheckIfAdmin
     private function checkIfUserIsAdmin($user)
     {
         $checkAmin = $user->hasRole('admin');
-        $checkSa = $user->hasRole('sadmin');
-        $check = $checkAmin || $checkSa;
+        $checkUser = $user->hasRole('user');
+
+        $check = $checkAmin || $checkUser;
         return $check;
     }
 

@@ -66,7 +66,7 @@
 
 
 {{-- cart right --}}
-<div class="fixed inset-0 z-50 overflow-y-auto hidden" id="main-cart">
+<div class="fixed inset-0 z-[9999999999999999] overflow-y-auto hidden" id="main-cart">
     <div class="z-max fixed inset-y-0 right-0 w-full max-w-md outline-none focus:outline-none md:max-w-md">
         <div class="relative z-20 opacity-100 translate-x-0">
             <div class="overflow-hidden shadow-lg ring-1 ring-black/5">
@@ -196,7 +196,7 @@
                         </svg>
                         <span class="block text-2xl font-bold">HotKicks.</span>
                     </a>
-                    <span class="absolute right-2 top-2 p-1" id="close-menu-toggle">
+                    <span class="absolute right-2 top-2 p-1 cursor-pointer" id="close-menu-toggle">
                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
                             height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                             <path fill="none" d="M0 0h24v24H0z"></path>

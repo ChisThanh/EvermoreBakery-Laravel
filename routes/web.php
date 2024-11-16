@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Middleware\CheckVerifyEmail;
 use App\Service\VnPayService;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Client',
+    'middleware' => [CheckVerifyEmail::class],
 ], function () {
 
     Route::get('/', 'HomeController@index')->name('home');
@@ -24,24 +26,11 @@ Route::group([
     Route::prefix('products')->group(function () {
         Route::get('/', 'ProductController@index')->name('products');
         Route::get('/{slug}', 'ProductController@show')->name('product.show');
+        Route::get('/buy-now/{slug}', 'ProductController@buyNow');
         Route::get('/add-to-cart/{slug}', 'ProductController@addToCart');
         Route::get('/update-from-cart/{slug}/{quantity}', 'ProductController@updateFromCart');
     });
 });
-
-// Route::get('/vnpay', function () {
-//     return view("clients.test");
-// });
-// Route::post('/vnpay', function () {
-//     $inputs = request()->validate([
-//         'amount' => 'required|numeric',
-//         'bill_id' => 'required',
-//     ]);
-//     $vnpService = new VnPayService();
-//     $url = $vnpService->vnpay($inputs);
-//     return redirect()->to($url);
-// });
-
 
 // https://hotkicks.themealchemy.com/home/
 require __DIR__ . '/auth.php';

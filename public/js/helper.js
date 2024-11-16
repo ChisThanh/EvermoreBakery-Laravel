@@ -1,3 +1,11 @@
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let result = new Array(length);
+    for (let i = 0; i < length; i++)
+        result[i] = characters.charAt(Math.floor(Math.random() * charactersLength));
+    return result.join('');
+}
 
 function extractNumbers(str) {
     const numbers = str.match(/\d+/g);
@@ -5,9 +13,27 @@ function extractNumbers(str) {
     return parseInt(joinedNumbers);
 }
 
+const toggleVisibility = (element) => {
+    element.classList.toggle('hidden');
+};
+
+function debounce(func, wait = 100) {
+    let timeout;
+    return function (...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 function openModal(
     title = "Confirm Action",
     content = "Are you sure",
+    confirmText = "Confirm",
+    cancelText = "Cancel",
     timeout = 0,
 ) {
     const existingModal = document.getElementById('confirmationModal');
@@ -24,8 +50,8 @@ function openModal(
             <h2 class="text-lg font-bold mb-4">${title}</h2>
             <p class="text-gray-700 mb-6">${content}</p>
             <div class="flex justify-end">
-                <button id="cancelButton" class="bg-gray-500 px-4 py-2 rounded mr-2">Cancel</button>
-                <button id="confirmButton" class="bg-red-500 text-white px-4 py-2 rounded">Confirm</button>
+                <button id="cancelButton" class="bg-gray-500 px-4 py-2 rounded mr-2">${cancelText}</button>
+                <button id="confirmButton" class="bg-red-500 text-white px-4 py-2 rounded">${confirmText}</button>
             </div>
         </div>
     `;
@@ -107,3 +133,5 @@ function openToast(type = 'success', message = 'Item moved successfully', timeou
         }, 1000);
     }
 }
+
+

@@ -30,7 +30,8 @@ class ProductRequest extends FormRequest
             'price' => 'required|numeric',
             'price_sale' => 'required|numeric',
             'description' => 'required|string',
-            'images' => 'required|min:4',
+            'images' => 'required|array|min:3|max:4',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         if ($this->isMethod('put')) {
             $rule['id'] = 'required';
