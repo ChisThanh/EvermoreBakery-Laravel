@@ -10,35 +10,35 @@ class BaseApiController extends Controller
 {
     protected $service;
 
-    public function index()
+    public function index(): JsonResponse
     {
-        return $this->makeResponse($this->service->all());
+        return $this->makeResponse(data: $this->service->all());
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        return $this->makeResponse($this->service->create($request->all()));
+        return $this->makeResponse(data: $this->service->create($request->all()));
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        return $this->makeResponse($this->service->find($id));
+        return $this->makeResponse(data: $this->service->find($id));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
-        return $this->makeResponse($this->service->update($id, $request->all()));
+        return $this->makeResponse(data: $this->service->update($id, $request->all()));
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
-        return $this->makeResponse($this->service->delete($id));
+        return $this->makeResponse(data: $this->service->delete($id));
     }
 
     public function makeResponse($message = 'Successfully', $status = 200, $data = [], $fields = []): JsonResponse
     {
         $res = [];
-        if ($data !== null && $data !== '' && !(is_array($data) && empty($data))) 
+        if ($data !== null && $data !== '' && !(is_array($data) && empty($data)))
             $res['data'] = $data;
 
         if (!empty($message))

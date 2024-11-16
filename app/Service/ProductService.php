@@ -88,7 +88,7 @@ class ProductService extends BaseService
             });
         }
 
-        $this->getCart(request()->cookie('cart_id'));
+        $this->getCart(request()->cookie('cookie_id'));
         return $data;
     }
 
@@ -113,7 +113,7 @@ class ProductService extends BaseService
             $userId = auth()->id();
             $product->liked = $product->likes->contains('id', $userId);
         }
-        $cookieId = request()->cookie('cart_id');
+        $cookieId = request()->cookie('cookie_id');
         dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
 
         return ['success' => true, 'data' => $product];
@@ -122,17 +122,17 @@ class ProductService extends BaseService
     public function showCart()
     {
         $model = $this->cartRepository->getModel();
-        if (auth()->check() && empty(request()->cookie('cart_id'))) {
+        if (auth()->check() && empty(request()->cookie('cookie_id'))) {
             $userId = auth()->id();
             $carts = $model->where('user_id', $userId)->first();
             $cookie_id = \Str::random(32);
-            \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
+            \Cookie::queue('cookie_id', $cookie_id, 60 * 24 * 30);
             if ($carts) {
                 $carts->cookie_id = $cookie_id;
                 $carts->save();
             }
         } else {
-            $cookie = request()->cookie('cart_id');
+            $cookie = request()->cookie('cookie_id');
             $carts = $model->where('cookie_id', $cookie)->first();
         }
         $cartDetails = [];
@@ -148,11 +148,11 @@ class ProductService extends BaseService
 
     public function addToCart($slug)
     {
-        $cookie_id = request()->cookie('cart_id');
+        $cookie_id = request()->cookie('cookie_id');
 
-        if (!auth()->check() && !request()->cookie('cart_id')) {
+        if (!auth()->check() && !request()->cookie('cookie_id')) {
             $cookie_id = \Str::random(32);
-            \Cookie::queue('cart_id', $cookie_id, 60 * 24 * 30);
+            \Cookie::queue('cookie_id', $cookie_id, 60 * 24 * 30);
         }
 
         $product = $this->repository->getModel()
@@ -230,8 +230,7 @@ class ProductService extends BaseService
         if (request()->has('cartId'))
             $cookie_id = request()->get('cartId');
         else
-            $cookie_id = request()->cookie('cart_id');
-
+            $cookie_id = request()->cookie('cookie_id');
 
         $cart = $this->getCart($cookie_id)['data'];
         $cartDetails = json_decode($cart->cart_details, true) ?? [];

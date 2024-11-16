@@ -72,4 +72,18 @@ class DataProcessorService
 		return ['success' => false];
 	}
 
+	public function recommendProducts($inputs)
+	{
+		$url = $this->url . '/api/v1/recommend-products';
+		$response = $this->client->post($url, [
+			'json' => $inputs,
+		]);
+		$array = json_decode($response->getBody()->getContents(), true);
+		
+		if (count($array) <= 0)
+			return ['success' => false];
+
+		return ['success' => true, 'data' => $array];
+	}
+
 }

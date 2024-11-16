@@ -14,9 +14,12 @@
                                 <p class="my-10 w-[80%] text-neutral-500">Feel unbeatable from the tee box to the final
                                     putt
                                     in
-                                    a design that's pure early MJ: speed, class</p><button
+                                    a design that's pure early MJ: speed, class</p>
+                                    <a
+                                    href="/products"
                                     class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium px-5 py-4  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">View
-                                    Product</button>
+                                    Product
+                                </a>
                             </div>
                             <div class="basis-[37%]"><img alt="shoe box" loading="lazy" width="1019" height="920"
                                     decoding="async" data-nimg="1" class="w-full" src="/images/shoe_box.png"
@@ -53,8 +56,10 @@
                                         <div class="relative flow-root">
                                             <div class="swiper-home flow-root rounded-xl">
                                                 <div class="swiper-button-prev p-5"></div>
-                                                <ul class="swiper-wrapper relative -mx-2 flex whitespace-nowrap xl:-mx-4 ">
-                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
+                                                <ul 
+                                                id="recommend-products"
+                                                class="swiper-wrapper relative -mx-2 flex whitespace-nowrap xl:-mx-4 ">
+                                                    {{-- <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
                                                         style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
                                                         <div
                                                             class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
@@ -288,7 +293,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </li>
+                                                    </li> --}}
                                                 </ul>
                                                 <div class="swiper-button-next p-5"></div>
                                             </div>

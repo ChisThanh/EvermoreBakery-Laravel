@@ -1,6 +1,3 @@
-// function
-
-
 // Cart 
 const cartButton = document.querySelector('#cart-button');
 const mainCart = document.querySelector('#main-cart');

@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\PusherBroadcast;
-use App\Http\Controllers\Controller;
-use App\Models\Chat;
 use App\Service\ChatService;
-use App\Service\DataProcessorService;
 use Illuminate\Http\Request;
 
 class ChatApiController extends BaseApiController

@@ -102,7 +102,7 @@ class BillService extends BaseService
                     'url' => $url,
                 ];
             }
-            cookie()->forget('cart_id');
+            cookie()->forget('cookie_id');
             $this->cartRepository->getModel()->where('user_id', $user->id)->delete();
             \DB::commit();
         } catch (\Exception $th) {
@@ -169,7 +169,7 @@ class BillService extends BaseService
     private function clearUserCart(): void
     {
         $userId = auth()->id();
-        cookie()->forget('cart_id');
+        cookie()->forget('cookie_id');
         $this->cartRepository->getModel()
             ->where('user_id', $userId)
             ->delete();

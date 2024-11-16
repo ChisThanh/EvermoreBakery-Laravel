@@ -46,6 +46,7 @@ class ChatService extends BaseService
         $dataInsert = [];
         $data = ['message' => $inputs['message']];
         $now = now();
+        $botMessage = null;
         if (!isset($inputs['admin'])) {
             if ($user->is_chatbot == true) {
                 $res = $this->dataProcessorService->chatbot($inputs);
@@ -56,9 +57,10 @@ class ChatService extends BaseService
                         'message' => $res['data']['answer'],
                         'user_name' => 'BOT',
                         'is_customer' => false,
-                        'created_at' => $now,
-                        'updated_at' => $now,
+                        'created_at' => $now->copy()->addSeconds(1),
+                        'updated_at' => $now->copy()->addSeconds(1),
                     ];
+                    $botMessage = $res['data']['answer'];
 
                     $data = [
                         ...$data,
@@ -71,7 +73,8 @@ class ChatService extends BaseService
         broadcast(new PusherBroadcast(
             $inputs['channel'],
             $user->name,
-            $inputs['message']
+            $inputs['message'],
+            $botMessage ?? "NULL"
         ));
 
         $dataInsert[] = [
@@ -79,8 +82,8 @@ class ChatService extends BaseService
             'message' => $inputs['message'],
             'user_name' => $user->name,
             'is_customer' => isset($inputs['admin']) ? false : true,
-            'created_at' => now()->addSecond(),
-            'updated_at' => now()->addSecond(),
+            'created_at' => $now,
+            'updated_at' => $now,
         ];
 
         $this->repository->getModel()->insert($dataInsert);

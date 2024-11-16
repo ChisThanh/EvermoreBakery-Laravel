@@ -8,7 +8,7 @@
             <hr class="my-10 border-neutral-300 xl:my-12">
             <div class="flex flex-col lg:flex-row">
                 <div class="w-full divide-y divide-neutral-300 lg:w-[60%] xl:w-[55%]">
-                    @foreach ($data['cartDetails'] as $item)
+                    @forelse ($data['cartDetails'] as $item)
                         <div class="flex py-5 last:pb-0 js-cart-item">
                             <div class="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl md:h-40 md:w-40"><img
                                     alt="Air Force 1" loading="lazy" decoding="async" data-nimg="fill"
@@ -49,7 +49,8 @@
                                                     type="button">
                                                     -
                                                 </button>
-                                                <span class="js-item-quantity block flex-1 select-none text-center leading-none">
+                                                <span
+                                                    class="js-item-quantity block flex-1 select-none text-center leading-none">
                                                     {{ $item['quantity'] }}
                                                 </span>
                                                 <button onclick="updateQuantity(this, '{{ $item['slug'] }}', 1)"
@@ -63,7 +64,9 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <center>Không có gì trong giỏ hàng</center>
+                    @endforelse
                 </div>
                 <div
                     class="my-10 shrink-0 border-t border-neutral-300 lg:mx-10 lg:my-0 lg:border-l lg:border-t-0 xl:mx-16 2xl:mx-20">

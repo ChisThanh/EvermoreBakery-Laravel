@@ -66,7 +66,7 @@
 
 
 {{-- cart right --}}
-<div class="fixed inset-0 z-50 overflow-y-auto hidden" id="main-cart">
+<div class="fixed inset-0 z-[9999999999999999] overflow-y-auto hidden" id="main-cart">
     <div class="z-max fixed inset-y-0 right-0 w-full max-w-md outline-none focus:outline-none md:max-w-md">
         <div class="relative z-20 opacity-100 translate-x-0">
             <div class="overflow-hidden shadow-lg ring-1 ring-black/5">

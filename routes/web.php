@@ -26,6 +26,7 @@ Route::group([
     Route::prefix('products')->group(function () {
         Route::get('/', 'ProductController@index')->name('products');
         Route::get('/{slug}', 'ProductController@show')->name('product.show');
+        Route::get('/buy-now/{slug}', 'ProductController@buyNow');
         Route::get('/add-to-cart/{slug}', 'ProductController@addToCart');
         Route::get('/update-from-cart/{slug}/{quantity}', 'ProductController@updateFromCart');
     });

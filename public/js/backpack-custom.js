@@ -1,3 +1,5 @@
+
+
 function updateStatusBill(id, element) {
     const value = element.value;
     const url = `/admin/bill/${id}/update-status/${value}`;
@@ -25,3 +27,4 @@ function updateStatusBill(id, element) {
             }).show();
         });
 }
+

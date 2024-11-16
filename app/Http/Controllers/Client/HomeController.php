@@ -22,15 +22,13 @@ class HomeController extends Controller
 
     public function index()
     {
-        // $products = cache()->remember('products_home', 60 * 24 * 30, function () {
-        //     return $this->productService->getProductHome();
-        // });
+        $products = cache()->remember('products_home', 60 * 24 * 30, function () {
+            return $this->productService->getProductHome();
+        });
 
-        // $categories = cache()->remember('categories_home', 60 * 24 * 30, function () {
-        //     return $this->categoryService->getCategoryHome();
-        // });
-        $products = $this->productService->getProductHome();
-        $categories = $this->categoryService->getCategoryHome();
+        $categories = cache()->remember('categories_home', 60 * 24 * 30, function () {
+            return $this->categoryService->getCategoryHome();
+        });
         return view('clients.home', compact('products', 'categories'));
     }
 

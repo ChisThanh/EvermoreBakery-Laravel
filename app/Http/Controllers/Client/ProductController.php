@@ -13,7 +13,7 @@ class ProductController extends Controller
     protected $billService;
     public function __construct(
         ProductService $productService,
-        BillService $billService
+        BillService $billService,
     ) {
         $this->productService = $productService;
         $this->billService = $billService;
@@ -21,11 +21,6 @@ class ProductController extends Controller
 
     public function index()
     {
-        // $data = $this->productService->index(request()->all());
-
-        // if ($data['success'] === false)
-        //     return redirect()->back()->with('error', $data['message']);
-        // return view('clients.products', compact('data'));
         return view('clients.products');
     }
 
@@ -44,6 +39,13 @@ class ProductController extends Controller
         if ($data['success'] === false)
             return redirect()->back()->with('error', $data['message']);
         return redirect()->back()->with('success', 'Thêm vào giỏ hàng thành công');
+    }
+    public function buyNow($slug)
+    {
+        $data = $this->productService->addToCart($slug);
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
+        return redirect('/checkout');
     }
 
     public function updateFromCart($slug, $quantity)
@@ -122,7 +124,9 @@ class ProductController extends Controller
             "vnp_ResponseCode" => "required",
             "vnp_TxnRef" => "required",
         ]);
+
         $data = $this->billService->updateBillStatusPayment($inputs);
+
         if ($data['success'] === false)
             return redirect()->route('products')
                 ->with('error', $data['message']);
