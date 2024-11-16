@@ -3,7 +3,7 @@
     <div class="nc-CartPage">
         <main class="container py-16 lg:pb-28 lg:pt-20 ">
             <div class="mb-14">
-                <h2 class="block text-2xl font-medium sm:text-3xl lg:text-4xl">Your Cart</h2>
+                <h2 class="block text-2xl font-medium sm:text-3xl lg:text-4xl">Giỏ Hàng Của Bạn</h2>
             </div>
             <hr class="my-10 border-neutral-300 xl:my-12">
             <div class="flex flex-col lg:flex-row">
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     @empty
-                        <center>Không có gì trong giỏ hàng</center>
+                        <center>Không Có Gì Trong Giỏ Hàng</center>
                     @endforelse
                 </div>
                 <div
@@ -73,23 +73,23 @@
                 </div>
                 <div class="flex-1">
                     <div class="sticky top-28">
-                        <h3 class="text-2xl font-semibold">Summary</h3>
+                        <h3 class="text-2xl font-semibold">Chi Tiết Giỏ Hàng</h3>
                         <div class="mt-7 divide-y divide-neutral-300 text-sm">
                             <div class="flex justify-between pb-4">
-                                <span>Subtotal</span>
+                                <span>Tổng Phụ</span>
                                 <span class="font-semibold">{{ $data['total'] }} Đ</span>
                             </div>
                             <div class="flex justify-between py-4">
-                                <span>Estimated Delivery &amp; Handling</span>
-                                <span class="font-semibold">Free</span>
+                                <span>Phí Vận Chuyển Dự Tính</span>
+                                <span class="font-semibold">Miễn Phí</span>
                             </div>
                             <div class="flex justify-between pt-4 text-base font-semibold">
-                                <span>Total</span>
+                                <span>Tổng Cộng</span>
                                 <span>{{ $data['total'] }} Đ</span>
                             </div>
                         </div><a
                             class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 mt-8 w-full"
-                            href="/checkout">Checkout Now</a><a
+                            href="/checkout">Thanh Toán Ngay</a><a
                             class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  mt-3 inline-flex w-full items-center gap-1 border-2 border-primary text-primary"
                             href="/checkout"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
                                 stroke-linecap="round" stroke-linejoin="round" class="text-2xl" height="1em"

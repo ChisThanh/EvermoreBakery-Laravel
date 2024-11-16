@@ -5,7 +5,7 @@
         <div class="nc-CheckoutPage">
             <main class="container py-16 lg:pb-28 lg:pt-20 ">
                 <div class="mb-16">
-                    <h2 class="block text-2xl font-semibold sm:text-3xl lg:text-4xl ">Checkout</h2>
+                    <h2 class="block text-2xl font-semibold sm:text-3xl lg:text-4xl ">Thanh Toán</h2>
                 </div>
                 <div class="flex flex-col lg:flex-row">
                     <div class="flex-1">
@@ -24,18 +24,18 @@
                                         </span>
                                         <div class="flex w-full items-center justify-between">
                                             <div class="sm:ml-8">
-                                                <span class="uppercase">Thông tin nhận hàng</span>
+                                                <span class="uppercase">Thông Tin Nhận Hàng</span>
                                                 <div class="mt-1 text-sm font-semibold">
                                                     <span class="">{{ $user->name }}</span>
                                                 </div>
                                             </div><button
-                                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-2 px-4  border-2 border-primary text-primary">Edit</button>
+                                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-2 px-4  border-2 border-primary text-primary">Chỉnh Sửa</button>
                                         </div>
                                     </div>
                                     <div class="space-y-4 border-t border-neutral-300 px-6 py-7 sm:space-y-6 block">
                                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-3">
                                             <div>
-                                                <div class="font-medium">Tên người nhận <span class="text-red-600">*</span>
+                                                <div class="font-medium">Tên Người Nhận <span class="text-red-600">*</span>
                                                 </div>
                                                 <div class="mt-1.5">
                                                     <input
@@ -50,7 +50,7 @@
 
                                             </div>
                                             <div>
-                                                <div class="font-medium">Số điện thoại <span class="text-red-600">*</span>
+                                                <div class="font-medium">Số Điện Thoại <span class="text-red-600">*</span>
                                                 </div>
                                                 <div class="mt-1.5">
                                                     <input
@@ -66,7 +66,7 @@
                                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-3">
                                             <div class="flex-1">
                                                 <div class="">
-                                                    <div class="font-medium">Địa chỉ / Đường <span
+                                                    <div class="font-medium">Địa Chỉ / Đường <span
                                                             class="text-red-600">*</span></div>
                                                     <div class="mt-1.5">
                                                         <input
@@ -79,7 +79,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <div class="font-medium">Thành phố <span class="text-red-600">*</span>
+                                                <div class="font-medium">Thành Phố <span class="text-red-600">*</span>
                                                 </div>
                                                 <div class="mt-1.5">
                                                     <input
@@ -122,7 +122,7 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <div class="font-medium">Ghi chú</div>
+                                            <div class="font-medium">Ghi Chú</div>
                                             <div class="mt-1.5">
                                                 <textarea
                                                     class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary min-h-[150px]"
@@ -132,20 +132,20 @@
                                     </div>
                                     <div class="px-6">
                                         <div class="">
-                                            <div class="font-medium">Thanh toán <span class="text-red-600">*</span></div>
+                                            <div class="font-medium">Thanh Toán <span class="text-red-600">*</span></div>
                                             <div class="mt-1.5">
                                                 <div class="mt-1.5 grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
                                                     <div class="flex items-center text-sm sm:text-base ">
                                                         <input
                                                             class="focus:ring-action-primary rounded-full border-neutral-400 bg-transparent text-primary hover:border-neutral-700  focus:ring-primary w-6 h-6"
                                                             type="radio" value="cash"name="payment">
-                                                        <div class="block select-none pl-2.5 sm:pl-3">Thanh toán khi nhận hàng</div>
+                                                        <div class="block select-none pl-2.5 sm:pl-3">Thanh Toán Khi Nhận Hàng</div>
                                                     </div>
                                                     <div class="flex items-center text-sm sm:text-base ">
                                                         <input
                                                             class="focus:ring-action-primary rounded-full border-neutral-400 bg-transparent text-primary hover:border-neutral-700  focus:ring-primary w-6 h-6"
                                                             type="radio" value="card" checked="" name="payment">
-                                                        <div class="block select-none pl-2.5 sm:pl-3">Chuyển khoàn</div>
+                                                        <div class="block select-none pl-2.5 sm:pl-3">Chuyển Khoàn</div>
                                                     </div>
                                                 </div>
                                                 @error('payment')
@@ -165,7 +165,7 @@
                         class="my-10 shrink-0 border-t border-neutral-300 lg:mx-10 lg:my-0 lg:border-l lg:border-t-0 xl:lg:mx-14 2xl:mx-16 ">
                     </div>
                     <div class="w-full lg:w-[36%] ">
-                        <h3 class="text-lg font-semibold">Order summary</h3>
+                        <h3 class="text-lg font-semibold">Chi Tiết Đơn Hàng</h3>
                         <div class="mt-8 divide-y divide-neutral-300">
                             @foreach ($data['cartDetails'] as $index => $item)
                                 <div class="flex py-5 last:pb-0 js-cart-item">
@@ -236,32 +236,32 @@
                         </div>
                         <div class="mt-10 border-t border-neutral-300 pt-6 text-sm">
                             <div>
-                                <div class="text-sm">Coupon</div>
+                                <div class="text-sm">Coupon Giảm Giá</div>
                                 <div class="mt-1.5 flex">
                                     <input
                                         class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 flex-1 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
                                         type="text" name="coupon_code">
                                     <button type="button" data-click="true" onclick="applyCoupon(this)"
                                         class="ml-3 flex w-24 items-center justify-center rounded-2xl border border-neutral-300 bg-gray px-4 text-sm font-medium transition-colors hover:bg-neutral-100">
-                                        Apply
+                                        Áp Dụng
                                     </button>
                                 </div>
                             </div>
                             <div class="mt-4 flex justify-between pb-4">
-                                <span>Subtotal</span>
+                                <span>Tổng Phụ</span>
                                 <span class="font-semibold js-subtotal">{{ $data['total'] ?? 0 }} Đ</span>
                             </div>
                             <div class="flex justify-between py-4">
-                                <span>Phí vận chuyển</span>
+                                <span>Phí Vận Chuyển</span>
                                 <span class="font-semibold">50000 Đ</span>
                             </div>
                             <div class="flex justify-between pt-4 text-base font-semibold">
-                                <span>Total</span>
+                                <span>Tổng Cộng</span>
                                 <span class="js-total">{{ $data['total'] + 50000 ?? 0 + 50000 }} Đ</span>
                             </div>
                         </div><button
                             class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 mt-8 w-full">
-                            Confirm order
+                            Xác Nhận Đơn Hàng
                         </button>
                     </div>
                 </div>

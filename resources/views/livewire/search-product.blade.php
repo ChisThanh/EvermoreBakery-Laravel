@@ -18,15 +18,15 @@
                     <div
                         class="nc-Section-Heading relative flex flex-col justify-between sm:flex-row sm:items-end mb-0">
                         <div class="max-w-4xl">
-                            <h2 class="text-3xl mb-5 font-medium" style="line-height: 1.2em;">Lọc sản phẩm</h2>
+                            <h2 class="text-3xl mb-5 font-medium" style="line-height: 1.2em;">Lọc Sản Phẩm</h2>
                         </div>
                     </div>
                     <div class="divide-y divide-neutral-300">
                         <div class="relative flex flex-col space-y-4 pb-8">
-                            <h3 class="mb-2.5 text-xl font-medium">Thể loại</h3>
+                            <h3 class="mb-2.5 text-xl font-medium">Thể Loại</h3>
                             <div class="grid gap-4">
                                 <button type="button" wire:click="setCategory(null)"
-                                    class="rounded-lg py-2  @if ($categoryName != null || $categoryName != '') bg-gray @else bg-primary text-white @endif">Tất cả</button>
+                                    class="rounded-lg py-2  @if ($categoryName != null || $categoryName != '') bg-gray @else bg-primary text-white @endif">Tất Cả</button>
                                 @foreach ($categories as $category)
                                     <button type="button"
                                         class="rounded-lg py-2 bg-gray @if ($category->name == $categoryName) bg-primary text-white @endif"
@@ -35,17 +35,17 @@
                             </div>
                         </div>
                         <div class="relative flex flex-col space-y-5 py-8 pr-3">
-                            <div class="space-y-5"><span class="font-semibold">Theo giá</span>
+                            <div class="space-y-5"><span class="font-semibold">Theo Giá</span>
                                 <div class="grid gap-4">
                                     <button type="button"
                                         class="rounded-lg py-2 @if ($price != null || $price != '') bg-gray @else bg-primary text-white @endif"
-                                        wire:click="setPrice(null)">Tất cả</button>
+                                        wire:click="setPrice(null)">Tất Cả</button>
                                     <button type="button"
                                         class="rounded-lg py-2 bg-gray @if ($price == 'asc') bg-primary text-white @endif"
-                                        wire:click="setPrice('asc')">Thấp đến cao</button>
+                                        wire:click="setPrice('asc')">Thấp Đến Cao</button>
                                     <button type="button"
                                         class="rounded-lg py-2 bg-gray @if ($price == 'desc') bg-primary text-white @endif"
-                                        wire:click="setPrice('desc')">Cao đến thấp</button>
+                                        wire:click="setPrice('desc')">Cao Đến Thấp</button>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                     </div>
                     <button type="submit" wire:click="searchSubmit"
                         class="ml-2 bg-primary text-white rounded-full h-12 px-6 py-3">
-                        Tìm kiếm
+                        Tìm Kiếm
                     </button>
                 </div>
                 <div class="grid flex-1 gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-3 ">
