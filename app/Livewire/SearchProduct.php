@@ -84,7 +84,7 @@ class SearchProduct extends Component
 
     public function getCategory()
     {
-        return cache()->remember('categories', 60 * 24 * 30, function () {
+        return cache()->remember('categories', 60 * 24, function () {
             return Category::select('id', 'name')->get();
         });
     }

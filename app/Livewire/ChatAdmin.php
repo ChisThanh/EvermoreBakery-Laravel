@@ -43,11 +43,10 @@ class ChatAdmin extends Component
             ->orderBy('created_at', 'asc')
             ->get();
 
-        if ($history->isEmpty()) {
+        if ($history->isEmpty())
             $this->history = [];
-        } else {
+        else
             $this->history = $history;
-        }
     }
 
     public function toggleChatbot($userId)

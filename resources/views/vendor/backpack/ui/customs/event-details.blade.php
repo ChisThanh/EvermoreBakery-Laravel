@@ -53,7 +53,7 @@
                                                     onclick="calculatePriceSale('{{ $event->id }}', event)">
                                                     <i class="la la-edit"></i> Tính giá sale
                                                 </a>
-                                                <a href="http://localhost:9090/admin/event/{{ $event->id }}/edit" bp-button="update"
+                                                <a href="/admin/event/{{ $event->id }}/edit" bp-button="update"
                                                     class="btn btn-sm btn-link"><i
                                                         class="la la-edit"></i><span>Sửa</span></a>
                                             </td>

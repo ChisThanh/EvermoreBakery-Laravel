@@ -35,14 +35,8 @@
                                 <table class="table table-striped m-0 p-0">
                                     <tbody>
                                         <tr>
-                                            <td><strong>Ngày Giao:</strong></td>
-                                            <td><span>
-                                                    {{ $bill->delivery_date }}
-                                                </span></td>
-                                        </tr>
-                                        <tr>
                                             <td><strong>Tổng Tiền:</strong></td>
-                                            <td><span>{{ $bill->total }} đ</span></td>
+                                            <td><span>{{ round($bill->total, 2) }} đ</span></td>
                                         </tr>
                                         <tr>
                                             <td><strong>Tình Trạng Thanh Toán:</strong></td>
@@ -52,7 +46,8 @@
                                                             '1' => 'Đã Thanh Toán',
                                                             '2' => 'Chưa Thanh Toán',
                                                         ];
-                                                        echo $payment_status[$bill->payment_status] ?? "Chưa Thanh Toán";
+                                                        echo $payment_status[$bill->payment_status] ??
+                                                            'Chưa Thanh Toán';
                                                     @endphp
 
                                                 </span></td>
@@ -76,21 +71,21 @@
                                                         $status = [
                                                             '1' => 'Chờ Xác Nhận',
                                                             '2' => 'Đang Xử Lý',
-                                                            '3' => 'Đã Giao Hàng',
-                                                            '4' => 'Hũy Bỏ',
-                                                            '5' => 'Hoàn Thành',
+                                                            '3' => 'Đang Giao Hàng',
+                                                            '4' => 'Đã Giao Hàng',
+                                                            '5' => 'Hũy Bỏ',
                                                         ];
-                                                        echo $status[$bill->status] ?? "Chờ Xác Nhận";
+                                                        echo $status[$bill->status] ?? 'Chờ Xác Nhận';
                                                     @endphp
                                                 </span></td>
                                         </tr>
                                         <tr>
                                             <td><strong>Mã Giảm Giá:</strong></td>
-                                            <td><span>{{ $bill->coupon_id }}</span></td>
+                                            <td><span>{{ $bill->coupon->code ?? '_' }}</span></td>
                                         </tr>
                                         <tr>
                                             <td><strong>Ghi Chú:</strong></td>
-                                            <td><span>{{ $bill->note }}</span></td>
+                                            <td><span>{{ $bill->note ?? '_' }}</span></td>
                                         </tr>
 
                                         <tr>
@@ -102,8 +97,12 @@
                                             <td><span>{{ $billAddress->phone }}</span></td>
                                         </tr>
                                         <tr>
+                                            <td><strong>Ngày Giao:</strong></td>
+                                            <td><span>{{ $bill->delivery_date }}</span></td>
+                                        </tr>
+                                        <tr>
                                             <td><strong>Địa Chỉ</strong></td>
-                                            <td><span>{{ $billAddress->street . ',' . $billAddress->ward . ',' . $billAddress->district . ',' . $billAddress->city }}</span>
+                                            <td><span>{{ $billAddress->street . ', ' . $billAddress->ward . ', ' . $billAddress->district . ', ' . $billAddress->city }}</span>
                                             </td>
                                         </tr>
 

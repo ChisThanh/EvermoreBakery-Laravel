@@ -47,6 +47,7 @@ class ProductCrudController extends CrudController
     protected function setupListOperation()
     {
         CRUD::setFromDb();
+        CRUD::setOperationSetting('lineButtonsAsDropdown', true);
         $this->crud->addClause('with', 'images');
     }
 

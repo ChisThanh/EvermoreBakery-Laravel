@@ -14,7 +14,8 @@ class BillCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow;
+    }
 
 
     public function setup()
@@ -25,6 +26,7 @@ class BillCrudController extends CrudController
         CRUD::denyAccess('delete');
         CRUD::denyAccess('update');
         CRUD::denyAccess('create');
+        
 
         $this->crud->addColumn([
             'name' => 'payment_method',
@@ -53,6 +55,24 @@ class BillCrudController extends CrudController
             'model' => "App\Models\User",
         ]);
         $this->crud->addColumn([
+            'name' => 'total',
+            'label' => 'Tổng tiền',
+            'type' => 'number',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'coupon_id',
+            'type' => 'select',
+            'label' => 'Mã giảm giá',
+            'entity' => 'coupon',
+            'attribute' => 'code',
+            'model' => "App\Models\Coupon",
+        ]);
+        $this->crud->addColumn([
+            'name' => 'delivery_date',
+            'label' => 'Ngày giao hàng',
+            'type' => 'datetime',
+        ]);
+        $this->crud->addColumn([
             'name' => 'quick_update',
             'label' => 'Thay đổi trình trạng',
             'type' => 'custom_html',
@@ -73,7 +93,6 @@ class BillCrudController extends CrudController
 
     protected function setupListOperation()
     {
-        CRUD::setFromDb();
     }
 
 
@@ -92,7 +111,7 @@ class BillCrudController extends CrudController
 
     public function show($id)
     {
-        $bill = Bill::with(['details.product', 'address', 'user'])->find($id);
+        $bill = Bill::with(['details.product', 'address', 'user', 'coupon'])->find($id);
         $billDetails = $bill->details;
         $billAddress = $bill->address;
         return view(

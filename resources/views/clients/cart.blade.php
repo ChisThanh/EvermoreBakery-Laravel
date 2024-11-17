@@ -24,7 +24,6 @@
                                                 <a href="/products/{{ $item['slug'] }}">{{ $item['product_name'] }}</a>
                                             </h3>
                                             <span class="my-1 text-sm text-neutral-500">{{ $item['category_name'] }}</span>
-
                                         </div><span class="font-medium md:text-xl">{{ $item['total'] }} Đ</span>
                                     </div>
                                 </div>

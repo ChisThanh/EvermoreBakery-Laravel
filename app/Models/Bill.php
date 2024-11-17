@@ -53,4 +53,8 @@ class Bill extends Model
     {
         return $this->hasOne(BillAddress::class, 'bill_id');
     }
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class, 'coupon_id');
+    }
 }

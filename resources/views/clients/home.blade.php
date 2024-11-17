@@ -15,8 +15,7 @@
                                     putt
                                     in
                                     a design that's pure early MJ: speed, class</p>
-                                    <a
-                                    href="/products"
+                                <a href="/products"
                                     class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium px-5 py-4  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">View
                                     Product
                                 </a>
@@ -56,244 +55,8 @@
                                         <div class="relative flow-root">
                                             <div class="swiper-home flow-root rounded-xl">
                                                 <div class="swiper-button-prev p-5"></div>
-                                                <ul 
-                                                id="recommend-products"
-                                                class="swiper-wrapper relative -mx-2 flex whitespace-nowrap xl:-mx-4 ">
-                                                    {{-- <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
-                                                        style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
-                                                        <div
-                                                            class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
-                                                            <div
-                                                                class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                                                                <button type="button"
-                                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                                                        class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                                                        <path
-                                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                                            stroke="currentColor" fill="none"
-                                                                            stroke-width="1.5" stroke-linecap="round"
-                                                                            stroke-linejoin="round"></path>
-                                                                    </svg></button><a class="h-[250px] w-full lg:h-[220px]"
-                                                                    href="https://hotkicks.themealchemy.com/products/brsb"><img
-                                                                        alt="BRSB cover photo" loading="lazy" width="592"
-                                                                        height="592" decoding="async" data-nimg="1"
-                                                                        class="h-full w-full object-cover object-bottom"
-                                                                        src="/images/brsb.jpg"
-                                                                        style="color: transparent;"></a>
-                                                            </div>
-                                                            <div class="mt-3">
-                                                                <div class="flex items-center justify-between">
-                                                                    <h3 class="font-semibold">BRSB</h3>
-                                                                    <p class="text-neutral-500 block text-sm line-through">
-                                                                        $250
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center justify-between">
-                                                                    <p class="text-sm text-neutral-500">Men's shoes</p>
-                                                                    <p class="text-lg font-medium text-primary">$199
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
-                                                        style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
-                                                        <div
-                                                            class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
-                                                            <div
-                                                                class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                                                                <button type="button"
-                                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                                                        class="h-5 w-5" viewBox="0 0 24 24" fill="none">
-                                                                        <path
-                                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                                            stroke="#e94e07" fill="#e94e07"
-                                                                            stroke-width="1.5" stroke-linecap="round"
-                                                                            stroke-linejoin="round"></path>
-                                                                    </svg></button><a class="h-[250px] w-full lg:h-[220px]"
-                                                                    href="https://hotkicks.themealchemy.com/products/dunklow"><img
-                                                                        alt="Dunk Low cover photo" loading="lazy"
-                                                                        width="592" height="592" decoding="async"
-                                                                        data-nimg="1"
-                                                                        class="h-full w-full object-cover object-bottom"
-                                                                        src="/images/dunklow.jpg"
-                                                                        style="color: transparent;"></a>
-                                                            </div>
-                                                            <div class="mt-3">
-                                                                <div class="flex items-center justify-between">
-                                                                    <h3 class="font-semibold">Dunk Low</h3>
-                                                                    <p class="text-neutral-500 block text-sm line-through">
-                                                                        $250
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center justify-between">
-                                                                    <p class="text-sm text-neutral-500">Men's shoes</p>
-                                                                    <p class="text-lg font-medium text-primary">$199
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
-                                                        style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
-                                                        <div
-                                                            class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
-                                                            <div
-                                                                class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                                                                <button type="button"
-                                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                                                        class="h-5 w-5" viewBox="0 0 24 24"
-                                                                        fill="none">
-                                                                        <path
-                                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                                            stroke="#e94e07" fill="#e94e07"
-                                                                            stroke-width="1.5" stroke-linecap="round"
-                                                                            stroke-linejoin="round"></path>
-                                                                    </svg></button><a class="h-[250px] w-full lg:h-[220px]"
-                                                                    href="https://hotkicks.themealchemy.com/products/lebronxx"><img
-                                                                        alt="Lebron XXL cover photo" loading="lazy"
-                                                                        width="592" height="592" decoding="async"
-                                                                        data-nimg="1"
-                                                                        class="h-full w-full object-cover object-bottom"
-                                                                        src="/images/lebronxx.jpg"
-                                                                        style="color: transparent;"></a>
-                                                            </div>
-                                                            <div class="mt-3">
-                                                                <div class="flex items-center justify-between">
-                                                                    <h3 class="font-semibold">Lebron XXL</h3>
-                                                                    <p class="text-neutral-500 block text-sm line-through">
-                                                                        $250
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center justify-between">
-                                                                    <p class="text-sm text-neutral-500">Men's shoes</p>
-                                                                    <p class="text-lg font-medium text-primary">$199
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
-                                                        style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
-                                                        <div
-                                                            class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
-                                                            <div
-                                                                class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                                                                <div
-                                                                    class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
-                                                                    Just In!</div><button type="button"
-                                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                                                        class="h-5 w-5" viewBox="0 0 24 24"
-                                                                        fill="none">
-                                                                        <path
-                                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                                            stroke="#e94e07" fill="#e94e07"
-                                                                            stroke-width="1.5" stroke-linecap="round"
-                                                                            stroke-linejoin="round"></path>
-                                                                    </svg></button><a class="h-[250px] w-full lg:h-[220px]"
-                                                                    href="https://hotkicks.themealchemy.com/products/metcon5"><img
-                                                                        alt="Metcon 5 cover photo" loading="lazy"
-                                                                        width="592" height="592" decoding="async"
-                                                                        data-nimg="1"
-                                                                        class="h-full w-full object-cover object-bottom"
-                                                                        src="/images/metcon5.jpg"
-                                                                        style="color: transparent;"></a>
-                                                            </div>
-                                                            <div class="mt-3">
-                                                                <div class="flex items-center justify-between">
-                                                                    <h3 class="font-semibold">Metcon 5</h3>
-                                                                    <p class="text-neutral-500 block text-sm line-through">
-                                                                        $250
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center justify-between">
-                                                                    <p class="text-sm text-neutral-500">Men's shoes</p>
-                                                                    <p class="text-lg font-medium text-primary">$199
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
-                                                        style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
-                                                        <div
-                                                            class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
-                                                            <div
-                                                                class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                                                                <button type="button"
-                                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                                                        class="h-5 w-5" viewBox="0 0 24 24"
-                                                                        fill="none">
-                                                                        <path
-                                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                                            stroke="currentColor" fill="none"
-                                                                            stroke-width="1.5" stroke-linecap="round"
-                                                                            stroke-linejoin="round"></path>
-                                                                    </svg></button><a class="h-[250px] w-full lg:h-[220px]"
-                                                                    href="https://hotkicks.themealchemy.com/products/metcon9"><img
-                                                                        alt="Metcon 9 cover photo" loading="lazy"
-                                                                        width="592" height="592" decoding="async"
-                                                                        data-nimg="1"
-                                                                        class="h-full w-full object-cover object-bottom"
-                                                                        src="/images/metcon9.jpg"
-                                                                        style="color: transparent;"></a>
-                                                            </div>
-                                                            <div class="mt-3">
-                                                                <div class="flex items-center justify-between">
-                                                                    <h3 class="font-semibold">Metcon 9</h3>
-                                                                    <p class="text-neutral-500 block text-sm line-through">
-                                                                        $250
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center justify-between">
-                                                                    <p class="text-sm text-neutral-500">Men's shoes</p>
-                                                                    <p class="text-lg font-medium text-primary">$199
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="swiper-slide relative inline-block shrink-0 whitespace-normal px-2"
-                                                        style="width: calc(25%); transform: translateX(0%) translateZ(0px);">
-                                                        <div
-                                                            class="transitionEffect relative rounded-2xl p-3 shadow-md bg-white">
-                                                            <div
-                                                                class="h-[250px] w-full overflow-hidden rounded-2xl lg:h-[220px] 2xl:h-[300px]">
-                                                                <div
-                                                                    class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
-                                                                    Just In!</div><button type="button"
-                                                                    class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2"><svg
-                                                                        class="h-5 w-5" viewBox="0 0 24 24"
-                                                                        fill="none">
-                                                                        <path
-                                                                            d="M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z"
-                                                                            stroke="currentColor" fill="none"
-                                                                            stroke-width="1.5" stroke-linecap="round"
-                                                                            stroke-linejoin="round"></path>
-                                                                    </svg></button><a class="h-[250px] w-full lg:h-[220px]"
-                                                                    href="https://hotkicks.themealchemy.com/products/nike_blazer"><img
-                                                                        alt="Nike Blazer cover photo" loading="lazy"
-                                                                        width="592" height="592" decoding="async"
-                                                                        data-nimg="1"
-                                                                        class="h-full w-full object-cover object-bottom"
-                                                                        src="/images/nike_blazer.jpg"
-                                                                        style="color: transparent;"></a>
-                                                            </div>
-                                                            <div class="mt-3">
-                                                                <div class="flex items-center justify-between">
-                                                                    <h3 class="font-semibold">Nike Blazer</h3>
-                                                                    <p class="text-neutral-500 block text-sm line-through">
-                                                                        $250
-                                                                    </p>
-                                                                </div>
-                                                                <div class="flex items-center justify-between">
-                                                                    <p class="text-sm text-neutral-500">Men's shoes</p>
-                                                                    <p class="text-lg font-medium text-primary">$199
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li> --}}
+                                                <ul id="recommend-products"
+                                                    class="swiper-wrapper relative -mx-2 flex whitespace-nowrap xl:-mx-4 ">
                                                 </ul>
                                                 <div class="swiper-button-next p-5"></div>
                                             </div>
@@ -309,8 +72,7 @@
                         <div
                             class="nc-Section-Heading relative flex flex-col justify-between sm:flex-row sm:items-end mb-10">
                             <div class="mx-auto mb-2 w-full max-w-3xl text-center">
-                                <h2 class="lineHeight text-3xl lg:text-[55px] mb-5 font-medium"
-                                    style="line-height: 1.2em;">
+                                <h2 class="lineHeight text-3xl lg:text-[55px] mb-5 font-medium" style="line-height: 1.2em;">
                                     Chọn những món bạn thích :)))
                                 </h2>
                                 <p class="mt-5 text-neutral-500">
@@ -318,44 +80,6 @@
                                     mơ ước của bạn, biến nó thành hiện thực</p>
                             </div>
                         </div>
-                        {{-- <div
-                            class="mx-auto mb-10 max-w-4xl items-center justify-between space-y-3 rounded-2xl border border-neutral-300 p-2 md:flex md:space-y-0 md:rounded-full">
-                            <div class="grid basis-[75%] gap-3 md:grid-cols-4"><select
-                                    class="nc-Select h-12  block w-full rounded-full border-transparent bg-gray text-sm focus:border-transparent focus:ring focus:ring-transparent focus:ring-opacity-50">
-                                    <option value="Nike">Nike</option>
-                                    <option value="Alexander Mqueen">Alexander Mqueen</option>
-                                    <option value="New Balance">New Balance</option>
-                                    <option value="Compass">Compass</option>
-                                </select><select
-                                    class="nc-Select h-12  block w-full rounded-full border-transparent bg-gray text-sm focus:border-transparent focus:ring focus:ring-transparent focus:ring-opacity-50">
-                                    <option value="Price">Price</option>
-                                    <option value="Below $100">Below $100</option>
-                                    <option value="Below $200">Below $200</option>
-                                    <option value="Below $300">Below $300</option>
-                                    <option value="Below $400">Below $400</option>
-                                </select><select
-                                    class="nc-Select h-12  block w-full rounded-full border-transparent bg-gray text-sm focus:border-transparent focus:ring focus:ring-transparent focus:ring-opacity-50">
-                                    <option value="Size">Size</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                    <option value="XXl">XXl</option>
-                                </select><select
-                                    class="nc-Select h-12  block w-full rounded-full border-transparent bg-gray text-sm focus:border-transparent focus:ring focus:ring-transparent focus:ring-opacity-50">
-                                    <option value="Type">Type</option>
-                                    <option value="Sandals">Sandals</option>
-                                    <option value="Sneakers">Sneakers</option>
-                                    <option value="Boots">Boots</option>
-                                </select></div>
-                            <div class="hidden h-5 w-px bg-neutral-300 md:block"></div><button
-                                class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  flex w-full items-center gap-1 bg-gray lg:w-auto">More
-                                Filter<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
-                                    stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                                </svg></button>
-                        </div> --}}
                         <div class="grid gap-7 md:grid-cols-2 lg:grid-cols-4">
                             @foreach ($products as $each)
                                 <div class="transitionEffect relative rounded-2xl p-3 shadow-md border-neutral-300">
@@ -416,8 +140,7 @@
                         <div
                             class="nc-Section-Heading relative flex flex-col justify-between sm:flex-row sm:items-end mb-10">
                             <div class="mx-auto mb-2 w-full max-w-3xl text-center">
-                                <h2 class="lineHeight text-3xl lg:text-[55px] mb-5 font-medium"
-                                    style="line-height: 1.2em;">
+                                <h2 class="lineHeight text-3xl lg:text-[55px] mb-5 font-medium" style="line-height: 1.2em;">
                                     Các thể loại bán chạy nhất
                                 </h2>
                                 <p class="mt-5 text-neutral-500">
@@ -506,9 +229,4 @@
 
 @push('scripts')
     <script src="{{ asset('js/home.js') }}"></script>
-    @if (session('verify-email'))
-        <script>
-            openModal("Xác nhận email", "Vui lòng kiểm tra email của bạn để xác nhận tài khoản", "Xác nhận", "Đóng", 0);
-        </script>
-    @endif
 @endpush

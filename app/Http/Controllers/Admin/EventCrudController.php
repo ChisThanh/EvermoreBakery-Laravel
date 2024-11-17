@@ -25,7 +25,7 @@ class EventCrudController extends CrudController
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/event');
         CRUD::setEntityNameStrings('event', 'events');
-        CRUD::addButton('line', 'add_product', 'view', 'vendor.backpack.ui.customs.btn-event', 'beginning', false);
+        CRUD::addButton('line', 'add_product', 'view', 'vendor.backpack.ui.customs.btn-event-add-product', 'beginning', false);
         CRUD::addButton('line', 'cal_product', 'view', 'vendor.backpack.ui.customs.btn-event-cal', 'beginning', false);
     }
 
@@ -56,7 +56,7 @@ class EventCrudController extends CrudController
             ->whereNotIn('id', $eventProducts->pluck('product_id'))
             ->get();
 
-        return view('vendor.backpack.ui.customs.add-product', compact('products'));
+        return view('vendor.backpack.ui.customs.event-add-product', compact('products'));
     }
 
     public function addProduct(Request $request, $id)

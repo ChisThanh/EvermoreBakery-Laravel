@@ -1,5 +1,4 @@
 <div class="mb-5">
-
     <div wire:loading>
         <div class="fixed inset-0 flex items-center justify-center bg-white min-h-screen z-[100000000]">
             <div class="loader">
@@ -10,7 +9,6 @@
             </div>
         </div>
     </div>
-
     <div wire:loading.remove>
         <div class="container relative flex flex-col lg:flex-row" id="body">
             <div class="pr-4 pt-10 lg:basis-1/3 xl:basis-1/4">

@@ -29,7 +29,6 @@
                 </button>
             @endisset
 
-
         </header>
         <div class="h-screen overflow-y-auto px-4 pb-36 border-end-1 " id="chat-list">
             @foreach ($history as $item)

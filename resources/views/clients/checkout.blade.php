@@ -10,7 +10,6 @@
                 <div class="flex flex-col lg:flex-row">
                     <div class="flex-1">
                         <div class="space-y-8">
-
                             <div id="ShippingAddress" class="scroll-mt-24">
                                 <div class="rounded-xl border border-neutral-300 ">
                                     <div class="flex flex-col items-start p-6 sm:flex-row"><span class="hidden sm:block">
@@ -71,7 +70,7 @@
                                                     <div class="mt-1.5">
                                                         <input
                                                             class="block w-full focus:ring focus:ring-transparent focus:ring-opacity-25 disabled:bg-neutral-800 rounded-lg text-sm font-normal h-12 px-4 py-3 border-neutral-300 bg-transparent placeholder:text-neutral-500 focus:border-primary"
-                                                             type="text" value="{{ $address->street ?? "" }}" name="street">
+                                                            type="text" value="{{ $address->street ?? "" }}" name="street">
                                                         @error('street')
                                                             <span class="text-red-500 text-sm">{{ $message }}</span>
                                                         @enderror

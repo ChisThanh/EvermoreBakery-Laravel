@@ -6,4 +6,4 @@
 <x-backpack::menu-item title="Coupons" icon="la la-ticket-alt" :link="backpack_url('coupon')" />
 <x-backpack::menu-item title="Bills" icon="la la-money-bill" :link="backpack_url('bill')" />
 <x-backpack::menu-item title="Chat" icon="la la-comment-alt" :link="backpack_url('chat')" />
-<x-backpack::menu-item title="Events" icon="la la-question" :link="backpack_url('event')" />
+<x-backpack::menu-item title="Events" icon="la la-star-half-alt" :link="backpack_url('event')" />

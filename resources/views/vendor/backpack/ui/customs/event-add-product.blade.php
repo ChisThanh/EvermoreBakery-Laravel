@@ -19,7 +19,7 @@
                     <tr>
                         <th scope="row">
                             <section>
-                                <select name="product_id[]">
+                                <select name="product_id[]" class="form-select">
                                     <option value="0">Chọn sản phẩm</option>
                                     @foreach ($products as $product)
                                         <option value="{{ $product['id'] }}">{{ $product['name'] }}</option>
@@ -27,7 +27,7 @@
                                 </select>
                             </section>
                         </th>
-                        <td><input type="text" name="per[]" /></td>
+                        <td><input type="text" name="per[]" class="form-control" /></td>
                         <td><button type="button" class="add-row btn btn-primary">+</button></td>
                     </tr>
                 </tbody>
@@ -49,13 +49,13 @@
                     newRow.innerHTML = `
                         <th scope="row">
                             <section>
-                                <select name="product_id[]">
+                                <select name="product_id[]" class="form-select">
                                     <option value="0">Chọn sản phẩm</option>
                                     ${products.map(product => `<option value="${product.id}">${product.name}</option>`).join('')}
                                 </select>
                             </section>
                         </th>
-                        <td><input type="text" name="per[]" /></td>
+                        <td><input type="text" name="per[]" class="form-control"/></td>
                         <td><button type="button" class="remove-row btn btn-primary">-</button></td>
                     `;
 

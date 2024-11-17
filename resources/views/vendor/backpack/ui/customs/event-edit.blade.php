@@ -61,7 +61,7 @@
                                                     <tr>
                                                         <th scope="row"> {{ $item->product_name }}</th>
                                                         <td>
-                                                            <input type="text" class="percentage"
+                                                            <input type="text" class="percentage form-control"
                                                                 value="{{ $item->percentage }}"
                                                                 data-index="{{ $item->product_id }}"
                                                                 oninput="updateHiddenValue(this)">
@@ -72,8 +72,10 @@
                                                             <input type="hidden" name="ids[]"
                                                                 value="{{ $item->product_id }}">
                                                         </td>
-                                                        <td><input type="checkbox" value="{{ $item->product_id }}"
-                                                                name="del[]"></td>
+                                                        <td>
+                                                            <input class="form-check-input" type="checkbox" value="{{ $item->product_id }}"
+                                                                name="del[]">
+                                                            </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
