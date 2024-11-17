@@ -74,14 +74,6 @@ class ProductCrudController extends CrudController
         ]);
 
         CRUD::addField([
-            'name' => 'price_sale',
-            'type' => 'number',
-            'label' => 'Giá giảm',
-            'prefix' => '$',
-            'attributes' => ["step" => "1"]
-        ]);
-
-        CRUD::addField([
             'name' => 'images',
             'label' => 'Hình ảnh',
             'type' => 'upload_multiple',
@@ -91,6 +83,8 @@ class ProductCrudController extends CrudController
             'temporary' => 10,
             'hint' => 'Tải lên nhiều hình ảnh.',
         ]);
+
+        CRUD::removeField('price_sale');
     }
 
 
@@ -124,7 +118,7 @@ class ProductCrudController extends CrudController
             'name' => $request->name,
             'category_id' => $request->category_id,
             'price' => $request->price,
-            'price_sale' => $request->price_sale,
+            'price_sale' => $request->price,
             'description' => $request->description,
         ]);
 

@@ -71,28 +71,21 @@ class SearchProduct extends Component
         });
 
         $data = $query->paginate($this->limit ?? 9);
+
         $data->transform(function ($product) {
             $product->category_name = $product->category->name;
             $product->image = $product->images->first()->url ?? null;
-            $product->liked = false;
+            $product->liked = auth()->check() ? $product->likes->contains('id', auth()->id()) : false;
             return $product;
         });
 
-        if (auth()->check()) {
-            $userId = auth()->id();
-            $data->transform(function ($product) use ($userId) {
-                $product->liked = $product->likes->contains('id', $userId);
-                return $product;
-            });
-        }
         return $data;
     }
 
     public function getCategory()
     {
-        // return cache()->remember('categories', 60 * 24 * 30, function () {
-        //     return Category::select('id', 'name')->get();
-        // });
-        return Category::select('id', 'name')->get();
+        return cache()->remember('categories', 60 * 24 * 30, function () {
+            return Category::select('id', 'name')->get();
+        });
     }
 }

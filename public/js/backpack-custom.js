@@ -28,3 +28,30 @@ function updateStatusBill(id, element) {
         });
 }
 
+function calculatePriceSale(id, e) {
+    e.preventDefault();
+    const url = `/admin/event/calculate-price/${id}`;
+    fetch(url, { method: 'GET' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                new Noty({
+                    type: "success",
+                    text: "Tính giá giảm thành công",
+                }).show();
+            } else {
+                new Noty({
+                    type: "error",
+                    text: "Tính giá giảm không thành công",
+                }).show();
+            }
+            if (typeof crud !== 'undefined') {
+                crud.table.ajax.reload();
+            }
+        }).catch(error => {
+            new Noty({
+                type: "error",
+                text: "Cập nhật không thành công",
+            }).show();
+        });
+}

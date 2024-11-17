@@ -24,6 +24,9 @@ Route::group([
     Route::get('chat', 'ChatController@index');
     Route::post('chat/broadcast', 'ChatController@broadcast');
     Route::crud('event', 'EventCrudController');
+    Route::get('event/add-product/{id}', 'EventCrudController@viewAddProduct');
+    Route::post('event/add-product/{id}', 'EventCrudController@addProduct');
+    Route::get('event/calculate-price/{id}', 'EventCrudController@calculatePriceSale');
 });
 
 /**

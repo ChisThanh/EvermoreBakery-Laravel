@@ -49,17 +49,10 @@ class ProductService extends BaseService
         $products->transform(function ($product) {
             $product->category_name = $product->category->name;
             $product->image = $product->images->first()->url ?? null;
-            $product->liked = false;
+            $product->liked = auth()->check() ? $product->likes->contains('id', auth()->id()) : false;
             return $product;
         });
 
-        if (auth()->check()) {
-            $userId = auth()->id();
-            $products->transform(function ($product) use ($userId) {
-                $product->liked = $product->likes->contains('id', $userId);
-                return $product;
-            });
-        }
         return $products;
     }
 
@@ -83,17 +76,9 @@ class ProductService extends BaseService
         $data->transform(function ($product) {
             $product->category_name = $product->category->name;
             $product->image = $product->images->first()->url ?? null;
-            $product->liked = false;
+            $product->liked = auth()->check() ? $product->likes->contains('id', auth()->id()) : false;
             return $product;
         });
-
-        if (auth()->check()) {
-            $userId = auth()->id();
-            $data->transform(function ($product) use ($userId) {
-                $product->liked = $product->likes->contains('id', $userId);
-                return $product;
-            });
-        }
 
         $this->getCart(request()->cookie('cookie_id'));
         return $data;
@@ -235,10 +220,7 @@ class ProductService extends BaseService
 
     public function updateFromCart($slug, $quantity)
     {
-        if (request()->has('cartId'))
-            $cookie_id = request()->get('cartId');
-        else
-            $cookie_id = request()->cookie('cookie_id');
+        $cookie_id = request()->get('cartId') ?? request()->cookie('cookie_id');
 
         $cart = $this->getCart($cookie_id)['data'];
         $cartDetails = json_decode($cart->cart_details, true) ?? [];
