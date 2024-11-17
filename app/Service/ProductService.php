@@ -15,18 +15,21 @@ class ProductService extends BaseService
     protected $cartRepository;
     protected $billRepository;
     protected $productReviewRepository;
+    protected $dataProcessorService;
 
     public function __construct(
         ProductRepository $repository,
         CartRepository $cartRepository,
         BillRepository $billRepository,
-        ProductReviewRepository $productReviewRepository
+        ProductReviewRepository $productReviewRepository,
+        DataProcessorService $dataProcessorService
 
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
         $this->productReviewRepository = $productReviewRepository;
+        $this->dataProcessorService = $dataProcessorService;
     }
 
     public function getProductHome()
@@ -39,7 +42,10 @@ class ProductService extends BaseService
                 'images:id,imageable_id,url',
                 'likes:id',
                 'events' => function ($query) {
-                    $query->orderBy('event_products.created_at', 'desc')->limit(1);
+                    $query->where('start_date', '<=', now())
+                        ->where('end_date', '>=', now())
+                        ->orderBy('event_products.created_at', 'desc')
+                        ->limit(1);
                 },
             ])
             ->orderBy('created_at', 'desc')
@@ -67,7 +73,10 @@ class ProductService extends BaseService
                         'images:id,imageable_id,url',
                         'likes:id',
                         'events' => function ($query) {
-                            $query->orderBy('event_products.created_at', 'desc')->limit(1);
+                            $query->where('start_date', '<=', now())
+                                ->where('end_date', '>=', now())
+                                ->orderBy('event_products.created_at', 'desc')
+                                ->limit(1);
                         },
                     ]);
             });
@@ -99,6 +108,11 @@ class ProductService extends BaseService
         if (!$product)
             $product = $model->first();
 
+        $productRecommend = $this->dataProcessorService->recommendProducts([
+            'user_id' => auth()->id() ?? 0,
+            'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
+        ]);
+
         $product->liked = false;
         $userId = '';
         if (auth()->check()) {
@@ -109,7 +123,11 @@ class ProductService extends BaseService
         $cookieId = request()->cookie('cookie_id');
         dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
 
-        return ['success' => true, 'data' => $product];
+        return [
+            'success' => true,
+            'data' => $product,
+            'recommend' => $productRecommend['data'],
+        ];
     }
 
     public function showCart()
@@ -265,11 +283,23 @@ class ProductService extends BaseService
         $inputs['user_id'] = $userId;
         $modelProductReview = $this->productReviewRepository->getModel();
 
-        $data = $modelProductReview->createOrFirst([
-            'user_id' => $inputs['user_id'],
-            'product_id' => $inputs['product_id'],
-        ], $inputs);
+        $review = $modelProductReview->where('product_id', $inputs['product_id'])
+            ->where('user_id', $userId)
+            ->first();
 
-        return ['success' => true, 'data' => $data];
+        if ($review) {
+            $review->update([
+                "comment" => $inputs['comment'],
+                "rating" => $inputs['rating'],
+            ]);
+        } else {
+            $review = $modelProductReview->create([
+                "product_id" => $inputs['product_id'],
+                "user_id" => auth()->id(),
+                "comment" => $inputs['comment'],
+                "rating" => $inputs['rating'],
+            ]);
+        }
+        return ['success' => true, 'data' => $review];
     }
 }

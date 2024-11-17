@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\CheckVerifyEmail;
-use App\Service\VnPayService;
 use Illuminate\Support\Facades\Route;
 
 Route::group([

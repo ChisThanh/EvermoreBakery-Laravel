@@ -8,7 +8,6 @@ use Livewire\WithPagination;
 
 class SearchProduct extends Component
 {
-    // <input type="text" wire:model.live="search">
     use WithPagination;
     public $search = '';
     public $limit = 9;
@@ -65,7 +64,10 @@ class SearchProduct extends Component
                     'images:id,imageable_id,url',
                     'likes:id',
                     'events' => function ($query) {
-                        $query->orderBy('event_products.created_at', 'desc')->limit(1);
+                        $query->where('start_date', '<=', now())
+                            ->where('end_date', '>=', now())
+                            ->orderBy('event_products.created_at', 'desc')
+                            ->limit(1);
                     },
                 ]);
         });

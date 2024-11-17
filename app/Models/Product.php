@@ -62,7 +62,9 @@ class Product extends Model
     public function latestEvent()
     {
         return $this->belongsToMany(Event::class, 'event_products')
-            ->withPivot(['percentage', 'created_at']) 
+            ->withPivot(['percentage', 'created_at'])
+            ->where('events.start_date', '<=', now())
+            ->where('events.end_date', '>=', now())
             ->orderBy('event_products.created_at', 'desc')
             ->limit(1);
     }
