@@ -123,8 +123,5 @@
             var hiddenInput = document.querySelector('input[name="per[]"][data-index="' + index + '"]');
             hiddenInput.value = percentageValue;
         }
-
-
-       
     </script>
 @endsection
