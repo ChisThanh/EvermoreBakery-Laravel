@@ -2,24 +2,49 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Model;
+
 abstract class BaseRepository
 {
-    protected $model;
-    private static $instance = null;
+    protected Model $model;
 
     public function __construct()
     {
-        $this->model = $this->getModel();
+        $this->setModel();
     }
 
-    abstract public function getModel();
+    abstract protected function getModel();
 
-    public static function getInstance(): mixed
+    protected function setModel()
     {
-        if (self::$instance === null) {
-            self::$instance = new static();
+        $this->model = app()->make(
+            $this->getModel()
+        );
+    }
+
+    public function getModelInstance(): Model
+    {
+        return $this->model;
+    }
+
+    public function index(array $inputs): mixed
+    {
+        $query = $this->model->query();
+
+        if (isset($inputs['q']))
+            $query->where('name', 'like', '%' . $inputs['q'] . '%');
+
+        if (isset($inputs['sort']))
+            $query->orderBy($inputs['sort'], $inputs['order'] ?? 'asc');
+
+        if (isset($inputs['filter'])) {
+            foreach ($inputs['filter'] as $key => $value)
+                if (!empty($value))
+                    $query->where($key, 'like', '%' . $value . '%');
         }
-        return self::$instance;
+
+        $data = $query->paginate($inputs['limit'] ?? 10);
+        return $data;
     }
 
     public function all(): mixed
@@ -41,9 +66,76 @@ abstract class BaseRepository
         })->get();
     }
 
-    public function where($column, $value): mixed
+    /**
+     * @param array|string $inputs
+     * @param mixed $value = null
+     * @param bool $latest = false
+     * @param array|null $with = null
+     * @return mixed
+     */
+    public function whereFirst(
+        mixed $inputs,
+        mixed $value = null,
+        array $with = null,
+        bool $latest = false
+    ): mixed {
+        $query = $this->model;
+
+        if (!is_array($inputs)) {
+            $query = $query->where($inputs, $value);
+        } else {
+            foreach ($inputs as $column => $value) {
+                $query = $query->where($column, $value);
+            }
+        }
+
+        if ($with)
+            $query = $query->with($with);
+
+        if ($latest)
+            $query = $query->latest();
+
+        return $query->first();
+    }
+
+    /**
+     * @param array|string $inputs
+     * @param mixed $value = null
+     * @param bool $latest = false
+     * @param array|null $with = null
+     * @return mixed
+     */
+    public function whereAll(
+        mixed $inputs,
+        mixed $value = null,
+        bool $latest = false
+    ): mixed {
+        $query = $this->model;
+
+        if (!is_array($inputs)) {
+            $query = $query->where($inputs, $value);
+        } else {
+            foreach ($inputs as $column => $value) {
+                $query = $query->where($column, $value);
+            }
+        }
+        
+        if ($latest)
+            $query = $query->latest();
+
+        return $query->first();
+    }
+
+    public function whereIn($column, $values, $boolean = 'and', $not = false): mixed
     {
-        return $this->model->where($column, $value)->get();
+        return $this->model->whereIn($column, $values, $boolean, $not)->get();
+    }
+
+    public function firstOrCreate(array $attributes = [], array $values = []): mixed
+    {
+        $data = $this->model->firstOrCreate($attributes, $values);
+        $data = $data->fresh();
+        return $data;
     }
 
     public function find($id): mixed
@@ -53,7 +145,15 @@ abstract class BaseRepository
 
     public function create(array $data): mixed
     {
-        return $this->model->create($data);
+        $data = $this->model->create($data);
+        $data = $data->fresh();
+        return $data;
+    }
+
+    public function insert(array $data): mixed
+    {
+        $data = $this->model->insert($data);
+        return $data;
     }
 
     public function update($id, array $data): mixed
@@ -62,6 +162,7 @@ abstract class BaseRepository
         if (!$record)
             return false;
         $record->update($data);
+        $record = $record->fresh();
         return $record;
     }
 
@@ -70,14 +171,23 @@ abstract class BaseRepository
         $record = $this->model->find($id);
         if (!$record)
             return false;
+        $record = $record->fresh();
         return $record->delete();
     }
 
     public function deleteIds(array $ids, $field = 'id'): mixed
     {
-        if (empty($ids))
+        $data = $this->model->whereIn($field, $ids)->delete();
+        if ($data == 0)
             return false;
-        return $this->model->whereIn($field, $ids)->delete();
+        return $data;
     }
 
+    public function whereDelete($column, $value = null, $operator = '='): mixed
+    {
+        $data = $this->model->where($column, $operator, $value)->delete();
+        if ($data == 0)
+            return false;
+        return $data;
+    }
 }

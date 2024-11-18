@@ -8,21 +8,7 @@ class BaseService
 
     public function index(array $inputs): mixed
     {
-        $query = $this->repository->getModel()->query();
-
-        if (isset($inputs['q']))
-            $query->where('name', 'like', '%' . $inputs['q'] . '%');
-
-        if (isset($inputs['sort']))
-            $query->orderBy($inputs['sort'], $inputs['order'] ?? 'asc');
-
-        if (isset($inputs['filter'])) {
-            foreach ($inputs['filter'] as $key => $value)
-                if (!empty($value))
-                    $query->where($key, 'like', '%' . $value . '%');
-        }
-        
-        $data = $query->paginate($inputs['limit'] ?? 10);
+        $data = $this->repository->index($inputs);
         return ['success' => true, 'data' => $data];
     }
 

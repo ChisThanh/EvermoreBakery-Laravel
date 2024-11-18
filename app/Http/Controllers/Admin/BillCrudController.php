@@ -14,9 +14,7 @@ class BillCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation { show as traitShow;
-    }
-
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     public function setup()
     {
@@ -26,7 +24,7 @@ class BillCrudController extends CrudController
         CRUD::denyAccess('delete');
         CRUD::denyAccess('update');
         CRUD::denyAccess('create');
-        
+
 
         $this->crud->addColumn([
             'name' => 'payment_method',
@@ -90,12 +88,6 @@ class BillCrudController extends CrudController
         ]);
     }
 
-
-    protected function setupListOperation()
-    {
-    }
-
-
     protected function setupCreateOperation()
     {
         CRUD::setValidation(BillRequest::class);
@@ -111,7 +103,8 @@ class BillCrudController extends CrudController
 
     public function show($id)
     {
-        $bill = Bill::with(['details.product', 'address', 'user', 'coupon'])->find($id);
+        $bill = Bill::with(['details.product', 'address', 'user', 'coupon'])
+            ->find($id);
         $billDetails = $bill->details;
         $billAddress = $bill->address;
         return view(

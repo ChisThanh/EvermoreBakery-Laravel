@@ -7,9 +7,9 @@ use App\Models\Coupon;
 
 class CouponsRepository extends BaseRepository
 {
-    public function getModel()
+    protected function getModel()
     {
-        return new Coupon();
+        return Coupon::class;
     }
 
 }

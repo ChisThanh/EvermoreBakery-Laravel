@@ -7,9 +7,8 @@ use App\Models\Bill;
 
 class BillRepository extends BaseRepository
 {
-    public function getModel()
+    protected function getModel()
     {
-        return new Bill();
+        return Bill::class;
     }
-
 }

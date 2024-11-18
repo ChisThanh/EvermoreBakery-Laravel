@@ -21,9 +21,6 @@ class GenerateKeywordJob implements ShouldQueue
         $this->text = $text;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
         $dataProcessorService = app(DataProcessorService::class);

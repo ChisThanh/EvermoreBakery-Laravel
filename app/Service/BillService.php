@@ -36,10 +36,7 @@ class BillService extends BaseService
         try {
             \DB::beginTransaction();
             $ids = array_keys($data['products']);
-            $products = $this->productRepository
-                ->getModel()
-                ->whereIn('id', $ids)
-                ->get();
+            $products = $this->productRepository->whereIn('id', $ids);
             $user = auth()->user();
 
             $paymentMethod = $data['payment'] == 'card' ? Bill::PAYMENT_METHOD_CARD : Bill::PAYMENT_METHOD_CASH;
@@ -103,7 +100,7 @@ class BillService extends BaseService
                 ];
             }
             cookie()->forget('cookie_id');
-            $this->cartRepository->getModel()->where('user_id', $user->id)->delete();
+            $this->clearUserCart();
             \DB::commit();
         } catch (\Exception $th) {
             \DB::rollBack();
@@ -115,10 +112,7 @@ class BillService extends BaseService
     public function getAddressUser(): mixed
     {
         $user = auth()->user();
-        $model = $this->repository->getModel();
-        $data = $model->where('user_id', $user->id)
-            ->latest()
-            ->first();
+        $data = $this->repository->whereFirst('user_id', $user->id, latest: true);
         if (!$data) {
             return [
                 'success' => false,
@@ -132,9 +126,7 @@ class BillService extends BaseService
 
     public function getCoupons($code): mixed
     {
-        $coupons = $this->couponRepository->getModel()
-            ->where('code', $code)
-            ->first();
+        $coupons = $this->couponRepository->whereFirst('code', $code);
 
         if (!$coupons)
             return ['success' => false, 'message' => 'Coupon not found'];
@@ -149,7 +141,7 @@ class BillService extends BaseService
 
         if ($responseCode === '00' || $transactionStatus === '00') {
             $billId = explode('_', $inputs['vnp_TxnRef'])[1];
-            $bill = $this->repository->getModel()->find($billId);
+            $bill = $this->repository->find($billId);
 
             if ($bill) {
                 $bill->payment_status = Bill::PAYMENT_PAID;
@@ -170,9 +162,6 @@ class BillService extends BaseService
     {
         $userId = auth()->id();
         cookie()->forget('cookie_id');
-        $this->cartRepository->getModel()
-            ->where('user_id', $userId)
-            ->delete();
+        $this->cartRepository->whereDelete('user_id', $userId);
     }
-
 }

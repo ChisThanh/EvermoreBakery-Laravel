@@ -25,10 +25,7 @@ class ChatService extends BaseService
 
     public function getHistory($chatId)
     {
-        $model = $this->repository->getModel();
-        $history = $model->where('chat_id', $chatId)
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $history = $this->repository->getHistory($chatId);
 
         if ($history->isEmpty())
             return ['success' => false, 'message' => 'No chat history found'];
@@ -86,7 +83,7 @@ class ChatService extends BaseService
             'updated_at' => $now,
         ];
 
-        $this->repository->getModel()->insert($dataInsert);
+        $this->repository->insert($dataInsert);
 
         return ['success' => true, 'data' => $data];
     }

@@ -1,6 +1,9 @@
 services:
-    nginx:
-        image: nginx:latest
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        tty: true
         ports:
             - "9090:80"
         volumes:
@@ -9,10 +12,13 @@ services:
         networks:
             - custom_network
 
-    php:
+    app:
         build:
             context: .
             dockerfile: ./.docker/dev-nginx/Dockerfile
+        container_name: app
+        restart: unless-stopped
+        tty: true
         volumes:
             - ./:/var/www/html
             - ./.docker/dev-nginx/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf

@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('product_id')->constrained();
             $table->tinyInteger('quantity')->default(1);
             $table->float('price')->default(0);
-            $table->boolean('review')->default(false);
+            $table->boolean('review')->default(true);
             $table->primary(['bill_id', 'product_id']);
         });
     }

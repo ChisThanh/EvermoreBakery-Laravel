@@ -9,8 +9,9 @@ class UserService extends BaseService
 {
     protected $repository;
     public function __construct(
+        UserRepository $repository
     ) {
-        $this->repository = UserRepository::getInstance();
+        $this->repository = $repository;
     }
 
 }

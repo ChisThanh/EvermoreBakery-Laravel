@@ -7,8 +7,8 @@ use App\Models\ProductReview;
 
 class ProductReviewRepository extends BaseRepository
 {
-    public function getModel()
+    protected function getModel()
     {
-        return new ProductReview();
+        return ProductReview::class;
     }
 }

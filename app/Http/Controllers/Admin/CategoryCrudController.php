@@ -17,6 +17,7 @@ class CategoryCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     use PermissionTrait;
 
+    
     public function setup()
     {
         CRUD::setModel(\App\Models\Category::class);

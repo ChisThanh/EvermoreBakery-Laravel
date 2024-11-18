@@ -79,11 +79,21 @@ class DataProcessorService
 			'json' => $inputs,
 		]);
 		$array = json_decode($response->getBody()->getContents(), true);
-		
+
 		if (count($array) <= 0)
 			return ['success' => false];
 
 		return ['success' => true, 'data' => $array];
+	}
+
+	public function checkProductReview($inputs)
+	{
+		$url = $this->url . '/api/v1/check-product-review';
+		$response = $this->client->post($url, [
+			'json' => $inputs,
+		]);
+		$array = json_decode($response->getBody()->getContents(), true);
+		return $array;
 	}
 
 }

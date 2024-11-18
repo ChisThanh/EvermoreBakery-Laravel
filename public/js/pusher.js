@@ -61,26 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
 			})
 	}
 
-	function addUserMessage(message) {
-		const messageElement = document.createElement("div");
-		messageElement.classList.add("mb-2", "text-right");
-		messageElement.innerHTML = `<p class="bg-blue-500 text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
-		chatbox.appendChild(messageElement);
-		chatbox.scrollTop = chatbox.scrollHeight;
-	}
-
-	function addBotMessage(message) {
-		const messageElement = document.createElement("div");
-		messageElement.classList.add("mb-2");
-		messageElement.innerHTML =
-			`<p class="bg-gray-200 text-gray-700 rounded-lg py-2 px-4 inline-block">${message}</p>`;
-		chatbox.appendChild(messageElement);
-		chatbox.scrollTop = chatbox.scrollHeight;
-	}
-
-
 	if (chatId === '') {
-		chatId = generateRandomString(20);
+		chatId = generateRandomString(10);
 		metaChatId.setAttribute('content', chatId);
 	}
 
@@ -101,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 
 	function getHistory() {
-		fetch(`api/v1/chat/${chatId}`, {
+		fetch(`/api/v1/chat/${chatId}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
@@ -112,6 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 			.then(response => response.json())
 			.then(data => {
+				if (data.status_code === 404) {
+					addBotMessage('Xin chào, tôi có thể giúp gì được cho bạn');
+				}
 				if (data.status_code === 200) {
 					addBotMessage('Xin chào, tôi có thể giúp gì được cho bạn');
 					data.data.forEach(element => {
@@ -125,4 +110,22 @@ document.addEventListener('DOMContentLoaded', () => {
 			})
 	}
 	getHistory();
+
+	function addUserMessage(message) {
+		const messageElement = document.createElement("div");
+		messageElement.classList.add("mb-2", "text-right");
+		messageElement.innerHTML =
+			`<p class="bg-blue-500 text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
+		chatbox.appendChild(messageElement);
+		chatbox.scrollTop = chatbox.scrollHeight;
+	}
+
+	function addBotMessage(message) {
+		const messageElement = document.createElement("div");
+		messageElement.classList.add("mb-2");
+		messageElement.innerHTML =
+			`<p class="bg-gray-200 text-gray-700 rounded-lg py-2 px-4 inline-block">${message}</p>`;
+		chatbox.appendChild(messageElement);
+		chatbox.scrollTop = chatbox.scrollHeight;
+	}
 });

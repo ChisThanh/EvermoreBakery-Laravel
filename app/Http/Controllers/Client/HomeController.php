@@ -48,8 +48,4 @@ class HomeController extends Controller
     {
         return view('clients.contact');
     }
-
-
-
-
 }

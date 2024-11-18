@@ -7,9 +7,17 @@ use App\Models\Chat;
 
 class ChatRepository extends BaseRepository
 {
-    public function getModel()
+    protected function getModel()
     {
-        return new Chat();
+        return Chat::class;
+    }
+
+    public function getHistory($chatId)
+    {
+        $history = $this->model->where('chat_id', $chatId)
+            ->orderBy('created_at', 'asc')
+            ->get();
+        return $history;
     }
 
 }

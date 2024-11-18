@@ -7,8 +7,8 @@ use App\Models\User;
 
 class UserRepository extends BaseRepository
 {
-    public function getModel()
+    protected function getModel()
     {
-        return new User();
+        return User::class;
     }
 }

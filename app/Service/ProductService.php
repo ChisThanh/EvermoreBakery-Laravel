@@ -16,41 +16,27 @@ class ProductService extends BaseService
     protected $billRepository;
     protected $productReviewRepository;
     protected $dataProcessorService;
+    protected $productReviewService;
 
     public function __construct(
         ProductRepository $repository,
         CartRepository $cartRepository,
         BillRepository $billRepository,
         ProductReviewRepository $productReviewRepository,
-        DataProcessorService $dataProcessorService
-
+        DataProcessorService $dataProcessorService,
+        ProductReviewService $productReviewService
     ) {
         $this->repository = $repository;
         $this->cartRepository = $cartRepository;
         $this->billRepository = $billRepository;
         $this->productReviewRepository = $productReviewRepository;
         $this->dataProcessorService = $dataProcessorService;
+        $this->productReviewService = $productReviewService;
     }
 
     public function getProductHome()
     {
-        $model = $this->repository->getModel();
-        $products = $model
-            ->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug', 'created_at')
-            ->with([
-                'category:id,name',
-                'images:id,imageable_id,url',
-                'likes:id',
-                'events' => function ($query) {
-                    $query->where('start_date', '<=', now())
-                        ->where('end_date', '>=', now())
-                        ->orderBy('event_products.created_at', 'desc')
-                        ->limit(1);
-                },
-            ])
-            ->orderBy('created_at', 'desc')
-            ->limit(8)
-            ->get();
+        $products = $this->repository->getProductHome();
 
         $products->transform(function ($product) {
             $product->category_name = $product->category->name;
@@ -64,78 +50,44 @@ class ProductService extends BaseService
 
     public function index(array $inputs): mixed
     {
-        $model = $this->repository->getModel();
-        $query = $model->search(strtolower($inputs['q'] ?? ''))
-            ->query(function ($query) use ($inputs) {
-                $query->select('id', 'name', 'category_id', 'price', 'price_sale', 'slug')
-                    ->with([
-                        'category:id,name',
-                        'images:id,imageable_id,url',
-                        'likes:id',
-                        'events' => function ($query) {
-                            $query->where('start_date', '<=', now())
-                                ->where('end_date', '>=', now())
-                                ->orderBy('event_products.created_at', 'desc')
-                                ->limit(1);
-                        },
-                    ]);
-            });
-
-        $data = $query->paginate($inputs['limit'] ?? 9);
-        $data->transform(function ($product) {
-            $product->category_name = $product->category->name;
-            $product->image = $product->images->first()->url ?? null;
-            $product->liked = auth()->check() ? $product->likes->contains('id', auth()->id()) : false;
-            return $product;
-        });
-
+        $data = $this->repository->searchProducts($inputs);
         $this->getCart(request()->cookie('cookie_id'));
         return $data;
     }
 
     public function show($slug)
     {
-        $model = $this->repository->getModel();
-        $product = $model->where('slug', $slug)
-            ->with([
-                'category',
-                'images',
-                'likes',
-                'latestEvent',
-            ])
-            ->first();
-
-        if (!$product)
-            $product = $model->first();
+        $product = $this->repository->getProductDetail($slug);
+        $reviewProduct = $this->productReviewService->getAllReview($product->id);
 
         $productRecommend = $this->dataProcessorService->recommendProducts([
             'user_id' => auth()->id() ?? 0,
             'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
         ]);
 
-        $product->liked = false;
         $userId = '';
         if (auth()->check()) {
             $userId = auth()->id();
-            $product->liked = $product->likes->contains('id', $userId);
+            $product->liked = $product->likes->contains('id', $userId) ?? false;
+            $product->review = $this->productReviewService->checkReview($product->id, $userId) ?? null;
         }
 
         $cookieId = request()->cookie('cookie_id');
         dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
-
         return [
             'success' => true,
             'data' => $product,
             'recommend' => $productRecommend['data'],
+            'checkReview' => $checkReview ?? null,
+            'reviewProduct' => $reviewProduct,
         ];
     }
 
     public function showCart()
     {
-        $model = $this->cartRepository->getModel();
         if (auth()->check() && empty(request()->cookie('cookie_id'))) {
             $userId = auth()->id();
-            $carts = $model->where('user_id', $userId)->first();
+            $carts = $this->cartRepository->whereFirst('user_id', $userId);
             $cookie_id = \Str::random(32);
             \Cookie::queue('cookie_id', $cookie_id, 60 * 24 * 30);
             if ($carts) {
@@ -144,7 +96,7 @@ class ProductService extends BaseService
             }
         } else {
             $cookie = request()->cookie('cookie_id');
-            $carts = $model->where('cookie_id', $cookie)->first();
+            $carts = $this->cartRepository->whereFirst('cookie_id', $cookie);
         }
         $cartDetails = [];
         if ($carts)
@@ -166,9 +118,7 @@ class ProductService extends BaseService
             \Cookie::queue('cookie_id', $cookie_id, 60 * 24 * 30);
         }
 
-        $product = $this->repository->getModel()
-            ->where('slug', $slug)
-            ->first();
+        $product = $this->repository->whereFirst('slug', $slug);
 
         if (!$product)
             return ['success' => false, 'message' => 'Product not found'];
@@ -206,12 +156,11 @@ class ProductService extends BaseService
 
     public function getCart($cookie_id)
     {
-        $cartModel = $this->cartRepository->getModel();
         if (auth()->check()) {
             $userId = auth()->id();
-            $cartUser = $cartModel->firstWhere('user_id', $userId);
+            $cartUser = $this->cartRepository->whereFirst('user_id', $userId);
             if (isset($cartUser) && $cartUser->cookie_id != $cookie_id) {
-                $cartCookie = $cartModel->firstWhere('cookie_id', $cookie_id);
+                $cartCookie = $this->cartRepository->whereFirst('cookie_id', $cookie_id);
 
                 $jsonCartUser = json_decode($cartUser->cart_details, true) ?? [];
                 $jsonCartCookie = json_decode($cartCookie->cart_details, true) ?? [];
@@ -232,7 +181,7 @@ class ProductService extends BaseService
             }
         }
 
-        $cart = $cartModel->firstOrCreate(['cookie_id' => $cookie_id]);
+        $cart = $this->cartRepository->firstOrCreate(['cookie_id' => $cookie_id]);
         return ['success' => true, 'data' => $cart];
     }
 
@@ -263,7 +212,7 @@ class ProductService extends BaseService
 
     public function likeProduct($slug)
     {
-        $product = $this->repository->getModel()->where('slug', $slug)->first();
+        $product = $this->repository->whereFirst('slug', $slug);
         if (!$product)
             return ['success' => false, 'message' => 'Product not found'];
 
@@ -281,11 +230,11 @@ class ProductService extends BaseService
     {
         $userId = auth()->id();
         $inputs['user_id'] = $userId;
-        $modelProductReview = $this->productReviewRepository->getModel();
 
-        $review = $modelProductReview->where('product_id', $inputs['product_id'])
-            ->where('user_id', $userId)
-            ->first();
+        $review = $this->productReviewRepository->whereFirst([
+            'product_id' => $inputs['product_id'],
+            'user_id' => $userId
+        ]);
 
         if ($review) {
             $review->update([
@@ -293,7 +242,7 @@ class ProductService extends BaseService
                 "rating" => $inputs['rating'],
             ]);
         } else {
-            $review = $modelProductReview->create([
+            $review = $this->productReviewRepository->create([
                 "product_id" => $inputs['product_id'],
                 "user_id" => auth()->id(),
                 "comment" => $inputs['comment'],
