@@ -50,3 +50,7 @@ volumes:
 networks:
     custom_network:
         external: true
+
+# rsync -av --exclude='vendor/' --exclude='node_modules/' --exclude='storage/' source_folder/ destination_folder/
+
+# rsync -av --exclude='vendor/' evermore-bakery/ evermore-bakery-cp/
