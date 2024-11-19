@@ -60,10 +60,12 @@ class ProductService extends BaseService
         $product = $this->repository->getProductDetail($slug);
         $reviewProduct = $this->productReviewService->getAllReview($product->id);
 
-        $productRecommend = $this->dataProcessorService->recommendProducts([
-            'user_id' => auth()->id() ?? 0,
-            'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
-        ]);
+        $productRecommend = ['data' => []];
+        if(env('APP_ENV') == 'production')
+            $productRecommend = $this->dataProcessorService->recommendProducts([
+                'user_id' => auth()->id() ?? 0,
+                'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
+            ]);
 
         $userId = '';
         if (auth()->check()) {
@@ -73,7 +75,7 @@ class ProductService extends BaseService
         }
 
         $cookieId = request()->cookie('cookie_id');
-        
+
         if(env('APP_ENV') == 'production')
             ProductInteractionJob::dispatch($userId, $cookieId, $product->id);
         
