@@ -19,7 +19,7 @@
                     <a class="list-none"href="/products">Sản Phẩm</a>
                 </div>
                 <div class="mx-3 flex shrink-0 items-center font-medium decoration-primary decoration-2 underline-offset-8 hover:underline">
-                    <a class="list-none" href="/contact">Liên Lạc</a>
+                    <a class="list-none" href="/contact">Liên Hệ</a>
                 </div>
             </div>
         </div>
