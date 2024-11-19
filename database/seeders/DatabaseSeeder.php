@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LaratrustSeeder::class,
             ProductSeeder::class,
-            DiscountsTableSeeder::class,
             EventSeeder::class,
+            CouponSeeder::class,
         ]);
 
         User::factory(2)->create();

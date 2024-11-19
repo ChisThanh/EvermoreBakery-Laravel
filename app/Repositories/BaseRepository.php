@@ -77,7 +77,7 @@ abstract class BaseRepository
         mixed $inputs,
         mixed $value = null,
         array $with = null,
-        bool $latest = false
+        bool $latest = false,
     ): mixed {
         $query = $this->model;
 

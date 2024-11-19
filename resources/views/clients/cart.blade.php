@@ -80,24 +80,15 @@
                             </div>
                             <div class="flex justify-between py-4">
                                 <span>Phí Vận Chuyển Dự Tính</span>
-                                <span class="font-semibold">Miễn Phí</span>
+                                <span class="font-semibold">50.000 Đ</span>
                             </div>
                             <div class="flex justify-between pt-4 text-base font-semibold">
                                 <span>Tổng Cộng</span>
                                 <span>{{ $data['total'] }} Đ</span>
                             </div>
-                        </div><a
-                            class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 mt-8 w-full"
-                            href="/checkout">Thanh Toán Ngay</a><a
-                            class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  mt-3 inline-flex w-full items-center gap-1 border-2 border-primary text-primary"
-                            href="/checkout"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"
-                                stroke-linecap="round" stroke-linejoin="round" class="text-2xl" height="1em"
-                                width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path
-                                    d="M10 13l2.5 0c2.5 0 5 -2.5 5 -5c0 -3 -1.9 -5 -5 -5h-5.5c-.5 0 -1 .5 -1 1l-2 14c0 .5 .5 1 1 1h2.8l1.2 -5c.1 -.6 .4 -1 1 -1zm7.5 -5.8c1.7 1 2.5 2.8 2.5 4.8c0 2.5 -2.5 4.5 -5 4.5h-2.6l-.6 3.6a1 1 0 0 1 -1 .8l-2.7 0a.5 .5 0 0 1 -.5 -.6l.2 -1.4">
-                                </path>
-                            </svg>PayPal</a>
+                        </div>
+                        <a class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 mt-8 w-full"
+                            href="/checkout">Thanh Toán Ngay</a>
                     </div>
                 </div>
             </div>

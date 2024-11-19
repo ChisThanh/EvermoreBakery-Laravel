@@ -36,7 +36,7 @@
             <div id="chatbox" class="p-4 h-80 overflow-y-auto">
             </div>
             <div class="p-4 border-t flex">
-                <input id="user-input" type="text" placeholder="Type a message"
+                <input id="user-input" type="text" placeholder="Nhập tin nhắn ..."
                     class="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <button id="send-button"
                     class="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300">Gửi</button>

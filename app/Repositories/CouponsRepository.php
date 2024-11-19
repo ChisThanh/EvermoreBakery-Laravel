@@ -12,4 +12,12 @@ class CouponsRepository extends BaseRepository
         return Coupon::class;
     }
 
+    public function getCoupons()
+    {
+        return $this->model
+            ->with('images')
+            ->where('expires_at', '>', now())
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

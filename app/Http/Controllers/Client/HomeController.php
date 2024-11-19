@@ -4,39 +4,47 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
+use App\Service\CouponService;
 use App\Service\ProductService;
+use Database\Seeders\CouponSeeder;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     protected $productService;
     protected $categoryService;
+    protected $couponService;
 
     public function __construct(
         ProductService $productService,
-        CategoryService $categoryService
+        CategoryService $categoryService,
+        CouponService $couponService
     ) {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
+        $this->couponService = $couponService;
     }
 
     public function index()
     {
-        // $products = cache()->remember('products_home', 60 * 24, function () {
-        //     return $this->productService->getProductHome();
-        // });
-
-        // $categories = cache()->remember('categories_home', 60 * 24, function () {
-        //     return $this->categoryService->getCategoryHome();
-        // });
         $products = $this->productService->getProductHome();
-        $categories = $this->categoryService->getCategoryHome();
+        if (env('APP_ENV') == 'local') {
+            $categories = $this->categoryService->getCategoryHome();
+        } else {
+            $categories = cache()
+                ->remember('categories_home', 60 * 24, function () {
+                    return $this->categoryService->getCategoryHome();
+                });
+        }
+
         return view('clients.home', compact('products', 'categories'));
     }
 
     public function blog()
     {
-        return view('clients.blog');
+        $coupons = $this->couponService->getCoupons();
+        $coupons = $coupons['data'];
+        return view('clients.blog', compact('coupons'));
     }
 
     public function about()
