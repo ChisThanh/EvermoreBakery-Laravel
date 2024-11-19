@@ -248,232 +248,92 @@
             </div>
         </div>
         <div class="mb-28">
-            <div class="grid gap-16 lg:grid-cols-2">
-                <div>
-                    <div class="nc-Section-Heading relative flex flex-col justify-between sm:flex-row sm:items-end mb-0">
-                        <div class="max-w-4xl">
-                            <h2 class="text-3xl mb-5 font-medium" style="line-height: 1.2em;">Product Info</h2>
-                        </div>
-                    </div>
-                    <div class="mb-10 flex items-center gap-5"><button type="button"
-                            class="py-4 text-neutral-500">Overview</button><button type="button"
-                            class="py-4 border-b-2 border-primary">Shipment details</button></div>
-                    <div class="mb-10 hidden">
-                        <div class="grid gap-5 md:grid-cols-2">
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M176,172a12,12,0,1,1-12-12A12,12,0,0,1,176,172ZM92,96A12,12,0,1,0,80,84,12,12,0,0,0,92,96ZM224,48V208a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48ZM64,84A28,28,0,1,0,92,56,28,28,0,0,0,64,84Zm128,88a28,28,0,1,0-28,28A28,28,0,0,0,192,172ZM189.66,66.34a8,8,0,0,0-11.32,0l-112,112a8,8,0,0,0,11.32,11.32l112-112A8,8,0,0,0,189.66,66.34Z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Discount</p>
-                                    <p>&gt; $100 Disc 10%</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Delivery Time</p>
-                                    <p>6 - 12 Working days</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.004-.001.274-.11a.75.75 0 0 1 .558 0l.274.11.004.001 6.971 2.789Zm-1.374.527L8 5.962 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339Z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Package</p>
-                                    <p>Reagular Premium Box</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M112 0C85.5 0 64 21.5 64 48V96H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 272c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 48c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 240c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 208c8.8 0 16 7.2 16 16s-7.2 16-16 16H64V416c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H112zM544 237.3V256H416V160h50.7L544 237.3zM160 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm272 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Estimated Arrival</p>
-                                    <p>10 - 12 October 23</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-10 block">
-                        <div class="grid gap-5 md:grid-cols-2">
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M176,172a12,12,0,1,1-12-12A12,12,0,0,1,176,172ZM92,96A12,12,0,1,0,80,84,12,12,0,0,0,92,96ZM224,48V208a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48ZM64,84A28,28,0,1,0,92,56,28,28,0,0,0,64,84Zm128,88a28,28,0,1,0-28,28A28,28,0,0,0,192,172ZM189.66,66.34a8,8,0,0,0-11.32,0l-112,112a8,8,0,0,0,11.32,11.32l112-112A8,8,0,0,0,189.66,66.34Z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Discount</p>
-                                    <p>&gt; $100 Disc 10%</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V192H0v272zm320-196c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM192 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-40zM64 268c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zm0 128c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12H76c-6.6 0-12-5.4-12-12v-40zM400 64h-48V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H160V16c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v48H48C21.5 64 0 85.5 0 112v48h448v-48c0-26.5-21.5-48-48-48z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Delivery Time</p>
-                                    <p>6 - 12 Working days</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M15.528 2.973a.75.75 0 0 1 .472.696v8.662a.75.75 0 0 1-.472.696l-7.25 2.9a.75.75 0 0 1-.557 0l-7.25-2.9A.75.75 0 0 1 0 12.331V3.669a.75.75 0 0 1 .471-.696L7.443.184l.004-.001.274-.11a.75.75 0 0 1 .558 0l.274.11.004.001 6.971 2.789Zm-1.374.527L8 5.962 1.846 3.5 1 3.839v.4l6.5 2.6v7.922l.5.2.5-.2V6.84l6.5-2.6v-.4l-.846-.339Z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Package</p>
-                                    <p>Reagular Premium Box</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2"><button type="button"
-                                    class="ttnc-ButtonCircle flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70 bg-gray w-12 h-12 "><svg
-                                        stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 640 512"
-                                        class="text-xl text-secondary" height="1em" width="1em"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M112 0C85.5 0 64 21.5 64 48V96H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 272c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 48c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 240c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 208c8.8 0 16 7.2 16 16s-7.2 16-16 16H64V416c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H112zM544 237.3V256H416V160h50.7L544 237.3zM160 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm272 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0z">
-                                        </path>
-                                    </svg></button>
-                                <div>
-                                    <p class="text-sm text-neutral-500">Estimated Arrival</p>
-                                    <p>10 - 12 October 23</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        <h3 class="text-xl font-medium">Note*</h3>
-                        <p class="text-neutral-500"> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae, est
-                            eum magnam doloremque, at adipisci debitis, similique dolores ipsa unde necessitatibus vero
-                            quibusdam nostrum numquam!</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="nc-Section-Heading relative flex flex-col justify-between sm:flex-row sm:items-end mb-0">
-                        <div class="max-w-4xl">
-                            <h2 class="text-3xl mb-5 font-medium" style="line-height: 1.2em;">Ratings</h2>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-5">
-                        <div class="space-y-3">
-                            <p class="text-[70px] font-semibold md:text-[100px]">4.8<span
-                                    class="text-base text-secondary">/5</span></p>
-                            <p class="text-neutral-500">(56 Reviews)</p>
-                        </div>
-                        <div class="w-full space-y-2">
-                            <div class="flex items-center gap-2">
-                                <div class="flex items-center gap-1 font-medium"><svg stroke="currentColor"
-                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400"
-                                        height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path
-                                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                        </path>
-                                    </svg>5</div>
-                                <div class="relative flex h-2 w-full overflow-hidden rounded-full bg-gray">
-                                    <div class="flex h-full bg-primary" style="width: 100%;"></div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="flex items-center gap-1 font-medium"><svg stroke="currentColor"
-                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400"
-                                        height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path
-                                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                        </path>
-                                    </svg>4</div>
-                                <div class="relative flex h-2 w-full overflow-hidden rounded-full bg-gray">
-                                    <div class="flex h-full bg-primary" style="width: 56%;"></div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="flex items-center gap-1 font-medium"><svg stroke="currentColor"
-                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400"
-                                        height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path
-                                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                        </path>
-                                    </svg>3</div>
-                                <div class="relative flex h-2 w-full overflow-hidden rounded-full bg-gray">
-                                    <div class="flex h-full bg-primary" style="width: 22%;"></div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="flex items-center gap-1 font-medium"><svg stroke="currentColor"
-                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400"
-                                        height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path
-                                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                        </path>
-                                    </svg>2</div>
-                                <div class="relative flex h-2 w-full overflow-hidden rounded-full bg-gray">
-                                    <div class="flex h-full bg-primary" style="width: 14%;"></div>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <div class="flex items-center gap-1 font-medium"><svg stroke="currentColor"
-                                        fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="text-yellow-400"
-                                        height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path fill="none" d="M0 0h24v24H0z"></path>
-                                        <path
-                                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
-                                        </path>
-                                    </svg>1</div>
-                                <div class="relative flex h-2 w-full overflow-hidden rounded-full bg-gray">
-                                    <div class="flex h-full bg-primary" style="width: 2%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="mb-28">
+        <div class="mb-28">
+    <div class="grid gap-10 lg:grid-cols-2">
+        <!-- Phần Thông Tin Chi Tiết -->
+        <div class="h-full w-full p-6 bg-white rounded-lg shadow-lg">
+            <div class="mb-5">
+                <h2 class="text-3xl font-medium text-gray-800">THÔNG TIN CHI TIẾT</h2>
+            </div>
+            
+            <div class="tabs-container mb-6 flex justify-around items-center gap-5 border-b-2 border-gray-200">
+                <button type="button" class="tab py-2 w-full text-center text-gray-500 hover:text-blue-500 focus:outline-none" onclick="showTab('Cake_Information')">Thông Tin Bánh</button>
+                <button type="button" class="tab py-2 w-full text-center text-gray-500 hover:text-blue-500 focus:outline-none" onclick="showTab('Ingredient')">Nguyên Liệu</button>
+                <button type="button" class="tab py-2 w-full text-center text-gray-500 hover:text-blue-500 focus:outline-none" onclick="showTab('Nutrition')">Thành Phần Dinh Dưỡng</button>
+            </div>
+
+            <div id="Cake_Information" class="tab-content active text-gray-700">Thông Tin Bánh</div>
+            <div id="Ingredient" class="tab-content hidden text-gray-700">Nguyên Liệu</div>
+            <div id="Nutrition" class="tab-content hidden text-gray-700">Thành Phần Dinh Dưỡng</div>
+
+            <style>
+                .tab-content { display: none; }
+                .tab-content.active { display: block; }
+                .tab.active { border-b-2 border-blue-500 text-blue-500; }
+            </style>
+
+            <script>
+                function showTab(tabId) {
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.querySelectorAll('.tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    document.getElementById(tabId).classList.add('active');
+                    event.target.classList.add('active');
+                }
+                document.addEventListener('DOMContentLoaded', () => {
+                    showTab('Cake_Information');
+                });
+            </script>
+        </div>
+        <!-- Phần Đánh Giá -->
+        <div class="h-full w-full p-6 bg-white rounded-lg shadow-lg">
+            <h2 class="text-3xl font-medium text-gray-800 mb-5">ĐÁNH GIÁ</h2>
+
+            <div id="chatBox" class="chat-box mb-4 border border-gray-200 rounded-lg p-4 h-60 overflow-y-auto bg-gray-50"></div>
+
+            <div class="flex gap-2">
+                <input 
+                    type="text" 
+                    id="messageInput" 
+                    class="form-control rounded-lg p-2 border border-gray-300 w-2/3" 
+                    placeholder="Đánh giá của bạn ..." 
+                />
+                <button 
+                    class="btn btn-success w-1/3 rounded-lg" 
+                    onclick="sendMessage()"
+                >
+                    Gửi đánh giá
+                </button>
             </div>
         </div>
-        <div class="mb-28">
+
+        <script>
+            function sendMessage() {
+                const messageInput = document.getElementById("messageInput");
+                const chatBox = document.getElementById("chatBox");
+
+                const message = messageInput.value.trim();
+
+                if (message) {
+                    const messageElement = document.createElement("div");
+                    messageElement.classList.add("message", "bg-gray-100", "p-2", "mb-2", "rounded");
+                    messageElement.textContent = message;
+
+                    chatBox.appendChild(messageElement);
+
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    messageInput.value = "";
+                }
+            }
+        </script>
+    </div>
+</div>
+
+    <div class="mb-28">
             <div>
                 <div class="nc-Section-Heading relative flex flex-col justify-between sm:flex-row sm:items-end mb-0">
                     <div class="max-w-4xl">
