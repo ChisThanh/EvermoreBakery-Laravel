@@ -1,5 +1,5 @@
-<div class="bg-[#fff9ed] text-[#451c0d] border-t border-neutral-200">
-    <div class="container flex lg:flex-row flex-col items-start justify-between gap-10 py-10 lg:divide-y-0 divide-y-2 divide-[#451c0d]">
+<div class="bg-secondary text-primary border-t border-neutral-200">
+    <div class="container flex lg:flex-row flex-col items-start justify-between gap-10 py-10 lg:divide-y-0 divide-y-2 divide-primary">
         <div class="lg:w-1/2 w-full space-y-4">
             <a class="flex cursor-pointer items-center gap-2 lg:justify-start justify-center" href="/">
                 <img src="/images/static/logo.png" alt="Logo" class="w-16 h-16">
