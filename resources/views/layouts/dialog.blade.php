@@ -6,7 +6,7 @@
                 <div class="relative h-screen bg-white">
                     <div class="hiddenScrollbar h-screen overflow-y-auto p-5 d-none">
                         <div class="flex items-center justify-between">
-                            <h3 class="text-xl font-semibold">Shopping cart</h3>
+                            <h3 class="text-xl font-semibold">Giỏ Hàng</h3>
                             <button type="button" id="main-cart-close"
                                 class="flex items-center justify-center rounded-full !leading-none focus:ring-transparent disabled:bg-opacity-70    ">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
@@ -90,9 +90,9 @@
                     <div class="absolute bottom-0 left-0 w-full bg-neutral-50 p-5">
                         <p class="flex justify-between">
                             <span>
-                                <span class="font-medium">Subtotal</span>
+                                <span class="font-medium">Tổng Cộng</span>
                                 <span class="block text-sm text-neutral-500">
-                                    Shipping and taxes calculated at checkout.
+                                    Phí Ship và Thuế Được Tính Sau
                                 </span>
                             </span>
                             <span class="text-xl font-medium js-cart-total">
@@ -101,9 +101,9 @@
                         </p>
                         <div class="mt-5 flex items-center gap-5"><a
                                 class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 w-full flex-1"
-                                href="/checkout">Checkout</a><a
+                                href="/checkout">Thanh Toán</a><a
                                 class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  w-full flex-1 border-2 border-primary text-primary"
-                                href="/cart">View cart</a></div>
+                                href="/cart">Xem Giỏ Hàng</a></div>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                                 d="M22 12C22 17.5228 17.5228 22 12 22H6.66472C8.68458 20.5479 10 18.1776 10 15.5H12C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12V15.5C8.5 19.0899 5.58985 22 2 22V12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z">
                             </path>
                         </svg>
-                        <span class="block text-2xl font-bold">HotKicks.</span>
+                        <span class="block text-2xl font-bold">Evermore Bakery</span>
                     </a>
                     <span class="absolute right-2 top-2 p-1 cursor-pointer" id="close-menu-toggle">
                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
@@ -139,11 +139,11 @@
                         </svg>
                     </span>
                 </div>
-                <ul class="flex flex-col space-y-5 px-5 py-6"><a class="capitalize" href="/home">Home</a><a
-                        class="capitalize" href="/blog">Blog</a><a class="capitalize"
-                        href="/products">Collection</a><a class="capitalize" href="/contact">Contact</a><a
-                        class="capitalize" href="/faqs">FAQ</a><a class="capitalize"
-                        href="/checkout">Checkout</a><a class="capitalize" href="/cart">Cart</a></ul>
+                <ul class="flex flex-col space-y-5 px-5 py-6">
+                    <a class="capitalize" href="/home">Trang Chủ</a>
+                    <a class="capitalize" href="/blog">Blog</a>
+                    <a class="capitalize" href="/products">Sản Phẩm</a>
+                    <a class="capitalize" href="/contact">Liên Hệ</a>
             </div>
         </div>
         <div class="fixed inset-0 bg-neutral-900/60 opacity-100" id="headlessui-dialog-overlay-:r1:"
@@ -152,25 +152,25 @@
 </div>
 
 <!-- Search Bar -->
-<div class="hidden sticky top-[81px] inset-x-0 z-50 container flex items-center py-4 justify-between bg-white text-[#451c0d] border-b border-neutral-200" id="search-section">
-    <div class="lg:flex hidden items-center divide-x-2 divide-[#451c0d]">
+<div class="hidden sticky top-[81px] inset-x-0 z-50 container flex items-center py-4 justify-between bg-white text-primary border-b border-neutral-200" id="search-section">
+    <div class="lg:flex hidden items-center divide-x-2 divide-primary">
         <div class="mx-3 flex items-center space-x-3">
             <div class="text-xs text-center font-semibold">
                 Thể Loại<br>Được Chọn
             </div>
             @for($i = 0; $i < 5; $i++)
-                <a class="cursor-pointer rounded-full border-2 border-[#451c0d] hover:opacity-50" href="/"><img src="https://picsum.photos/id/237/200/300" alt="Logo" class="rounded-full w-12 h-12"></a>
+                <a class="cursor-pointer rounded-full border-2 border-primary hover:opacity-50" href="/"><img src="https://picsum.photos/id/237/200/300" alt="Logo" class="rounded-full w-12 h-12"></a>
             @endfor
         </div>
         <div class="mx-3 flex items-center space-x-3">
             <div class="ml-3 text-xs  font-semibold">Blog Mới</div>
             @for($i = 0; $i < 5; $i++)
-                <a class="cursor-pointer rounded-full border-2 border-[#451c0d] hover:opacity-50" href="/"><img src="https://picsum.photos/id/236/200/300" alt="Logo" class="rounded-full w-12 h-12"></a>
+                <a class="cursor-pointer rounded-full border-2 border-primary hover:opacity-50" href="/"><img src="https://picsum.photos/id/236/200/300" alt="Logo" class="rounded-full w-12 h-12"></a>
             @endfor
         </div>
     </div>
     <div class="w-full lg:max-w-lg items-center gap-5 py-1 pr-3 flex">
-        <input type="text" class="js-search-main block w-full rounded-full text-sm font-normal h-11 px-4 py-3 border-2 border-[#451c0d] bg-white placeholder:text-[#451c0d] focus:border-transparent focus:ring-2 focus:ring-[#dda54a]" placeholder="Nhập sản phẩm... " oninput="debouncedSearch(this)">
+        <input type="text" class="js-search-main block w-full rounded-full text-sm font-normal h-11 px-4 py-3 border-2 border-primary bg-white placeholder:text-primary focus:border-transparent focus:ring-2 focus:ring-[#dda54a]" placeholder="Nhập sản phẩm... " oninput="debouncedSearch(this)">
         <span class="cursor-pointer" onclick="handelSearch()">
             <svg xmlns="http://www.w3.org/2000/svg" class="text-2xl text-neutral-500" height="1em" width="1em" viewBox="0 0 512 512">
                 <path fill="#451c0d" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
