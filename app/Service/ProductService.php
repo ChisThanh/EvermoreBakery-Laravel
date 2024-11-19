@@ -73,7 +73,10 @@ class ProductService extends BaseService
         }
 
         $cookieId = request()->cookie('cookie_id');
-        dispatch(new ProductInteractionJob($userId, $cookieId, $product->id));
+        
+        if(env('APP_ENV') == 'production')
+            ProductInteractionJob::dispatch($userId, $cookieId, $product->id);
+        
         return [
             'success' => true,
             'data' => $product,
