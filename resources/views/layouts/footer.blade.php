@@ -1,6 +1,6 @@
 <div class="bg-secondary text-primary border-t border-neutral-200">
     <div class="container flex lg:flex-row flex-col items-start justify-between gap-10 py-10 lg:divide-y-0 divide-y-2 divide-primary">
-        <div class="lg:w-1/2 w-full space-y-4">
+        <div class="w-full space-y-4">
             <a class="flex cursor-pointer items-center gap-2 lg:justify-start justify-center" href="/">
                 <img src="/images/static/logo.png" alt="Logo" class="w-16 h-16">
                 <span class="text-2xl font-semibold">Evermore Bakery</span>
@@ -44,17 +44,6 @@
                     </a>
                 </div>
             </div>
-        </div>
-        <div class="lg:w-1/4 w-full lg:pt-0 pt-6">
-            <div class="text-2xl font-semibold flex items-center justify-center mb-4 h-16">Được Thiết Kế Bởi</div>
-            <ul class="list-decimal text-base font-normal mx-4 lg:mx-0">
-                <li class="lg:px-2">2001210745 - Nguyễn Bảo Long</li>
-                <li class="lg:px-2">2001210055 - Nguyễn Văn Chí Thanh</li>
-                <li class="lg:px-2">2001216329 - Nguyễn Thường An Vy</li>
-                <li class="lg:px-2">2001215644 - Trần Chí Công</li>
-                <li class="lg:px-2">2001216004 - Nguyễn Ngọc Ái Nhi</li>
-                <li class="lg:px-2">2001210004 - Lưu Đức Vinh</li>
-            </ul>
         </div>
     </div>
 </div>

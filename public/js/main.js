@@ -210,3 +210,4 @@ function handelSearch() {
     const value = searchInput.value;
     window.location.href = `/products?search=${value}`;
 }
+
