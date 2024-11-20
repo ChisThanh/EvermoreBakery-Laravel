@@ -116,21 +116,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     getHistory();
 
-    function addUserMessage(message) {
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("mb-2", "text-right");
-        messageElement.innerHTML =
-            `<p class="bg-blue-500 text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
-        chatbox.appendChild(messageElement);
-        chatbox.scrollTop = chatbox.scrollHeight;
-    }
+	function addUserMessage(message) {
+		const messageElement = document.createElement("div");
+		messageElement.classList.add("mb-2", "text-right");
+		messageElement.innerHTML =
+			`<p class="bg-primary text-secondary rounded-lg py-2 px-4 inline-block">${message}</p>`;
+		chatbox.appendChild(messageElement);
+		chatbox.scrollTop = chatbox.scrollHeight;
+	}
 
-    function addBotMessage(message) {
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("mb-2");
-        messageElement.innerHTML =
-            `<p class="bg-gray-200 text-gray-700 rounded-lg py-2 px-4 inline-block">${message}</p>`;
-        chatbox.appendChild(messageElement);
-        chatbox.scrollTop = chatbox.scrollHeight;
-    }
+	function addBotMessage(message) {
+		const messageElement = document.createElement("div");
+		messageElement.classList.add("mb-2");
+		messageElement.innerHTML =
+			`<p class="bg-gray-200 text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
+		chatbox.appendChild(messageElement);
+		chatbox.scrollTop = chatbox.scrollHeight;
+	}
 });
