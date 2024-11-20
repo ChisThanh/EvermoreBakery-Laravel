@@ -113,7 +113,7 @@
                             <div class="mt-3">
                                 <div class="flex items-center justify-between">
                                     <h3 class="font-semibold">{{ $each['name'] }}</h3>
-                                    <p class="text-neutral-500 block text-sm line-through">{{ $each['price'] }} Đ</p>
+                                    <p class="text-neutral-500 block text-sm line-through">@if($each['price'] != $each['price_sale']) {{ $each['price'] }} Đ @endif</p>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <p class="text-sm text-neutral-500">{{ $each['category_name'] }}</p>
