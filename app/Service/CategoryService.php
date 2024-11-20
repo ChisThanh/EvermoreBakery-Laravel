@@ -18,6 +18,10 @@ class CategoryService extends BaseService
     public function getCategoryHome()
     {
         $topCategories = $this->repository->getCategoryHome();
+        $topCategories->transform(function ($item) {
+            $item->image = $item->images->first()->url ?? null;
+            return $item;
+        });
         return $topCategories;
     }
 }

@@ -24,7 +24,8 @@
                             <h3 class="mb-2.5 text-xl font-medium">Thể Loại</h3>
                             <div class="grid gap-4">
                                 <button type="button" wire:click="setCategory(null)"
-                                    class="rounded-lg py-2  @if ($categoryName != null || $categoryName != '') bg-gray @else bg-primary text-white @endif">Tất cả</button>
+                                    class="rounded-lg py-2  @if ($categoryName != null || $categoryName != '') bg-gray @else bg-primary text-white @endif">Tất
+                                    cả</button>
                                 @foreach ($categories as $category)
                                     <button type="button"
                                         class="rounded-lg py-2 bg-gray @if ($category->name == $categoryName) bg-primary text-white @endif"
@@ -106,8 +107,7 @@
                                 <a class="h-[250px] w-full lg:h-[220px]" href="/products/{{ $each['slug'] }}">
                                     <img alt="Air Force 1 cover photo" loading="lazy" width="592" height="592"
                                         decoding="async" data-nimg="1" class="h-full w-full object-cover object-bottom"
-                                        {{-- src="{{ asset('storage/' . $each['images'][0]['url']) }}" --}} src="{{ asset('images/new_balance3.webp') }}"
-                                        style="color: transparent;">
+                                        src="storage/{{ $each['image'] }}" style="color: transparent;">
                                 </a>
                             </div>
                             <div class="mt-3">

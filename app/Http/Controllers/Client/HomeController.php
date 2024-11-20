@@ -5,24 +5,26 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
 use App\Service\CouponService;
+use App\Service\DataProcessorService;
 use App\Service\ProductService;
-use Database\Seeders\CouponSeeder;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     protected $productService;
     protected $categoryService;
     protected $couponService;
+    protected $dataProcessorService;
 
     public function __construct(
         ProductService $productService,
         CategoryService $categoryService,
-        CouponService $couponService
+        CouponService $couponService,
+        DataProcessorService $dataProcessorService
     ) {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
         $this->couponService = $couponService;
+        $this->dataProcessorService = $dataProcessorService;
     }
 
     public function index()
@@ -37,7 +39,17 @@ class HomeController extends Controller
                 });
         }
 
-        return view('clients.home', compact('products', 'categories'));
+        try {
+            $recommendProducts = $this->dataProcessorService->recommendProducts([
+                'user_id' => auth()->id() ?? 0,
+                'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
+            ]);
+            $recommendProducts = $recommendProducts['data'];
+        } catch (\Exception $e) {
+            $recommendProducts = [];
+        }
+
+        return view('clients.home', compact('products', 'categories', 'recommendProducts'));
     }
 
     public function blog()

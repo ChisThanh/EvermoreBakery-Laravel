@@ -31,7 +31,7 @@
                                 <p class="mt-2 text-neutral-500">{{ $item->description }}</p>
                                 <p class="mt-2 mb-2 text-neutral-500">Giảm đến 
                                     {{ (int)$item->discount_percentage }}%
-                                    hoặc {{ (int)$item->discount_amount }} Đ</p>
+                                    hoặc {{ (int)$item->discount_amount }} Đ - SL: {{ $item->quantity }}</p>
                                 <div class="absolute bottom-5 left-3 w-full">
                                     <div class="relative">
                                         <p class="cursor-text inline-flex items-center gap-2 border-b-2 border-primary py-1 font-medium text-primary"
