@@ -14,7 +14,7 @@ Route::group([
     Route::get('/blog', 'HomeController@blog')->name('blog');
     Route::get('/contact', 'HomeController@contact')->name('contact');
     Route::get('/cart', 'ProductController@cart')->name('cart');
-
+    Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::middleware('auth')->group(function () {
         Route::get('/checkout', 'ProductController@checkout');
         Route::post('/checkout', 'ProductController@HandleCheckout');
