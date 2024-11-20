@@ -29,8 +29,12 @@ class ProductController extends Controller
         $data = $this->productService->show($slug);
         if ($data['success'] === false)
             return redirect()->back()->with('error', $data['message']);
+        $productRecommend = $data['recommend'];
         $data = $data['data'];
-        return view('clients.product-details', compact('data'));
+        return view(
+            'clients.product-details',
+            compact('data', 'productRecommend')
+        );
     }
 
     public function addToCart($slug)

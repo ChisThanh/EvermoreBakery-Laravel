@@ -16,15 +16,18 @@ class ProductRepository extends BaseRepository
     {
         $product = $this->model->where('slug', $slug)
             ->with([
-                'category',
+                'category.images',
                 'images',
                 'likes',
                 'latestEvent',
+                'ingredients',
+                'nutrition',
             ])
             ->first();
 
         if (!$product)
             $product = $this->model->first();
+        
         return $product;
     }
 

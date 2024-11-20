@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const messageElement = document.createElement("div");
 		messageElement.classList.add("mb-2");
 		messageElement.innerHTML =
-			`<p class="bg-gray-200 text-white rounded-lg py-2 px-4 inline-block">${message}</p>`;
+			`<p class="bg-gray-200 text-primary rounded-lg py-2 px-4 inline-block">${message}</p>`;
 		chatbox.appendChild(messageElement);
 		chatbox.scrollTop = chatbox.scrollHeight;
 	}

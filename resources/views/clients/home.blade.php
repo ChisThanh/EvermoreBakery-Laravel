@@ -19,7 +19,7 @@
                                 class="absolute left-6 top-0 rounded-b-lg bg-primary px-3 py-2 text-sm uppercase text-white shadow-md">
                                 Siêu hấp dẫn
                             </div>
-                            <button type="button" onclick="likeProduct('{{ $each['slug'] }}', this)"
+                            <button type="button" onclick="likeProduct('{{ $each['slug'] ?? '' }}', this)"
                                 data-liked="{{ $each['liked'] }}"
                                 class="flex h-9 w-9 items-center justify-center rounded-full bg-white absolute right-2 top-2 border-0">
                                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none">
@@ -57,6 +57,7 @@
             </div>
             <div class="flex items-center justify-center">
                 <button
+                    onclick="window.location.href = '/products';"
                     class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">Xem
                     Thêm</button>
             </div>
@@ -177,7 +178,7 @@
                                 </div>
                                 <div>
                                     <div class="flex items-center gap-1 text-lg font-semibold">{{ $category->name }}</div>
-                                    <p class="text-sm text-neutral-500">{{ substr($category->description, 0, 20) }}...</p>
+                                    <p class="text-sm text-neutral-500">{{ substr($category->description, 0, 50) }}...</p>
                                 </div>
                             </div>
                         </div>
@@ -192,9 +193,7 @@
                 @endforeach
             </div>
             <div class="flex items-center justify-center">
-                <button
-                    class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">Xem
-                    Thêm</button>
+                
             </div>
         </div>
         <a href="/contact" id="event-banner" class="container lg:my-8">

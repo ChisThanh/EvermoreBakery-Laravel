@@ -61,12 +61,11 @@ class ProductService extends BaseService
         $reviewProduct = $this->productReviewService->getAllReview($product->id);
 
         $productRecommend = ['data' => []];
-        if(env('APP_ENV') == 'production')
+        if(env('APP_ENV') != 'local')
             $productRecommend = $this->dataProcessorService->recommendProducts([
                 'user_id' => auth()->id() ?? 0,
                 'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
             ]);
-
         $userId = '';
         if (auth()->check()) {
             $userId = auth()->id();
@@ -76,7 +75,7 @@ class ProductService extends BaseService
 
         $cookieId = request()->cookie('cookie_id');
 
-        if(env('APP_ENV') == 'production')
+        if(env('APP_ENV') != 'local')
             ProductInteractionJob::dispatch($userId, $cookieId, $product->id);
         
         return [
