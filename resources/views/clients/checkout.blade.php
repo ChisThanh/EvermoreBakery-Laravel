@@ -28,6 +28,8 @@
                                                     <span class="">{{ $user->name }}</span>
                                                 </div>
                                             </div><button
+                                            type="button"
+                                            onclick="window.location.href='/profile'"   
                                                 class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-2 px-4  border-2 border-primary text-primary">Chỉnh Sửa</button>
                                         </div>
                                     </div>

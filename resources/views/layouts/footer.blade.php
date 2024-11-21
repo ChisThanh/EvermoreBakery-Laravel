@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="lg:w-1/4 w-full lg:pt-0 pt-6">
-            <div class="text-2xl font-semibold flex items-center justify-center mb-4 h-16">Được Thiết Kế Bởi</div>
+            <div class="text-2xl font-semibold flex items-center justify-center mb-4 h-16"></div>
             <ul class="list-decimal text-base font-normal mx-4 lg:mx-0">
                 <li class="lg:px-2"><a href="/">Trang chủ</a></li>
                 <li class="lg:px-2"><a href="/blog">Blog</a></li>

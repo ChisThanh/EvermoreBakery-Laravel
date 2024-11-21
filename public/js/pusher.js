@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function sendMsg(userMessage) {
         tmp = userMessage;
-        fetch(`api/v1/chat`, {
+        fetch(`/api/v1/chat`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

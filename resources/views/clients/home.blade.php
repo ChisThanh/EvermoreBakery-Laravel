@@ -168,7 +168,7 @@
             </div>
             <div class="flex items-center justify-start gap-4 w-full">
                 @foreach ($categories as $category)
-                    <a href="#" class="rounded-2xl border-4 border-primary p-3 lg:w-1/3 w-1/2">
+                    <a href="/products?categoryName={{$category->name}}" class="rounded-2xl border-4 border-primary p-3 lg:w-1/3 w-1/2">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
                                 <div class="h-20 w-20 overflow-hidden rounded-lg">

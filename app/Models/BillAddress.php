@@ -19,4 +19,9 @@ class BillAddress extends Model
         'ward',
         'street',
     ];
+
+    public function getStringAddressAttribute(): string
+    {
+        return "{$this->name} - {$this->phone} - {$this->street}, {$this->ward}, {$this->district}, {$this->city}";
+    }
 }

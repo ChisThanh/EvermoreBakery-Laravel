@@ -32,14 +32,20 @@ class SearchProduct extends Component
 
     public function setCategory($category)
     {
-        $this->categoryName = $category;
+        if($category == $this->categoryName)
+            $this->categoryName = null;
+        else
+            $this->categoryName = $category;
     }
 
     public function setPrice($price)
     {
         if (!in_array($price, ['asc', 'desc', null]))
             $price = 'asc';
-        $this->price = $price;
+        if($price == $this->price)
+            $this->price = null;
+        else
+            $this->price = $price;
     }
 
     public function searchSubmit()

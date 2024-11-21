@@ -44,7 +44,9 @@
                 @endif
             </button>
             @if(auth()->check())
-                <button type="button" class="w-8 h-8 mx-3 flex items-center rounded-full border border-primary overflow-hidden" id="user-button">
+                <button 
+                onclick="window.location.href='/profile'"
+                type="button" class="w-8 h-8 mx-3 flex items-center rounded-full border border-primary overflow-hidden" id="user-button">
                     <img alt="avatar" loading="lazy" width="500" height="500" decoding="async" data-nimg="1" 
                     class="object-cover object-center bg-transparent" src="{{ asset('images/avatar.png') }}">
                 </button>

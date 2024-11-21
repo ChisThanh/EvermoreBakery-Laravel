@@ -14,12 +14,15 @@ Route::group([
     Route::get('/blog', 'HomeController@blog')->name('blog');
     Route::get('/contact', 'HomeController@contact')->name('contact');
     Route::get('/cart', 'ProductController@cart')->name('cart');
-    Route::get('/profile', 'ProfileController@index')->name('profile');
     Route::middleware('auth')->group(function () {
         Route::get('/checkout', 'ProductController@checkout');
         Route::post('/checkout', 'ProductController@HandleCheckout');
         Route::get('/checkout/vnpay/callback', 'ProductController@CheckoutCallback')
             ->name('checkout.callback');
+        Route::get('/profile', 'ProfileController@index')->name('profile');
+        Route::post('/profile', 'ProfileController@update')->name('profile.update');
+
+        Route::post('/products/review/{slug}', 'ProductController@reviewProduct')->name('profile.update');
     });
 
     Route::prefix('products')->group(function () {

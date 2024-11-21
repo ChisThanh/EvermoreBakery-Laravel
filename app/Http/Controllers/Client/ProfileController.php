@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Bill;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,11 @@ class ProfileController extends Controller
 {
     public function index(): View
     {
-        return view('clients.profile');
+        $user_id = auth()->id();
+        $bills = Bill::with('details.product', 'address', 'coupon')
+            ->where('user_id', $user_id)
+            ->get();
+        return view('clients.profile', compact('bills'));
     }
 
     public function edit(Request $request): View
@@ -29,15 +34,11 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user = auth()->user();
+        $user->fill($request->validated());
+        $user->save();
+        $user->fresh();
+        return Redirect::back()->with('success', 'Cập nhật thông tin thành công');
     }
 
     /**

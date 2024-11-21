@@ -11,4 +11,9 @@ class BillRepository extends BaseRepository
     {
         return Bill::class;
     }
+
+    public function getBillByUser($userId)
+    {
+        return $this->model->where('user_id', $userId)->select('id')->get();
+    }
 }

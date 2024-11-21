@@ -61,7 +61,7 @@ class ProductService extends BaseService
         $reviewProduct = $this->productReviewService->getAllReview($product->id);
 
         $productRecommend = ['data' => []];
-        if(env('APP_ENV') != 'local')
+        if (env('APP_ENV') != 'local')
             $productRecommend = $this->dataProcessorService->recommendProducts([
                 'user_id' => auth()->id() ?? 0,
                 'cookie_id' => request()->cookie('cookie_id') ?? 'tmp',
@@ -75,14 +75,13 @@ class ProductService extends BaseService
 
         $cookieId = request()->cookie('cookie_id');
 
-        if(env('APP_ENV') != 'local')
+        if (env('APP_ENV') != 'local')
             ProductInteractionJob::dispatch($userId, $cookieId, $product->id);
-        
+
         return [
             'success' => true,
             'data' => $product,
             'recommend' => $productRecommend['data'],
-            'checkReview' => $checkReview ?? null,
             'reviewProduct' => $reviewProduct,
         ];
     }
@@ -148,12 +147,14 @@ class ProductService extends BaseService
         }
 
         $cartDetails[$productId]['total'] = $cartDetails[$productId]['quantity'] * $product->price_sale;
+        $cartDetails = mb_convert_encoding($cartDetails, 'UTF-8', 'UTF-8');
         $cart->cart_details = json_encode($cartDetails);
         $cart->total += array_sum(array_column($cartDetails, 'total'));
         if (auth()->check())
             $cart->user_id = auth()->id();
 
         $cart->save();
+        $cart->fresh();
 
         return ['success' => true, 'data' => $product];
     }
@@ -230,10 +231,15 @@ class ProductService extends BaseService
         return ['success' => true, 'liked' => !$hasLiked];
     }
 
-    public function productReview($inputs)
+    public function reviewProduct($inputs)
     {
+        $product = $this->repository->whereFirst('slug', $inputs['slug']);
+        if (!$product)
+            return ['success' => false, 'message' => 'Sản phẩm không tồn tại'];
+
         $userId = auth()->id();
         $inputs['user_id'] = $userId;
+        $inputs['product_id'] = $product->id;
 
         $review = $this->productReviewRepository->whereFirst([
             'product_id' => $inputs['product_id'],
@@ -242,17 +248,23 @@ class ProductService extends BaseService
 
         if ($review) {
             $review->update([
-                "comment" => $inputs['comment'],
+                "comment" => $inputs['review'],
                 "rating" => $inputs['rating'],
             ]);
         } else {
             $review = $this->productReviewRepository->create([
                 "product_id" => $inputs['product_id'],
-                "user_id" => auth()->id(),
-                "comment" => $inputs['comment'],
+                "user_id" => $userId,
+                "comment" => $inputs['review'],
                 "rating" => $inputs['rating'],
             ]);
         }
+        $billIds = $this->billRepository->getBillByUser($userId);
+        $billIds = $billIds->pluck('id')->join(',');
+        \DB::statement(
+            "UPDATE bill_details SET review = :review WHERE bill_id IN ($billIds) AND product_id = :product_id",
+            ['review' => 0, 'product_id' => $product->id]
+        );
         return ['success' => true, 'data' => $review];
     }
 }

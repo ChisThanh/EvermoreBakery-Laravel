@@ -73,7 +73,6 @@ class ProductController extends Controller
         $data = $this->productService->showCart();
         $address = $this->billService->getAddressUser();
         $user = auth()->user();
-
         if (sizeof($data['cartDetails']) <= 0)
             return redirect()
                 ->route('products')
@@ -138,5 +137,18 @@ class ProductController extends Controller
         return redirect()
             ->route('products')
             ->with('success', 'Đặt hàng thành công');
+    }
+
+    public function reviewProduct(Request $request, $slug) {
+        $inputs = [
+            'slug' => $slug,
+            'review' => $request->review,
+            'rating' => 5,
+        ];
+        $data = $this->productService->reviewProduct($inputs);
+        if ($data['success'] === false)
+            return redirect()->back()->with('error', $data['message']);
+        return redirect()->back()->with('success', 'Bình luận thành công');
+        
     }
 }

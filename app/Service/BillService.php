@@ -82,6 +82,7 @@ class BillService extends BaseService
                     $bill->total = min([$discountByAmount, $discountByPercentage]);
                     $coupon->quantity -= 1;
                     $coupon->save();
+                    $coupon->fresh();
                 }
             }
 

@@ -165,48 +165,26 @@
                 </div>
             </div>
         </div>
-        <div class="container flex flex-col items-center justify-center space-y-8">
-            <div class="text-center w-full lg:px-4">
-                <div class="text-[40px] font-bold">BẠN NGHĨ GÌ VỀ SẢN PHẨM NÀY</div>
-                <div class="text-xl font-normal mt-2">
-                    Evermorebakery luôn luôn quan tâm và tôn trọng ý kiến của bạn
+        @if (auth()->check() && $data->review)
+            <div class="container flex flex-col items-center justify-center space-y-8">
+                <div class="text-center w-full lg:px-4">
+                    <div class="text-[40px] font-bold">BẠN NGHĨ GÌ VỀ SẢN PHẨM NÀY</div>
+                    <div class="text-xl font-normal mt-2">
+                        Evermorebakery luôn luôn quan tâm và tôn trọng ý kiến của bạn
+                    </div>
                 </div>
+                <form method="POST" action="/products/review/{{ $data->slug }}"
+                    class="flex lg:flex-row flex-col items-center justify-center space-x-4 w-full">
+                    @csrf
+                    <input type="text" 
+                        class="w-1/2 border-2 border-primary rounded-xl focus:border-tertiary focus:outline-none focus:ring-1 focus:ring-tertiary"
+                        placeholder="Nhập bình luận của bạn" name="review">
+                    <button type="submit" class="rounded-xl p-3 bg-primary text-secondary hover:bg-tertiary">
+                        Bình Luận
+                    </button>
+                </form>
             </div>
-            <form class="flex lg:flex-row flex-col items-center justify-center space-x-4 w-full">
-                <div class="flex items-center">
-                    <svg class="w-4 h-4 text-tertiary ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 text-tertiary ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 text-tertiary ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 text-tertiary ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                    <svg class="w-4 h-4 ms-1 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor" viewBox="0 0 22 20">
-                        <path
-                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                    </svg>
-                </div>
-                <input type="text" name="" id=""
-                    class="w-1/2 border-2 border-primary rounded-xl focus:border-tertiary focus:outline-none focus:ring-1 focus:ring-tertiary"
-                    placeholder="Nhập bình luận của bạn">
-                <button type="submit" class="rounded-xl p-3 bg-primary text-secondary hover:bg-tertiary">Bình
-                    Luận</button>
-            </form>
-        </div>
+        @endif
         <div class="container flex flex-col items-center justify-center space-y-8">
             <div class="text-center w-full lg:px-4">
                 <div class="text-[40px] font-bold">CÓ THỂ BẠN CŨNG SẼ THÍCH</div>
@@ -239,8 +217,7 @@
                 @endfor
             </div>
             <div class="flex items-center justify-center">
-                <button
-                    onclick="window.location.href='/products'"
+                <button onclick="window.location.href='/products'"
                     class="relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium py-3 px-4 sm:py-3.5 sm:px-6  rounded-full bg-primary text-white hover:bg-primary/80 disabled:bg-opacity-70 ">Xem
                     Thêm</button>
             </div>
@@ -253,43 +230,42 @@
             openToast('success', '{{ session('success') }}', 5000);
         @endif
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabInfo = document.querySelector('#tab-info');
+            const contentInfo = document.querySelector('#content-info');
+            const tabNutrition = document.querySelector('#tab-nutrition');
+            const contentNutrition = document.querySelector('#content-nutrition');
+            const tabIngredient = document.querySelector('#tab-ingredient');
+            const contentIngredient = document.querySelector('#content-ingredient');
+
+            tabInfo.addEventListener('click', () => {
+                tabInfo.classList.add('border-b-2');
+                tabNutrition.classList.remove('border-b-2');
+                tabIngredient.classList.remove('border-b-2');
+
+                contentInfo.classList.remove('hidden');
+                contentNutrition.classList.add('hidden');
+                contentIngredient.classList.add('hidden');
+            });
+            tabNutrition.addEventListener('click', () => {
+                tabInfo.classList.remove('border-b-2');
+                tabNutrition.classList.add('border-b-2');
+                tabIngredient.classList.remove('border-b-2');
+
+                contentInfo.classList.add('hidden');
+                contentNutrition.classList.remove('hidden');
+                contentIngredient.classList.add('hidden');
+            });
+            tabIngredient.addEventListener('click', () => {
+                tabInfo.classList.remove('border-b-2');
+                tabNutrition.classList.remove('border-b-2');
+                tabIngredient.classList.add('border-b-2');
+
+                contentInfo.classList.add('hidden');
+                contentNutrition.classList.add('hidden');
+                contentIngredient.classList.remove('hidden');
+            });
+        });
+    </script>
 @endpush
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const tabInfo = document.querySelector('#tab-info');
-        const contentInfo = document.querySelector('#content-info');
-        const tabNutrition = document.querySelector('#tab-nutrition');
-        const contentNutrition = document.querySelector('#content-nutrition');
-        const tabIngredient = document.querySelector('#tab-ingredient');
-        const contentIngredient = document.querySelector('#content-ingredient');
-
-        tabInfo.addEventListener('click', () => {
-            tabInfo.classList.add('border-b-2');
-            tabNutrition.classList.remove('border-b-2');
-            tabIngredient.classList.remove('border-b-2');
-
-            contentInfo.classList.remove('hidden');
-            contentNutrition.classList.add('hidden');
-            contentIngredient.classList.add('hidden');
-        });
-        tabNutrition.addEventListener('click', () => {
-            tabInfo.classList.remove('border-b-2');
-            tabNutrition.classList.add('border-b-2');
-            tabIngredient.classList.remove('border-b-2');
-
-            contentInfo.classList.add('hidden');
-            contentNutrition.classList.remove('hidden');
-            contentIngredient.classList.add('hidden');
-        });
-        tabIngredient.addEventListener('click', () => {
-            tabInfo.classList.remove('border-b-2');
-            tabNutrition.classList.remove('border-b-2');
-            tabIngredient.classList.add('border-b-2');
-
-            contentInfo.classList.add('hidden');
-            contentNutrition.classList.add('hidden');
-            contentIngredient.classList.remove('hidden');
-        });
-    });
-</script>

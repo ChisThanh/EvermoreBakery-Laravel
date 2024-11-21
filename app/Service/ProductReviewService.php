@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\Models\Bill;
 use App\Repositories\ProductReviewRepository;
 
 
@@ -27,7 +28,9 @@ class ProductReviewService extends BaseService
             ->join('bill_details', 'bills.id', '=', 'bill_details.bill_id')
             ->where('bill_details.product_id', $product_id)
             ->where('bills.user_id', $userId)
+            ->where('bills.payment_status', Bill::PAYMENT_PAID)
+            ->where('bill_details.review', 1)
             ->count();
-        return $data;
+        return $data > 0;
     }
 }
