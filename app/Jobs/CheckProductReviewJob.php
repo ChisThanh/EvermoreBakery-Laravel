@@ -30,7 +30,7 @@ class CheckProductReviewJob implements ShouldQueue
         $dataProcessorService->checkProductReview([
             'user_id' => $this->userId,
             'product_id' => $this->product_id,
-            'review' => $this->review,
+            'text' => $this->review,
         ]);
     }
 }

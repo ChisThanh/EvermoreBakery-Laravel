@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\Jobs\CheckProductReviewJob;
 use App\Jobs\ProductInteractionJob;
 use App\Repositories\BillRepository;
 use App\Repositories\CartRepository;
@@ -265,6 +266,10 @@ class ProductService extends BaseService
             "UPDATE bill_details SET review = :review WHERE bill_id IN ($billIds) AND product_id = :product_id",
             ['review' => 0, 'product_id' => $product->id]
         );
+
+        if(env('APP_ENV') != 'local')
+            CheckProductReviewJob::dispatch($userId, $product->id, $inputs['review']);
+        
         return ['success' => true, 'data' => $review];
     }
 }
