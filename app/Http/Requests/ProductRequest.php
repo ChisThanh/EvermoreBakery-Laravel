@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric',
             'description' => 'required|string',
-            'images' => 'required|array|min:3|max:4',
+            'images' => 'required|array|min:3|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         if ($this->isMethod('put')) {

@@ -21,6 +21,15 @@
                 <div class="mx-3 flex shrink-0 items-center font-medium decoration-primary decoration-2 underline-offset-8 hover:underline">
                     <a class="list-none" href="/contact">Liên Hệ</a>
                 </div>
+                @if(auth()->check())
+                    <div class="mx-3 flex shrink-0 items-center font-medium decoration-primary decoration-2 underline-offset-8 hover:underline">
+                        <a class="list-none" href="/logout">Đăng xuất</a>
+                    </div>
+                @else
+                    <div class="mx-3 flex shrink-0 items-center font-medium decoration-primary decoration-2 underline-offset-8 hover:underline">
+                        <a class="list-none" href="/login">Đăng nhập</a>
+                    </div>
+                @endif
             </div>
         </div>
         <a class="flex cursor-pointer justify-center items-center gap-2 w-1/3" href="/">
