@@ -17,6 +17,15 @@
                                         <h3 class="font-medium md:text-xl">HD0{{ $index + 1 }}</h3>
                                         <p class="my-1 text-sm text-neutral-500">
                                             @php
+                                                $payment_method = [
+                                                    '1' => 'Thanh Toán Khi Nhận Hàng',
+                                                    '2' => 'Thanh Toán Qua Thẻ',
+                                                ];
+                                                echo $payment_method[$item->payment_method];
+                                            @endphp
+                                        </p>
+                                        <p class="my-1 text-sm text-neutral-500">
+                                            @php
                                                 $payment_status = [
                                                     '1' => 'Đã Thanh Toán',
                                                     '2' => 'Chưa Thanh Toán',
@@ -24,12 +33,45 @@
                                                 echo $payment_status[$item->payment_status] ?? 'Chưa Thanh Toán';
                                             @endphp
                                         </p>
+                                        <p class="my-1 text-sm text-neutral-500">
+                                            @php
+                                                $status = [
+                                                    '1' => 'Chờ Xác Nhận',
+                                                    '2' => 'Đang Xử Lý',
+                                                    '3' => 'Đang Giao Hàng',
+                                                    '4' => 'Đã Giao Hàng',
+                                                    '5' => 'Đã Hủy',
+                                                ];
+                                                echo $status[$item->status] ?? 'Chờ Xác Nhận';
+                                            @endphp
+                                        </p>
+
                                         <p class="my-1 text-sm text-neutral-500 group-open:hidden">
                                             Xem thêm ...
                                         </p>
                                     </div>
                                 </div>
-                                <span class="font-medium md:text-xl">{{ (int) $item->total }} Đ</span>
+                                <div class="flex justify-center items-center flex-col">
+                                    <p class="font-medium md:text-xl">{{ (int) $item->total }} Đ</p>
+                                    @if ($item->status == 1)
+                                    <form method="POST" action="{{route("bills.cancel", $item->id)}}" class="inline-block">
+                                        @csrf
+                                        <button
+                                            class="flex items-center justify-center h-8 rounded-full bg-red-500 text-white text-sm p-2">
+                                            Hủy
+                                        </button>
+                                    </form>
+                                    @endif
+                                    @if ($item->payment_status == 2 && $item->payment_method == 2 && $item->status != 5)
+                                    <form method="POST" action="{{route("bills.repayment-vnpay", $item->id)}}" class="inline-block">
+                                        @csrf
+                                        <button
+                                            class="mt-1 flex items-center justify-center h-8 rounded-full bg-primary text-white text-sm p-2">
+                                            Thanh toán lại
+                                        </button>
+                                    </form>
+                                    @endif
+                                </div>
                             </summary>
                             <p class="mt-2 text-sm text-neutral-600">
                             <div class="relative overflow-x-auto">
@@ -43,7 +85,8 @@
                                             @foreach ($item->details as $product)
                                                 <th scope="row"
                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                    <a href="/products/{{ $product->product->slug }}">{{ $product->product->name }}</a>
+                                                    <a
+                                                        href="/products/{{ $product->product->slug }}">{{ $product->product->name }}</a>
                                                 </th>
                                                 <td class="px-6 py-4">
                                                     ({{ $product->quantity }})
@@ -132,9 +175,9 @@
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                         <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Lưu</button>
+                            class="text-white bg-primary  focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Lưu</button>
                         <button onclick="document.querySelector('#default-modal').classList.toggle('hidden')" type="button"
-                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Hủy</button>
+                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary focus:z-10 focus:ring-4 focus:ring-gray-100 ">Hủy</button>
                     </div>
                 </form>
             </div>

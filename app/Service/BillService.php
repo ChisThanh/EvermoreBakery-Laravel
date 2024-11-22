@@ -165,4 +165,30 @@ class BillService extends BaseService
         cookie()->forget('cookie_id');
         $this->cartRepository->whereDelete('user_id', $userId);
     }
+
+    public function cancelBill($id): mixed
+    {
+        $bill = $this->repository->find($id);
+        if (!$bill) 
+            return ['success' => false, 'message' => 'Bill not found'];
+
+        $bill->status = Bill::STATUS_CANCEL;
+        $bill->save();
+        $bill->fresh();
+        return ['success' => true, 'message' => 'Cancel bill success'];
+    }
+
+    public function repaymentVnPay($id): mixed
+    {
+        $bill = $this->repository->find($id);
+        if (!$bill) 
+            return ['success' => false, 'message' => 'Bill not found'];
+
+        $url = $this->vnPayService->vnpay([
+            'bill_id' => "HD_" . $bill->id . "_" . time(),
+            'amount' => $bill->total,
+        ]);
+
+        return ['success' => true, 'url' => $url];
+    }
 }

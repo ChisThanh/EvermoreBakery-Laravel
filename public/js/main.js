@@ -34,6 +34,7 @@ function optionAPI(method = 'POST', body = {}) {
             'X-CSRF-TOKEN': csrf,
             'X-Requested-With': 'XMLHttpRequest',
             'Authorization': `Bearer ${token}`,
+            'charset': 'utf-8',
         },
         body: JSON.stringify(body),
     };

@@ -73,7 +73,7 @@
                                                             '2' => 'Đang Xử Lý',
                                                             '3' => 'Đang Giao Hàng',
                                                             '4' => 'Đã Giao Hàng',
-                                                            '5' => 'Hũy Bỏ',
+                                                            '5' => 'Hủy Bỏ',
                                                         ];
                                                         echo $status[$bill->status] ?? 'Chờ Xác Nhận';
                                                     @endphp

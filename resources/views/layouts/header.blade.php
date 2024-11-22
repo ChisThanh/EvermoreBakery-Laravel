@@ -25,10 +25,6 @@
                     <div class="mx-3 flex shrink-0 items-center font-medium decoration-primary decoration-2 underline-offset-8 hover:underline">
                         <a class="list-none" href="/logout">Đăng xuất</a>
                     </div>
-                @else
-                    <div class="mx-3 flex shrink-0 items-center font-medium decoration-primary decoration-2 underline-offset-8 hover:underline">
-                        <a class="list-none" href="/login">Đăng nhập</a>
-                    </div>
                 @endif
             </div>
         </div>

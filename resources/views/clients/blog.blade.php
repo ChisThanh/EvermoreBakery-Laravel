@@ -6,7 +6,7 @@
                 <div class="container mt-5">
                     <div class="text-center mb-5">
                         <h2 class="text-3xl font-medium mb-5 leading-tight">
-                            Mã Giảm Giá Evermore Bakery
+                            Blog Evermore Bakery
                         </h2>
                     </div>
                     <div class="flex items-center justify-center mb-8">

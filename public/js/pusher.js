@@ -94,7 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': csrf,
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'charset': 'utf-8',
             }
         })
             .then(response => response.json())

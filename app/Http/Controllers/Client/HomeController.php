@@ -59,11 +59,6 @@ class HomeController extends Controller
         return view('clients.blog', compact('coupons'));
     }
 
-    public function about()
-    {
-        return view('clients.about');
-    }
-
     public function contact()
     {
         return view('clients.contact');
