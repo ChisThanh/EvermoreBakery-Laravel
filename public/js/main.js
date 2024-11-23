@@ -164,7 +164,7 @@ function searchMain(element) {
     if (!suggestionsBox) {
         suggestionsBox = document.createElement('div');
         suggestionsBox.id = 'suggestions-box';
-        suggestionsBox.className = 'absolute z-[9999] bg-white border border-neutral-300 rounded-md shadow-md max-h-60 overflow-y-auto mt-1 top-[120px]';
+        suggestionsBox.className = 'absolute z-[9999] bg-white border border-neutral-300 rounded-md shadow-md max-h-60 overflow-y-auto top-[6rem]';
         element.parentNode.appendChild(suggestionsBox);
     }
     if (value.trim() !== '') {

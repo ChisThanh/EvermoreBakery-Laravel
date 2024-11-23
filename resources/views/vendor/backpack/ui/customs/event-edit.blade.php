@@ -21,8 +21,9 @@
             <div class="container-fluid animated fadeIn">
                 <div class="row" bp-section="crud-operation-update">
                     <div class="col-md-12 bold-labels">
-                        <form method="post" action="http://localhost:9090/admin/event/3"><input type="hidden"
-                                name="_token" value="NHU1oZYKVbNc2Va1WRoHSjyvuiskGCQBNwTq7plR" autocomplete="off"><input
+                        <form method="post" action="/admin/event/{{$event->id}}">
+                            @csrf
+                            <input
                                 type="hidden" name="_method" value="PUT"><input type="hidden" name="_http_referrer"
                                 value="http://localhost:9090/admin/event/2/show">
                             <div class="card">

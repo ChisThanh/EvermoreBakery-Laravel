@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\File;
 
@@ -29,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        $categoryHeader = Category::inRandomOrder()->limit(5)->select('name')->get();
+        view()->share('categoryHeader', $categoryHeader);
     }
 }

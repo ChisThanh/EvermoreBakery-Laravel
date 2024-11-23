@@ -96,7 +96,7 @@ class Product extends Model
             'nutrition_product',
             'product_id',
             'nutrition_id'
-        );
+        )->withPivot('quantity');
     }
 }
 

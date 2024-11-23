@@ -76,6 +76,11 @@
                             <p class="mt-2 text-sm text-neutral-600">
                             <div class="relative overflow-x-auto">
                                 <p class="my-1">Thông tin: {{ $item->address->string_address }}</p>
+                                    @if($item->coupon)
+                                        <p class="my-1">
+                                            Mã giảm giá: {{ $item->coupon->code }} - {{ (int)$item->coupon->discount_percentage }}% hoặc {{ (int)$item->coupon->discount_amount }} Đ
+                                        </p>
+                                    @endif
                                 <center>
                                     <h3 class="mt-2 border-b md:text-xl">Dánh sách sản phẩm</h3>
                                 </center>

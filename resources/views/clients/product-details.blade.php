@@ -133,7 +133,7 @@
                             @foreach ($data->nutrition as $each)
                                 <div class="grid grid-flow-col gap-4">
                                     <div class="col">{{ $each->name }}</div>
-                                    <div class="col">1kg</div>
+                                    <div class="col">{{ "{$each->pivot->quantity} {$each->unit}" }} </div>
                                 </div>
                             @endforeach
 

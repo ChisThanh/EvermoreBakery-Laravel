@@ -4,7 +4,7 @@
         <h3>Thêm sản phẩm cho event</h3>
     </center>
     <form method="POST">
-				@csrf
+        @csrf
         <div data-product="{{ json_encode($products) }}" id='products'></div>
         <div class="card no-padding no-border mb-0 mt-5">
             <table class="table table-striped m-0 p-0 " id="product-table">

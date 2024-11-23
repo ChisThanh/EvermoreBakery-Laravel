@@ -16,19 +16,19 @@ Route::group([
     Route::get('/cart', 'ProductController@cart')->name('cart');
     Route::middleware('auth')->group(function () {
         Route::get('/checkout', 'ProductController@checkout');
-        Route::post('/checkout', 'ProductController@HandleCheckout');
-        Route::get('/checkout/vnpay/callback', 'ProductController@CheckoutCallback')
+        Route::post('/checkout', 'BillController@HandleCheckout');
+        Route::get('/checkout/vnpay/callback', 'BillController@CheckoutCallback')
             ->name('checkout.callback');
+        Route::post('/bills/cancel/{id}', 'BillController@cancel')
+            ->name('bills.cancel');
+        Route::post('/bills/repayment-vnpay/{id}', 'BillController@repaymentVnPay')
+            ->name('bills.repayment-vnpay');
 
         Route::get('/profile', 'ProfileController@index')->name('profile');
         Route::post('/profile', 'ProfileController@update')->name('profile.update');
 
         Route::post('/products/review/{slug}', 'ProductController@reviewProduct')
             ->name('profile.update');
-
-        Route::post('/bills/cancel/{id}', 'BillController@cancel')->name('bills.cancel');
-        Route::post('/bills/repayment-vnpay/{id}', 'BillController@repaymentVnPay')
-            ->name('bills.repayment-vnpay');
     });
 
     Route::prefix('products')->group(function () {

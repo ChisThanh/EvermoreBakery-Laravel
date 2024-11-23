@@ -43,12 +43,6 @@ class EventCrudController extends CrudController
         CRUD::setFromDb();
     }
 
-
-    protected function setupUpdateOperation()
-    {
-        $this->setupCreateOperation();
-    }
-
     public function viewAddProduct($id)
     {
         $eventProducts = EventProduct::where('event_id', $id)->get();

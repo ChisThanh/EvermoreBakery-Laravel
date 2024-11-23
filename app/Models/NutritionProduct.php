@@ -12,5 +12,6 @@ class NutritionProduct extends Model
     protected $fillable = [
         'nutrition_id',
         'product_id',
+        'quantity',
     ];
 }

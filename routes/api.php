@@ -12,6 +12,11 @@ Route::group([
         Route::post('/coupons/{code}', 'ProductApiController@getCoupons');
         Route::post('/chat', 'ChatApiController@broadcast');
         Route::get('/chat/{chatId}', 'ChatApiController@getHistory');
+
+        Route::post('/upload-file', 'UploadApiController@uploadFile');
+        Route::post('/upload-files', 'UploadApiController@uploadFiles');
+        Route::post('/delete-file', 'UploadApiController@deleteFile');
+        Route::post('/delete-files', 'UploadApiController@deleteFiles');
     });
 
     Route::post('/update-from-cart/{slug}/{quantity}', 'ProductApiController@updateFromCart');

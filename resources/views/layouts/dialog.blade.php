@@ -70,8 +70,7 @@
                                                             class="block flex-1 select-none text-center leading-none js-item-quantity">
                                                             {{ $item['quantity'] }}
                                                         </span>
-                                                        <button
-                                                            onclick="updateQuantity(this, '{{ $item['slug'] }}', 1)"
+                                                        <button onclick="updateQuantity(this, '{{ $item['slug'] }}', 1)"
                                                             class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-300 bg-white text-xl hover:border-neutral-700 focus:outline-none disabled:cursor-default disabled:opacity-50 disabled:hover:border-neutral-400"
                                                             type="button">
                                                             +
@@ -108,8 +107,8 @@
                 </div>
             </div>
         </div>
-        <div class="fixed inset-0 bg-neutral-900/60 opacity-100" id="headlessui-dialog-overlay-:r7:"
-            aria-hidden="true" data-headlessui-state="open"></div>
+        <div class="fixed inset-0 bg-neutral-900/60 opacity-100" id="headlessui-dialog-overlay-:r7:" aria-hidden="true"
+            data-headlessui-state="open"></div>
     </div>
 </div>
 
@@ -152,28 +151,35 @@
 </div>
 
 <!-- Search Bar -->
-<div class="hidden sticky top-[81px] inset-x-0 z-50 container flex items-center py-4 justify-between bg-white text-primary border-b border-neutral-200" id="search-section">
+<div class="hidden sticky top-[81px] inset-x-0 z-50 container flex items-center py-4 justify-between bg-white text-primary border-b border-neutral-200"
+    id="search-section">
     <div class="lg:flex hidden items-center divide-x-2 divide-primary">
         <div class="mx-3 flex items-center space-x-3">
             <div class="text-xs text-center font-semibold">
                 Thể Loại<br>Được Chọn
             </div>
-            @for($i = 0; $i < 5; $i++)
-                <a class="cursor-pointer rounded-full border-2 border-primary hover:opacity-50" href="/"><img src="https://picsum.photos/id/237/200/300" alt="Logo" class="rounded-full w-12 h-12"></a>
-            @endfor
+            @foreach ($categoryHeader as $category)
+                <a class="cursor-pointer rounded-full border-2 border-primary hover:opacity-50"
+                    href="/products?categoryName={{ $category->name }}">
+                    <img src="/storage/{{ $category->image }}" alt="Logo" class="rounded-full w-12 h-12"></a>
+            @endforeach
         </div>
-        <div class="mx-3 flex items-center space-x-3">
+        {{-- <div class="mx-3 flex items-center space-x-3">
             <div class="ml-3 text-xs  font-semibold">Blog Mới</div>
-            @for($i = 0; $i < 5; $i++)
+            @for ($i = 0; $i < 5; $i++)
                 <a class="cursor-pointer rounded-full border-2 border-primary hover:opacity-50" href="/"><img src="https://picsum.photos/id/236/200/300" alt="Logo" class="rounded-full w-12 h-12"></a>
             @endfor
-        </div>
+        </div> --}}
     </div>
     <div class="w-full lg:max-w-lg items-center gap-5 py-1 pr-3 flex">
-        <input type="text" class="js-search-main block w-full rounded-full text-sm font-normal h-11 px-4 py-3 border-2 border-primary bg-white placeholder:text-primary focus:border-transparent focus:ring-2 focus:ring-[#dda54a]" placeholder="Nhập sản phẩm... " oninput="debouncedSearch(this)">
+        <input type="text"
+            class="js-search-main block w-full rounded-full text-sm font-normal h-11 px-4 py-3 border-2 border-primary bg-white placeholder:text-primary focus:border-transparent focus:ring-2 focus:ring-[#dda54a]"
+            placeholder="Nhập sản phẩm... " oninput="debouncedSearch(this)">
         <span class="cursor-pointer" onclick="handelSearch()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="text-2xl text-neutral-500" height="1em" width="1em" viewBox="0 0 512 512">
-                <path fill="#451c0d" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-2xl text-neutral-500" height="1em" width="1em"
+                viewBox="0 0 512 512">
+                <path fill="#451c0d"
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
             </svg>
         </span>
     </div>
