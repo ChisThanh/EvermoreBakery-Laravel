@@ -30,7 +30,11 @@ class RepositoryServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $categoryHeader = Category::inRandomOrder()->limit(5)->select('name')->get();
+        $categoryHeader = Category::inRandomOrder()->with('images')->limit(5)->get();
+        $categoryHeader->transform(function ($item) {
+            $item->image = $item->images()->first()->url ?? null;
+            return $item;
+        });
         view()->share('categoryHeader', $categoryHeader);
     }
 }
