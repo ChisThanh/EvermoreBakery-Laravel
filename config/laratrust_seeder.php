@@ -6,8 +6,8 @@ return [
 
     'roles_structure' => [
         'sadmin' => [
-            'permission' => 'c,r,u,d',
-            'role' => 'c,r,u,d',
+            'permission' => 'a',
+            'role' => 'a',
             'user' => 'c,r,u,d',
         ],
         'admin' => [

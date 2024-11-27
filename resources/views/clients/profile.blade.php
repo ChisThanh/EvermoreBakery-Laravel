@@ -54,40 +54,44 @@
                                 <div class="flex justify-center items-center flex-col">
                                     <p class="font-medium md:text-xl">{{ (int) $item->total }} Đ</p>
                                     @if ($item->status == 1)
-                                    <form method="POST" action="{{route("bills.cancel", $item->id)}}" class="inline-block">
-                                        @csrf
-                                        <button
-                                            class="flex items-center justify-center h-8 rounded-full bg-red-500 text-white text-sm p-2">
-                                            Hủy
-                                        </button>
-                                    </form>
+                                        <form method="POST" action="{{ route('bills.cancel', $item->id) }}"
+                                            class="inline-block">
+                                            @csrf
+                                            <button
+                                                class="flex items-center justify-center h-8 rounded-full bg-red-500 text-white text-sm p-2">
+                                                Hủy
+                                            </button>
+                                        </form>
                                     @endif
                                     @if ($item->payment_status == 2 && $item->payment_method == 2 && $item->status != 5)
-                                    <form method="POST" action="{{route("bills.repayment-vnpay", $item->id)}}" class="inline-block">
-                                        @csrf
-                                        <button
-                                            class="mt-1 flex items-center justify-center h-8 rounded-full bg-primary text-white text-sm p-2">
-                                            Thanh toán lại
-                                        </button>
-                                    </form>
+                                        <form method="POST" action="{{ route('bills.repayment-vnpay', $item->id) }}"
+                                            class="inline-block">
+                                            @csrf
+                                            <button
+                                                class="mt-1 flex items-center justify-center h-8 rounded-full bg-primary text-white text-sm p-2">
+                                                Thanh toán lại
+                                            </button>
+                                        </form>
                                     @endif
                                 </div>
                             </summary>
                             <p class="mt-2 text-sm text-neutral-600">
                             <div class="relative overflow-x-auto">
                                 <p class="my-1">Thông tin: {{ $item->address->string_address }}</p>
-                                    @if($item->coupon)
-                                        <p class="my-1">
-                                            Mã giảm giá: {{ $item->coupon->code }} - {{ (int)$item->coupon->discount_percentage }}% hoặc {{ (int)$item->coupon->discount_amount }} Đ
-                                        </p>
-                                    @endif
+                                @if ($item->coupon)
+                                    <p class="my-1">
+                                        Mã giảm giá: {{ $item->coupon->code }} -
+                                        {{ (int) $item->coupon->discount_percentage }}% hoặc
+                                        {{ (int) $item->coupon->discount_amount }} Đ
+                                    </p>
+                                @endif
                                 <center>
                                     <h3 class="mt-2 border-b md:text-xl">Dánh sách sản phẩm</h3>
                                 </center>
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
                                     <tbody>
-                                        <tr class="bg-white border-b ">
-                                            @foreach ($item->details as $product)
+                                        @foreach ($item->details as $product)
+                                            <tr class="bg-white border-b ">
                                                 <th scope="row"
                                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                     <a
@@ -99,7 +103,7 @@
                                                 <td class="px-6 py-4">
                                                     {{ $product->price }}
                                                 </td>
-                                                @if ($product->review && $item->payment_status == 1)
+                                                @if ($product->review && $item->payment_status == 1 && $item->status == 4)
                                                     <td class="px-6 py-4">
                                                         <a class="rounded-full transition-colors text-sm  font-medium py-2 px-3 sm:px-6 rounded-full bg-primary text-white"
                                                             href="/products/{{ $product->product->slug }}">
@@ -107,8 +111,8 @@
                                                         </a>
                                                     </td>
                                                 @endif
-                                            @endforeach
-                                        </tr>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
